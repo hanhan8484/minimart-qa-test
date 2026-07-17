@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test --project=chromium",
+    "test:batch1": "playwright test --project=chromium tests/api/g-auth.spec.ts tests/ui/g-login.spec.ts tests/ui/g-navbar.spec.ts tests/ui/p-products.spec.ts tests/ui/c-cart.spec.ts tests/flows/login-to-cart.spec.ts",
+    "test:report": "playwright show-report"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hanhan8484/minimart-qa-test.git"
