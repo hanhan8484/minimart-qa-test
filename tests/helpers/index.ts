@@ -17,3 +17,9 @@ export {
   placeOrderAndOpenDetail,
   getDetailStatusText,
 } from './orders';
+export {
+  setCartLines,
+  previewCheckout,
+  applyPricingCaseCart,
+  getSummaryValueByLabel,
+} from './pricing';
