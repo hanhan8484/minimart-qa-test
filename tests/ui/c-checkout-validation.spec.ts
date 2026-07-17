@@ -84,4 +84,19 @@ test.describe('C-B07 checkout shipping validation', () => {
     await page.locator('#checkout-address').blur();
     await expect(page.getByText('收件地址須為 5 至 100 個字')).toBeVisible();
   });
+
+  test('DEF-022: phone longer than 10 digits must be rejected', async ({ page }) => {
+    test.fail(
+      true,
+      'DEF-022: 手機 11 位（如 09123456789）仍可啟用送出、無錯誤（R-18.4）',
+    );
+    await page.locator('#checkout-name').fill('測試');
+    await page.locator('#checkout-phone').fill('09123456789');
+    await page.locator('#checkout-address').fill('台北市信義區測試路一段100號');
+    await page.locator('#checkout-phone').blur();
+    await expect(
+      page.getByText('請輸入正確的手機號碼（09 開頭，共 10 位數字）'),
+    ).toBeVisible();
+    await expect(page.locator('.checkout-submit-btn')).toBeDisabled();
+  });
 });

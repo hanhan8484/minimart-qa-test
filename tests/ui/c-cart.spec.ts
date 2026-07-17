@@ -56,4 +56,18 @@ test.describe('C-B01 / C-B02 / C-B03 cart page', () => {
     await expect(page.getByText('運費')).toHaveCount(0);
     await expect(page.getByText('應付金額')).toHaveCount(0);
   });
+
+  test('DEF-019: cart badge updates immediately after UI add (no reload)', async ({ page }) => {
+    test.fail(true, 'DEF-019: 加入購物車後導覽列徽章未即時更新（需重整才出現）（R-1.4）');
+    await page.goto('/');
+    await expect(page.getByTestId('cart-badge')).toHaveCount(0);
+    await page
+      .locator('.product-card')
+      .filter({ has: page.getByRole('button', { name: '加入購物車', disabled: false }) })
+      .first()
+      .getByRole('button', { name: '加入購物車' })
+      .click();
+    await expect(page.getByRole('status')).toBeVisible();
+    await expect(page.getByTestId('cart-badge')).toHaveText('1', { timeout: 3000 });
+  });
 });

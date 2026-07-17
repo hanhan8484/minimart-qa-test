@@ -68,4 +68,21 @@ test.describe('P-B01 / P-B02 / P-B03 product list', () => {
     await page.getByRole('link', { name: /回商品列表/ }).click();
     await expect(page).toHaveURL(/\/$/);
   });
+
+  test('DEF-018: 香氛蠟燭禮盒 product image should load', async ({ page }) => {
+    test.fail(
+      true,
+      'DEF-018: 香氛蠟燭禮盒圖片破圖（/images/candle-gift.svg 回傳 HTML 而非圖片）（R-9.2）',
+    );
+    const card = page
+      .locator('.product-card')
+      .filter({ has: page.locator('.product-name', { hasText: '香氛蠟燭禮盒' }) });
+    const img = card.locator('img').first();
+    await expect(img).toBeVisible();
+    await expect
+      .poll(async () => img.evaluate((el: HTMLImageElement) => el.naturalWidth), {
+        timeout: 10_000,
+      })
+      .toBeGreaterThan(0);
+  });
 });

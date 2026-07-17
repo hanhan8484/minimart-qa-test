@@ -273,6 +273,66 @@ export const CASE_COUPON_BELOW_THRESHOLD: PricingCase = {
   }),
 };
 
+/** R-4.6: subtotal exactly equals PCT15 threshold 800 → should apply */
+export const CASE_PCT15_AT_THRESHOLD: PricingCase = {
+  id: 'CASE_PCT15_AT_THRESHOLD',
+  title: 'T恤×2 小計恰=800 + PCT15（門檻邊界）',
+  cart: [{ productName: '純棉素色 T 恤', quantity: 2 }],
+  couponCode: 'PCT15',
+  expect: {
+    subtotal: 800,
+    bulkDiscount: 0,
+    couponDiscount: 120, // 800 × 15%
+    shipping: 60,
+    payable: 740,
+    couponName: '全站 85 折券',
+  },
+  display: pack({
+    subtotal: 800,
+    bulkDiscount: 0,
+    couponDiscount: 120,
+    shipping: 60,
+    payable: 740,
+    couponName: null,
+  }),
+};
+
+/** R-4.7: percent coupon on 商品小計, not after bulk */
+export const CASE_PCT15_WITH_BULK: PricingCase = {
+  id: 'CASE_PCT15_WITH_BULK',
+  title: '機械式鍵盤×1 + PCT15（折抵基準＝小計）',
+  cart: [{ productName: '機械式鍵盤', quantity: 1 }],
+  couponCode: 'PCT15',
+  expect: {
+    subtotal: 3180,
+    bulkDiscount: 159,
+    couponDiscount: 477, // 3180 × 15%（非 3021 × 15%）
+    shipping: 0,
+    payable: 2544, // 3180 − 159 − 477
+    couponName: '全站 85 折券',
+  },
+  display: pack({
+    subtotal: 3180,
+    bulkDiscount: 159,
+    couponDiscount: 477,
+    shipping: 0,
+    payable: 2544,
+    couponName: null,
+  }),
+};
+
+/** Known-fail pricing (DEF-021 / DEF-023) — still asserted via test.fail */
+export const PRICING_CASES_KNOWN_FAIL: { case: PricingCase; defect: string }[] = [
+  {
+    case: CASE_PCT15_WITH_BULK,
+    defect: 'DEF-021: 折扣券折抵以滿額後金額為基準，非商品小計（R-4.7）；實際 couponDiscount=453',
+  },
+  {
+    case: CASE_PCT15_AT_THRESHOLD,
+    defect: 'DEF-023: 商品小計恰好等於門檻時券不可用（R-4.6）；PCT15@800 未折抵',
+  },
+];
+
 /** All cases for C-A03 API table-driven tests */
 export const PRICING_CASES_API: PricingCase[] = [
   CASE_R56_1,
