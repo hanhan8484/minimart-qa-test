@@ -15,6 +15,7 @@
     "test:batch8": "playwright test --project=chromium tests/ui/v-coupons.spec.ts",
     "test:batch9": "playwright test --project=chromium tests/flows/g-logout-preserves-data.spec.ts",
     "test:batch10": "playwright test --project=chromium tests/ui/p-product-detail.spec.ts tests/ui/c-checkout-coupons.spec.ts tests/ui/c-checkout-validation.spec.ts",
+    "test:api-a": "playwright test --project=chromium tests/api/g-auth.spec.ts tests/api/c-pricing.spec.ts tests/api/p-products.spec.ts tests/api/c-cart-api.spec.ts tests/api/c-checkout-effects.spec.ts tests/api/o-orders-api.spec.ts tests/api/v-coupons-api.spec.ts tests/api/n-notifications-api.spec.ts",
     "test:report": "playwright show-report"
   },
   "repository": {
