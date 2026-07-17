@@ -10,6 +10,9 @@
     "test:batch3": "playwright test --project=chromium tests/ui/o-orders.spec.ts tests/flows/o-ship-confirm.spec.ts tests/flows/o-cancel-order.spec.ts",
     "test:batch4": "playwright test --project=chromium tests/api/c-pricing.spec.ts tests/ui/c-checkout-display.spec.ts",
     "test:batch5": "playwright test --project=chromium tests/ui/n-notifications.spec.ts",
+    "test:batch6": "playwright test --project=chromium tests/flows/o-return-refund.spec.ts",
+    "test:batch7": "playwright test --project=chromium tests/flows/o-return-reject-revoke.spec.ts",
+    "test:batch8": "playwright test --project=chromium tests/ui/v-coupons.spec.ts",
     "test:report": "playwright show-report"
   },
   "repository": {

@@ -48,7 +48,7 @@ export async function placeOrderAndOpenDetail(
 /** Read status from detail page body near label */
 export async function getDetailStatusText(page: Page): Promise<string> {
   const main = await page.locator('main').innerText();
+  if (main.includes('載入中')) return '';
   const m = main.match(/訂單狀態\s*\n?\s*(待出貨|已出貨|已完成|已取消|退貨中|已退款)/);
-  if (!m) throw new Error(`Cannot parse 訂單狀態 from:\n${main.slice(0, 400)}`);
-  return m[1];
+  return m?.[1] ?? '';
 }
