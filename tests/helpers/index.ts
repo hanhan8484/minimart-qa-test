@@ -13,6 +13,7 @@ export type { ShippingInfo } from './checkout';
 export {
   SEED_ORDER_IDS,
   SEED_ORDER_STATUSES,
+  fetchOrderIds,
   openOrderDetail,
   placeOrderAndOpenDetail,
   getDetailStatusText,

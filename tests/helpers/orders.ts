@@ -17,6 +17,16 @@ export const SEED_ORDER_IDS = [
 
 export const SEED_ORDER_STATUSES = ['待出貨', '已完成', '已出貨'] as const;
 
+/** Order ids for the logged-in session (newest first per API). */
+export async function fetchOrderIds(page: Page): Promise<string[]> {
+  return page.evaluate(async () => {
+    const res = await fetch('/api/orders', { credentials: 'include' });
+    if (!res.ok) throw new Error(`GET /api/orders failed: ${res.status}`);
+    const orders = (await res.json()) as { id: string }[];
+    return orders.map((o) => o.id);
+  });
+}
+
 /** Open order detail by id */
 export async function openOrderDetail(page: Page, orderId: string) {
   await page.goto(`/orders/${orderId}`);
