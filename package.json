@@ -9,6 +9,7 @@
     "test:batch2": "playwright test --project=chromium tests/flows/g-logout-clears-cart.spec.ts tests/flows/c-remove-cart-item.spec.ts tests/flows/c-checkout-success.spec.ts",
     "test:batch3": "playwright test --project=chromium tests/ui/o-orders.spec.ts tests/flows/o-ship-confirm.spec.ts tests/flows/o-cancel-order.spec.ts",
     "test:batch4": "playwright test --project=chromium tests/api/c-pricing.spec.ts tests/ui/c-checkout-display.spec.ts",
+    "test:batch5": "playwright test --project=chromium tests/ui/n-notifications.spec.ts",
     "test:report": "playwright show-report"
   },
   "repository": {
