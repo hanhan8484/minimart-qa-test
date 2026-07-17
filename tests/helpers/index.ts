@@ -10,3 +10,10 @@ export {
   submitCheckout,
 } from './checkout';
 export type { ShippingInfo } from './checkout';
+export {
+  SEED_ORDER_IDS,
+  SEED_ORDER_STATUSES,
+  openOrderDetail,
+  placeOrderAndOpenDetail,
+  getDetailStatusText,
+} from './orders';

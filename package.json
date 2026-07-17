@@ -7,6 +7,7 @@
     "test": "playwright test --project=chromium",
     "test:batch1": "playwright test --project=chromium tests/api/g-auth.spec.ts tests/ui/g-login.spec.ts tests/ui/g-navbar.spec.ts tests/ui/p-products.spec.ts tests/ui/c-cart.spec.ts tests/flows/login-to-cart.spec.ts",
     "test:batch2": "playwright test --project=chromium tests/flows/g-logout-clears-cart.spec.ts tests/flows/c-remove-cart-item.spec.ts tests/flows/c-checkout-success.spec.ts",
+    "test:batch3": "playwright test --project=chromium tests/ui/o-orders.spec.ts tests/flows/o-ship-confirm.spec.ts tests/flows/o-cancel-order.spec.ts",
     "test:report": "playwright show-report"
   },
   "repository": {
