@@ -13,6 +13,8 @@
     "test:batch6": "playwright test --project=chromium tests/flows/o-return-refund.spec.ts",
     "test:batch7": "playwright test --project=chromium tests/flows/o-return-reject-revoke.spec.ts",
     "test:batch8": "playwright test --project=chromium tests/ui/v-coupons.spec.ts",
+    "test:batch9": "playwright test --project=chromium tests/flows/g-logout-preserves-data.spec.ts",
+    "test:batch10": "playwright test --project=chromium tests/ui/p-product-detail.spec.ts tests/ui/c-checkout-coupons.spec.ts tests/ui/c-checkout-validation.spec.ts",
     "test:report": "playwright show-report"
   },
   "repository": {
