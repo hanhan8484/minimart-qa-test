@@ -505,7 +505,7 @@
 | **期望結果** | 圖片正常載入（`naturalWidth > 0`） |
 | **實際結果** | `/images/candle-gift.svg` HTTP 200 但 `Content-Type: text/html`（前端路由回傳），圖片破圖 |
 | **影響** | 該商品卡片無圖 |
-| **自動化處理** | `p-products.spec.ts` `test.fail` DEF-018 |
+| **自動化處理** | `p-products.spec.ts` P-B01／R-9.2 全商品 `naturalWidth` 檢查；僅蠟燭禮盒破圖時 `test.fail` DEF-018 |
 | **附件／備註** | 對應 RD **D-02** |
 
 **歷程**
