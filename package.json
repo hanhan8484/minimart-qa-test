@@ -1,7 +1,7 @@
 {
   "name": "minimart-qa-test",
   "version": "1.0.0",
-  "description": "",
+  "description": "MiniMart v2.0 Playwright QA (UI + API). Set BASE_URL to point at the SUT.",
   "main": "index.js",
   "scripts": {
     "test": "playwright test --project=chromium",

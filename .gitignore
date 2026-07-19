@@ -6,3 +6,7 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Keep archived handoff reports under docs/reports/ (see docs/reports/README.md)
+!docs/reports/
+!docs/reports/**

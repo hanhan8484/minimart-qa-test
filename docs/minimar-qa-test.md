@@ -1,4 +1,7 @@
-# MiniMart QA 測試策略
+# MiniMart QA 測試策略（工作細表）
+
+> **收卷用決策文件（含沒測／MVP／AI）**：請見 [`test-strategy-v2.md`](./test-strategy-v2.md)。  
+> 本檔保留完整「規則 → 案例」對照與案例總表。
 
 - 依據：`PRD.md` v2.0（行為唯一依據）
 - 目標站：依 `playwright.config.ts` 的 `baseURL`（預設 `https://cand1.tail296b14.ts.net`）
@@ -676,5 +679,6 @@ export async function resetEnv(request: APIRequestContext) {
 | 2026-07-17 | 環境重置 `…/reset-4712a2d2`（GET、Day-0、等 5 秒） |
 | 2026-07-17 | Primary + Display secondary（C-B10／O-B05／O-B06） |
 | 2026-07-17 | 難造條件 API Mock：空訂單／空通知／99+；檔案因磁碟滿曾清空後完整還原 |
+| 2026-07-19 | 決策段（沒測／MVP／AI）移至 `docs/test-strategy-v2.md`；本檔維持對照細表 |
 
 （本策略文件結束）
