@@ -32,4 +32,4 @@
 
 | 日期 | 摘要 | 路徑 |
 |---|---|---|
-| 2026-07-20 | chromium 全量：98 passed／1 failed（N-B01 種子通知日期寫死 D0，實際為 2026-07-15；其餘 DEF `test.fail` 為預期失敗）。v2.1：登出清車／列表件數／訂單備註通過；DEF-008／DEF-025 仍失敗。 | `docs/reports/latest/` |
+| 2026-07-20 | chromium 全量：**99 passed**（20.9m）；含 DEF `test.fail` 預期失敗案例。N-B01 已改動態讀取 D0 通知日期。 | `docs/reports/latest/` |
