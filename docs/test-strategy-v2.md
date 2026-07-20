@@ -1,7 +1,7 @@
 # MiniMart 測試策略決策文件（最終 v2）
 
-- **產品**：MiniMart v2.0  
-- **規格依據**：`PRD.md`（行為唯一真相）  
+- **產品**：MiniMart v2.1（延續 v2.0 案例編號；v2.1 新增 C-B12／C-B13／O-B07）  
+- **規格依據**：`PRD.md`（行為唯一真相；含訂單備註 R-12.12／R-14.11／R-18.10）  
 - **詳細案例／規則對照表**：見 [`minimar-qa-test.md`](./minimar-qa-test.md)（本文件不重複貼完整 161 條表，以該檔為準）  
 - **缺陷追蹤**：[`docs/defects.md`](./defects.md)  
 - **版本**：v2（收卷最終版）；v1 為第 3 天策略草稿（已併入本檔與 `minimar-qa-test.md`）

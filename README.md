@@ -1,19 +1,22 @@
 # MiniMart QA — Playwright 自動化測試
 
-針對 **MiniMart v2.0**（規格見 `PRD.md`）的 Playwright 端對端／API 測試專案。  
+針對 **MiniMart v2.1**（行為依據見根目錄 [`PRD.md`](./PRD.md)）的 Playwright 端對端／API 測試專案。  
 面試／收卷交付：自動化 repo、缺陷報告、測試策略、AI 相關文件皆在本倉庫。
 
-| 項目 | 位置 |
+## 文件地圖
+
+| 用途 | 位置 |
 |---|---|
-| 規格（SUT 行為依據） | [`PRD.md`](./PRD.md) |
-| 測試策略決策文件 v2 | [`docs/test-strategy-v2.md`](./docs/test-strategy-v2.md) |
+| 規格（唯一行為依據） | [`PRD.md`](./PRD.md)（v2.1；含訂單備註） |
+| v2.1 原文增補稿（來源留存） | [`docs/PRD-v2.1-supplement.docx`](./docs/PRD-v2.1-supplement.docx) |
+| 測試策略決策 v2 | [`docs/test-strategy-v2.md`](./docs/test-strategy-v2.md) |
 | 規則→案例細表 | [`docs/minimar-qa-test.md`](./docs/minimar-qa-test.md) |
 | 缺陷報告 | [`docs/defects.md`](./docs/defects.md) |
+| v2.1 迴歸報告（含 RD Changelog 對照） | [`docs/v2.1-regression-report.md`](./docs/v2.1-regression-report.md) |
 | AI 使用心得 | [`docs/ai-usage-reflection.md`](./docs/ai-usage-reflection.md) |
-| AI 報告檢視標註 | [`docs/ai-report-review.md`](./docs/ai-report-review.md)（標的：RD `ai-test-report-v2.0.md`，交卷時請一併附上原文） |
-| v2.1 迴歸報告 | [`docs/v2.1-regression-report.md`](./docs/v2.1-regression-report.md) |
-| v2.1 增補規格／Changelog | [`docs/PRD-v2.1-supplement.md`](./docs/PRD-v2.1-supplement.md)、[`docs/v2.1-changelog.md`](./docs/v2.1-changelog.md) |
-| 測試 HTML 報告歸檔 | [`docs/reports/`](./docs/reports/) |
+| AI 報告檢視標註 | [`docs/ai-report-review.md`](./docs/ai-report-review.md) |
+| AI 報告原文（標的） | [`docs/ai-test-report-v2.0.md`](./docs/ai-test-report-v2.0.md) |
+| 測試 HTML 報告歸檔 | [`docs/reports/latest/`](./docs/reports/latest/) |
 
 ---
 
@@ -98,15 +101,16 @@ npx playwright test tests/flows/c-checkout-success.spec.ts --project=chromium
 
 ```
 tests/
-  api/       # Type A — 後端 API（金額、庫存、狀態機、通知資料）
-  ui/        # Type B — 單頁 UI（文案、欄位、按鈕、徽章）
-  flows/     # Type C — 跨頁流程（登入→下單→出貨→退貨）
+  api/       # Type A — 後端 API
+  ui/        # Type B — 單頁 UI
+  flows/     # Type C — 跨頁流程
   helpers/   # 登入、reset、購物車、結帳、訂單
   fixtures/  # pricing golden cases
 docs/
-  defects.md           # 缺陷清單 DEF-001～
-  test-strategy-v2.md  # 策略決策（覆蓋／沒測／MVP／AI）
-  reports/             # 歸檔的 HTML 報告
+  defects.md
+  test-strategy-v2.md
+  v2.1-regression-report.md
+  reports/latest/   # 歸檔 HTML 報告
 ```
 
 - **UI 自動化 = must have**（`tests/ui` + `tests/flows`）
@@ -120,19 +124,15 @@ Workers：`playwright.config.ts` 設 `workers: 1`（遠端共用 SUT，避免 re
 
 ## 最近一次執行報告
 
-請見 [`docs/reports/`](./docs/reports/)：
+請見 [`docs/reports/latest/index.html`](./docs/reports/latest/index.html)。
 
-1. 本機執行 `npm test`
-2. 依 `docs/reports/README.md` 複製 `playwright-report/` 到 `docs/reports/latest/`
-3. 開啟 `docs/reports/latest/index.html`
-
-若該目錄尚無檔案，代表尚未歸檔——交卷前請跑全量並複製進去。
+歸檔步驟見 [`docs/reports/README.md`](./docs/reports/README.md)。
 
 ---
 
 ## 缺陷與已知失敗怎麼看
 
-- 清單：[`docs/defects.md`](./docs/defects.md)（含重現步驟、期望／實際、`R-x.y`、嚴重度、對應測試）
+- 清單：[`docs/defects.md`](./docs/defects.md)
 - 全量跑可能「多數 passed」，但其中含 **expected fail**（`test.fail`）＝缺陷仍在
 - 若出現 *Expected to fail, but passed* → 該 DEF 可能已修，應更新缺陷狀態並刪除 `test.fail`
 

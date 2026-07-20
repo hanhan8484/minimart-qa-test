@@ -6,10 +6,12 @@ import {
   openOrderDetail,
   resetEnv,
   applyPricingCaseCart,
+  checkoutNoteField,
   fillCheckoutShipping,
   goCheckoutFromCart,
   submitCheckout,
   clearCartViaApi,
+  addFirstInStockViaApi,
 } from '../helpers';
 import { CASE_R56_2, CASE_R56_3 } from '../fixtures/pricing-cases';
 import { seedCompletedId, seedPendingId, seedShippedId } from '../helpers/orders';
@@ -19,21 +21,32 @@ const pending = () => seedPendingId();
 const shipped = () => seedShippedId();
 
 /**
- * Batch B-rest — O-B02 / O-B03 / O-B04 / O-B05 / O-B06
+ * Batch B-rest — O-B02 / O-B03 / O-B04 / O-B05 / O-B06 / O-B07
+ * O-B07 = v2.1 新增（R-14.11 訂單備註詳情／列表／完成頁）
  * Shared remote SUT: keep order so O-B03’s return mutation runs last among seed-dependent cases.
  */
-test.describe.serial('O-B02～O-B06 order UI', () => {
+test.describe.serial('O-B02～O-B07 order UI', () => {
   test.beforeAll(async ({ request }) => {
     test.setTimeout(60_000);
     await resetEnv(request);
   });
 
-  test('O-B02: detail five blocks; completed has 完成時間; summary order', async ({ page }) => {
+  test('O-B02: detail six blocks (v2.1); completed has 完成時間; summary order', async ({
+    page,
+  }) => {
     await loginAsDemo(page);
     await openOrderDetail(page, completed());
 
     const main = await page.locator('main').innerText();
-    for (const block of ['訂單資訊', '商品明細', '金額摘要', '收件資訊', '狀態與操作']) {
+    // R-14.4 v2.1：訂單資訊、商品明細、金額摘要、收件資訊、訂單備註、狀態與操作
+    for (const block of [
+      '訂單資訊',
+      '商品明細',
+      '金額摘要',
+      '收件資訊',
+      '訂單備註',
+      '狀態與操作',
+    ]) {
       expect(main).toContain(block);
     }
     await expect(page.getByText('完成時間')).toBeVisible();
@@ -49,6 +62,62 @@ test.describe.serial('O-B02～O-B06 order UI', () => {
       '運費',
       '應付金額',
     ]);
+  });
+
+  /** v2.1 — R-14.11 seed / pre-v2.1 */
+  test('O-B07: seed / pre-v2.1 orders show （無備註）', async ({ page }) => {
+    await loginAsDemo(page);
+    await openOrderDetail(page, completed());
+    await expect(page.getByText('（無備註）')).toBeVisible();
+  });
+
+  /** v2.1 — R-12.12 / R-14.11 blank */
+  test('O-B07: blank note allowed; detail shows （無備註）', async ({ page }) => {
+    test.setTimeout(90_000);
+    await loginAsDemo(page);
+    await clearCartViaApi(page);
+    await addFirstInStockViaApi(page);
+    await goCheckoutFromCart(page);
+    await expect(page.locator('#checkout-name')).toBeVisible({ timeout: 20_000 });
+    await fillCheckoutShipping(page);
+    await expect(checkoutNoteField(page)).toBeVisible({ timeout: 10_000 });
+    await checkoutNoteField(page).fill('   ');
+    await submitCheckout(page);
+    await page.getByRole('button', { name: '查看訂單' }).click();
+    await expect(page.getByRole('heading', { name: '訂單詳情' })).toBeVisible();
+    await expect(page.getByText('（無備註）')).toBeVisible();
+  });
+
+  /** v2.1 — R-14.11 filled; R-13.5 / R-14.2 not on complete/list */
+  test('O-B07: filled note trimmed on detail; absent on list and complete', async ({ page }) => {
+    test.setTimeout(90_000);
+    const trimmed = '請放管理室門口';
+    await loginAsDemo(page);
+    await clearCartViaApi(page);
+    await addFirstInStockViaApi(page);
+    await goCheckoutFromCart(page);
+    await expect(page.locator('#checkout-name')).toBeVisible({ timeout: 20_000 });
+    await fillCheckoutShipping(page);
+    await expect(checkoutNoteField(page)).toBeVisible({ timeout: 10_000 });
+    await checkoutNoteField(page).fill(`  ${trimmed}  `);
+    await expect(page.locator('.checkout-note-counter, .checkout-page')).toContainText(
+      /[1-9]\d*\/100/,
+    );
+
+    await submitCheckout(page);
+    await expect(page.getByRole('heading', { name: '訂單已成立' })).toBeVisible();
+    await expect(page.getByText(trimmed)).toHaveCount(0);
+
+    const orderId = page.url().match(/MM-\d{8}-\d{4}/)![0];
+    await page.getByRole('button', { name: '查看訂單' }).click();
+    await expect(page).toHaveURL(new RegExp(`/orders/${orderId}$`));
+    await expect(page.getByText(trimmed)).toBeVisible();
+    await expect(page.getByText('（無備註）')).toHaveCount(0);
+
+    await page.goto('/orders');
+    const row = page.locator('.order-row').filter({ hasText: orderId });
+    await expect(row).toBeVisible();
+    await expect(row.getByText(trimmed)).toHaveCount(0);
   });
 
   test('O-B04: cancel does not create return; illegal entry redirects', async ({ page }) => {

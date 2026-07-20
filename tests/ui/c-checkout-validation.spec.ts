@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import {
   applyPricingCaseCart,
+  checkoutNoteField,
   loginAsDemo,
   resetEnv,
 } from '../helpers';
@@ -97,6 +98,38 @@ test.describe('C-B07 checkout shipping validation', () => {
     await expect(
       page.getByText('請輸入正確的手機號碼（09 開頭，共 10 位數字）'),
     ).toBeVisible();
+    await expect(page.locator('.checkout-submit-btn')).toBeDisabled();
+  });
+});
+
+/**
+ * v2.1 新增 — C-B13 訂單備註驗證（R-18.10）
+ * 與 C-B07 同分檔（結帳驗證主題），案例 ID 獨立避免與 C-B07／C-B11 重號。
+ */
+test.describe('C-B13 checkout order-note validation (v2.1)', () => {
+  test.beforeAll(async ({ request }) => {
+    test.setTimeout(60_000);
+    await resetEnv(request);
+  });
+
+  test.beforeEach(async ({ page }) => {
+    await loginAsDemo(page);
+    await applyPricingCaseCart(page, CASE_SHIP_LT500);
+    await page.goto('/checkout');
+    await expect(page.locator('.checkout-page')).toBeVisible();
+    await expect(page.locator('#checkout-name')).toBeVisible({ timeout: 20_000 });
+    await page.locator('#checkout-name').fill('測試收件人');
+    await page.locator('#checkout-phone').fill('0912345678');
+    await page.locator('#checkout-address').fill('台北市信義區測試路一段100號');
+    await expect(checkoutNoteField(page)).toBeVisible({ timeout: 10_000 });
+  });
+
+  test('C-B13: over 100 chars shows red error and disables submit', async ({ page }) => {
+    const note = checkoutNoteField(page);
+    const over = '測'.repeat(101);
+    await note.fill(over);
+    await expect(page.getByText('101/100')).toBeVisible();
+    await expect(page.getByText('訂單備註不可超過 100 個字')).toBeVisible();
     await expect(page.locator('.checkout-submit-btn')).toBeDisabled();
   });
 });

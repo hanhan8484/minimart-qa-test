@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import {
   applyPricingCaseCart,
+  checkoutNoteField,
   clearCartViaApi,
   fillCheckoutShipping,
   getSummaryValueByLabel,
@@ -12,21 +13,24 @@ import {
 import { CASE_R56_2 } from '../fixtures/pricing-cases';
 
 /**
- * Batch B-rest — C-B04 / C-B08 / C-B09 / C-B11
+ * Batch B-rest — C-B04 / C-B08 / C-B09 / C-B11 / C-B12
+ * C-B12 = v2.1 新增（R-12.12 訂單備註結帳 UI）
  */
-test.describe.serial('C-B04 / C-B08 / C-B09 / C-B11 checkout UI', () => {
+test.describe.serial('C-B04 / C-B08 / C-B09 / C-B11 / C-B12 checkout UI', () => {
   test.beforeAll(async ({ request }) => {
     test.setTimeout(60_000);
     await resetEnv(request);
   });
 
-  test('C-B04: four blocks, summary order, COD only', async ({ page }) => {
+  test('C-B04: five blocks (v2.1), summary order, COD only', async ({ page }) => {
     await loginAsDemo(page);
     await applyPricingCaseCart(page, CASE_R56_2);
     await page.goto('/checkout');
     await expect(page.locator('.checkout-page')).toBeVisible();
 
+    // R-12.1 v2.1：收件資訊 → 訂單備註 → 優惠券 → 金額摘要 → 付款方式與送出
     await expect(page.getByRole('heading', { name: '收件資訊' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: '訂單備註' })).toBeVisible();
     await expect(page.getByRole('heading', { name: '優惠券' })).toBeVisible();
     await expect(page.getByText('商品小計')).toBeVisible();
     // Summary block may lack an explicit「金額摘要」heading; rows are authoritative.
@@ -45,6 +49,31 @@ test.describe.serial('C-B04 / C-B08 / C-B09 / C-B11 checkout UI', () => {
 
     await expect(page.getByText('滿額折扣')).toBeVisible();
     await expect(page.getByText('優惠券折抵')).toBeVisible();
+  });
+
+  /** v2.1 — R-12.12 */
+  test('C-B12: order note between shipping and coupons; counter 0/100; blank ok', async ({
+    page,
+  }) => {
+    await loginAsDemo(page);
+    await applyPricingCaseCart(page, CASE_R56_2);
+    await page.goto('/checkout');
+    await expect(page.locator('#checkout-name')).toBeVisible({ timeout: 20_000 });
+    await fillCheckoutShipping(page);
+    await expect(checkoutNoteField(page)).toBeVisible({ timeout: 10_000 });
+
+    await expect(page.getByText('訂單備註（選填）')).toBeVisible();
+    const pageText = await page.locator('.checkout-page, main').first().innerText();
+    const iShip = pageText.indexOf('收件資訊');
+    const iNote = pageText.indexOf('訂單備註');
+    const iCoupon = pageText.indexOf('優惠券');
+    expect(iShip).toBeGreaterThanOrEqual(0);
+    expect(iNote).toBeGreaterThan(iShip);
+    expect(iCoupon).toBeGreaterThan(iNote);
+
+    await expect(page.getByText('0/100')).toBeVisible();
+    // 備註留空不導致送出停用（R-12.6 / R-12.12）
+    await expect(page.locator('.checkout-submit-btn')).toBeEnabled();
   });
 
   test('C-B08: empty cart opening /checkout redirects to /cart', async ({ page }) => {
