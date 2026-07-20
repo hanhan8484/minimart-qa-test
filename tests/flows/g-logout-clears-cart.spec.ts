@@ -8,9 +8,7 @@ import {
 
 /**
  * Batch 2 — G-C01 R-1.7 logout clears cart
- *
- * DEF-002: server cart is NOT cleared on logout (confirmed via /api/cart).
- * Marked test.fail until product fix; assertion still encodes PRD expectation.
+ * v2.1: DEF-002 fixed — logout clears server cart.
  */
 test.describe('G-C01 logout clears cart', () => {
   test.beforeAll(async ({ request }) => {
@@ -20,7 +18,6 @@ test.describe('G-C01 logout clears cart', () => {
 
   test('logout empties cart; login again still empty', async ({ page }) => {
     test.setTimeout(60_000);
-    test.fail(true, 'DEF-002: logout does not clear server-side cart (R-1.7)');
 
     await loginAsDemo(page);
     await clearCartViaApi(page);
@@ -32,7 +29,6 @@ test.describe('G-C01 logout clears cart', () => {
     await expect(page).toHaveURL(/\/login/);
 
     await loginAsDemo(page);
-    // Wait for session cart refresh from API
     await expect
       .poll(async () => {
         return page.evaluate(async () => {

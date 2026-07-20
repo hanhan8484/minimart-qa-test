@@ -12,6 +12,7 @@
 | AI 使用心得 | [`docs/ai-usage-reflection.md`](./docs/ai-usage-reflection.md) |
 | AI 報告檢視標註 | [`docs/ai-report-review.md`](./docs/ai-report-review.md)（標的：RD `ai-test-report-v2.0.md`，交卷時請一併附上原文） |
 | v2.1 迴歸報告 | [`docs/v2.1-regression-report.md`](./docs/v2.1-regression-report.md) |
+| v2.1 增補規格／Changelog | [`docs/PRD-v2.1-supplement.md`](./docs/PRD-v2.1-supplement.md)、[`docs/v2.1-changelog.md`](./docs/v2.1-changelog.md) |
 | 測試 HTML 報告歸檔 | [`docs/reports/`](./docs/reports/) |
 
 ---
@@ -89,7 +90,7 @@ npx playwright test tests/flows/c-checkout-success.spec.ts --project=chromium
 
 設定寫在 `playwright.config.ts` 的 `use.baseURL`，**收卷後請用你們的環境覆寫 `BASE_URL` 再跑**。
 
-重置行為：多數套件在 `beforeAll` 呼叫 `resetEnv()`（GET reset → 等約 5 秒）。若你們的 reset 路徑不同，請設 `RESET_URL`。
+重置行為：多數套件在 `beforeAll` 呼叫 `resetEnv()`（GET reset → 等約 5 秒 → **登入並檢查 A.4 三筆種子訂單**；若種子未還原會立刻失敗並提示環境髒掉，避免後面 serial 連坐）。若你們的 reset 路徑不同，請設 `RESET_URL`。
 
 ---
 

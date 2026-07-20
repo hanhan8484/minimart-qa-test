@@ -8,14 +8,20 @@ export {
   fillCheckoutShipping,
   goCheckoutFromCart,
   submitCheckout,
+  checkoutNoteField,
 } from './checkout';
 export type { ShippingInfo } from './checkout';
 export {
   SEED_ORDER_IDS,
   SEED_ORDER_STATUSES,
+  seedPendingId,
+  seedCompletedId,
+  seedShippedId,
+  loadDay0SeedOrders,
   fetchOrderIds,
   openOrderDetail,
   placeOrderAndOpenDetail,
+  fillCheckoutNote,
   getDetailStatusText,
 } from './orders';
 export {

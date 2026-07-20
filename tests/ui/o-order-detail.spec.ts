@@ -12,11 +12,11 @@ import {
   clearCartViaApi,
 } from '../helpers';
 import { CASE_R56_2, CASE_R56_3 } from '../fixtures/pricing-cases';
-import { SEED_ORDER_IDS } from '../helpers/orders';
+import { seedCompletedId, seedPendingId, seedShippedId } from '../helpers/orders';
 
-const COMPLETED = SEED_ORDER_IDS[1]; // MM-20260711 已完成
-const PENDING = SEED_ORDER_IDS[0]; // MM-20260712 待出貨
-const SHIPPED = SEED_ORDER_IDS[2]; // MM-20260710 已出貨
+const completed = () => seedCompletedId();
+const pending = () => seedPendingId();
+const shipped = () => seedShippedId();
 
 /**
  * Batch B-rest — O-B02 / O-B03 / O-B04 / O-B05 / O-B06
@@ -30,14 +30,14 @@ test.describe.serial('O-B02～O-B06 order UI', () => {
 
   test('O-B02: detail five blocks; completed has 完成時間; summary order', async ({ page }) => {
     await loginAsDemo(page);
-    await openOrderDetail(page, COMPLETED);
+    await openOrderDetail(page, completed());
 
     const main = await page.locator('main').innerText();
     for (const block of ['訂單資訊', '商品明細', '金額摘要', '收件資訊', '狀態與操作']) {
       expect(main).toContain(block);
     }
     await expect(page.getByText('完成時間')).toBeVisible();
-    await expect(page.getByText(COMPLETED)).toBeVisible();
+    await expect(page.getByText(completed())).toBeVisible();
     await expect(page.getByText('香氛蠟燭禮盒')).toBeVisible();
     await expect(page.getByText('測試收件人 2')).toBeVisible();
 
@@ -53,26 +53,26 @@ test.describe.serial('O-B02～O-B06 order UI', () => {
 
   test('O-B04: cancel does not create return; illegal entry redirects', async ({ page }) => {
     await loginAsDemo(page);
-    await openOrderDetail(page, COMPLETED);
+    await openOrderDetail(page, completed());
     await page.getByRole('button', { name: '申請退貨' }).click();
-    await expect(page).toHaveURL(new RegExp(`/orders/${COMPLETED}/return`));
+    await expect(page).toHaveURL(new RegExp(`/orders/${completed()}/return`));
     await page.getByRole('link', { name: '取消' }).click();
-    await expect(page).toHaveURL(new RegExp(`/orders/${COMPLETED}$`));
+    await expect(page).toHaveURL(new RegExp(`/orders/${completed()}$`));
 
     const order = await page.evaluate(async (oid) => {
       return fetch(`/api/orders/${oid}`, { credentials: 'include' }).then((r) => r.json());
-    }, COMPLETED);
+    }, completed());
     expect(order.status).toBe('已完成');
     expect(order.returnStatus === '無退貨' || order.returnStatus == null).toBeTruthy();
 
-    await page.goto(`/orders/${PENDING}/return`);
-    await expect(page).toHaveURL(new RegExp(`/orders/${PENDING}$`));
+    await page.goto(`/orders/${pending()}/return`);
+    await expect(page).toHaveURL(new RegExp(`/orders/${pending()}$`));
     await expect(page.getByRole('heading', { name: '訂單詳情' })).toBeVisible();
   });
 
   test('O-B04: empty / over-200 reason disables submit; counter', async ({ page }) => {
     await loginAsDemo(page);
-    await page.goto(`/orders/${COMPLETED}/return`);
+    await page.goto(`/orders/${completed()}/return`);
     const ta = page.locator('textarea');
     const submit = page.getByRole('button', { name: '送出申請' });
 
@@ -92,7 +92,7 @@ test.describe.serial('O-B02～O-B06 order UI', () => {
       'DEF-017: 退貨原因空／超過 200 字時未顯示 PRD 紅字「請填寫退貨原因」「退貨原因不可超過 200 個字」',
     );
     await loginAsDemo(page);
-    await page.goto(`/orders/${COMPLETED}/return`);
+    await page.goto(`/orders/${completed()}/return`);
     const ta = page.locator('textarea');
     await ta.fill('');
     await ta.blur();
@@ -104,7 +104,7 @@ test.describe.serial('O-B02～O-B06 order UI', () => {
 
   test('O-B06: return apply page refund strings match seed completed order', async ({ page }) => {
     await loginAsDemo(page);
-    await openOrderDetail(page, COMPLETED);
+    await openOrderDetail(page, completed());
     // Seed 已完成：應付 1290、運費 30 → 預計退款 1260
     await page.getByRole('button', { name: '申請退貨' }).click();
     await expect(page.locator('.return-refund-amount')).toHaveText('NT$1,260');
@@ -162,20 +162,20 @@ test.describe.serial('O-B02～O-B06 order UI', () => {
 
   test('O-B03: action buttons by status', async ({ page }) => {
     test.setTimeout(90_000);
-    // Re-seed so COMPLETED is again 已完成 after prior cases
+    // Re-seed so completed seed is again 已完成 after prior cases
     await resetEnv(page.request);
     await loginAsDemo(page);
 
-    await openOrderDetail(page, PENDING);
+    await openOrderDetail(page, pending());
     await expect(page.getByRole('button', { name: '模擬出貨（Demo）' })).toBeVisible();
     await expect(page.getByRole('button', { name: '取消訂單' })).toHaveCount(0);
 
-    await openOrderDetail(page, SHIPPED);
+    await openOrderDetail(page, shipped());
     await expect(page.getByRole('button', { name: '確認收貨' })).toBeVisible();
     await expect(page.getByRole('button', { name: '模擬出貨（Demo）' })).toHaveCount(0);
     await expect(page.getByRole('button', { name: '取消訂單' })).toHaveCount(0);
 
-    await openOrderDetail(page, COMPLETED);
+    await openOrderDetail(page, completed());
     await expect(page.getByRole('button', { name: '申請退貨' })).toBeVisible();
 
     await page.getByRole('button', { name: '申請退貨' }).click();

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { loginAsDemo, resetEnv } from '../helpers';
-import { getDetailStatusText, openOrderDetail, SEED_ORDER_IDS } from '../helpers/orders';
+import { getDetailStatusText, openOrderDetail, seedPendingId } from '../helpers/orders';
 
 /**
  * Batch 3 — O-C01 R-6.3 / R-6.4 / R-8.3
@@ -18,7 +18,7 @@ test.describe('O-C01 ship then confirm receipt', () => {
   test('Demo ship → notification → confirm → completed', async ({ page }) => {
     test.setTimeout(90_000);
 
-    const orderId = SEED_ORDER_IDS[0]; // Day-0 待出貨
+    const orderId = seedPendingId(); // Day-0 待出貨
     await loginAsDemo(page);
     await openOrderDetail(page, orderId);
     await expect(page.getByText('待出貨').first()).toBeVisible();

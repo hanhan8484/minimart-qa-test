@@ -35,6 +35,7 @@ export async function checkoutViaApi(
     phone: string;
     address: string;
     couponCode?: string | null;
+    note?: string | null;
   },
 ) {
   const body: Record<string, unknown> = {
@@ -43,6 +44,7 @@ export async function checkoutViaApi(
     address: data.address,
   };
   if (data.couponCode) body.couponCode = data.couponCode;
+  if (data.note !== undefined && data.note !== null) body.note = data.note;
   return request.post('/api/checkout', { data: body });
 }
 

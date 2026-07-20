@@ -62,9 +62,17 @@ test.describe('N-B01 / N-B02 notifications', () => {
       `訂單 ${SEED_ORDER_IDS[2]} 已成立`,
     );
 
-    // A.5 bodies (R-8.2 four parts; order 2 has 2 line items)
+    // A.5 bodies (R-8.2 four parts; order 2 has 2 line items).
+    // Date rolls with server D0 — read createdAt from seed order, do not hardcode.
+    const newestSeedCreatedAt = await page.evaluate(async (orderId) => {
+      const res = await fetch(`/api/orders/${orderId}`, { credentials: 'include' });
+      if (!res.ok) throw new Error(`GET /api/orders/${orderId} failed: ${res.status}`);
+      const order = (await res.json()) as { createdAt: string };
+      return order.createdAt;
+    }, SEED_ORDER_IDS[0]);
+
     const body0 = rows.nth(0).locator('.notification-body');
-    await expect(body0).toContainText('下單時間 2026-07-12 20:05');
+    await expect(body0).toContainText(`下單時間 ${newestSeedCreatedAt}`);
     await expect(body0).toContainText('不鏽鋼保溫瓶 × 1');
     await expect(body0).toContainText('應付金額 NT$750');
     await expect(body0).toContainText('收件人 測試收件人 3');

@@ -4,6 +4,7 @@ export type ShippingInfo = {
   name: string;
   phone: string;
   address: string;
+  note?: string;
 };
 
 export const DEFAULT_SHIPPING: ShippingInfo = {
@@ -16,6 +17,16 @@ export async function fillCheckoutShipping(page: Page, info: ShippingInfo = DEFA
   await page.locator('#checkout-name').fill(info.name);
   await page.locator('#checkout-phone').fill(info.phone);
   await page.locator('#checkout-address').fill(info.address);
+  if (info.note !== undefined) {
+    const field = page.locator('#checkout-note');
+    await expect(field).toBeVisible({ timeout: 15_000 });
+    await field.fill(info.note);
+  }
+}
+
+/** Order note field + counter on checkout (R-12.12). */
+export function checkoutNoteField(page: Page) {
+  return page.locator('#checkout-note');
 }
 
 export async function goCheckoutFromCart(page: Page) {

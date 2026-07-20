@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { loginViaApi, resetEnv } from '../helpers';
+import { loginViaApi, resetEnv, seedCompletedId, seedPendingId, seedShippedId } from '../helpers';
 import {
   addCartItem,
   checkoutViaApi,
@@ -38,13 +38,13 @@ test.describe('O-A01～O-A05 orders API', () => {
     );
     await loginViaApi(request);
 
-    const shipAgain = await request.post('/api/orders/MM-20260710-0001/ship');
+    const shipAgain = await request.post(`/api/orders/${seedShippedId()}/ship`);
     expect(shipAgain.ok()).toBeFalsy();
 
-    const shipCompleted = await request.post('/api/orders/MM-20260711-0001/ship');
+    const shipCompleted = await request.post(`/api/orders/${seedCompletedId()}/ship`);
     expect(shipCompleted.ok()).toBeFalsy();
 
-    const confirmPending = await request.post('/api/orders/MM-20260712-0001/confirm-receipt');
+    const confirmPending = await request.post(`/api/orders/${seedPendingId()}/confirm-receipt`);
     expect(confirmPending.status()).toBe(409);
   });
 
