@@ -10,7 +10,7 @@
 | 規格（唯一行為依據） | [`PRD.md`](./PRD.md)（v2.1；含訂單備註） |
 | v2.1 原文增補稿（來源留存） | [`docs/PRD-v2.1-supplement.docx`](./docs/PRD-v2.1-supplement.docx) |
 | 測試策略決策 v2 | [`docs/test-strategy-v2.md`](./docs/test-strategy-v2.md) |
-| 規則→案例細表 | [`docs/minimar-qa-test.md`](./docs/minimar-qa-test.md) |
+| 測試策略細表（規則→案例） | [`docs/test-strategy-v2-matrix.md`](./docs/test-strategy-v2-matrix.md) |
 | 缺陷報告 | [`docs/defects.md`](./docs/defects.md) |
 | v2.1 迴歸報告（含 RD Changelog 對照） | [`docs/v2.1-regression-report.md`](./docs/v2.1-regression-report.md) |
 | AI 使用心得 | [`docs/ai-usage-reflection.md`](./docs/ai-usage-reflection.md) |

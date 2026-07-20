@@ -2,9 +2,9 @@
 
 - **產品**：MiniMart v2.1（延續 v2.0 案例編號；v2.1 新增 C-B12／C-B13／O-B07）  
 - **規格依據**：`PRD.md`（行為唯一真相；含訂單備註 R-12.12／R-14.11／R-18.10）  
-- **詳細案例／規則對照表**：見 [`minimar-qa-test.md`](./minimar-qa-test.md)（本文件不重複貼完整 161 條表，以該檔為準）  
+- **詳細案例／規則對照表**：見 [`test-strategy-v2-matrix.md`](./test-strategy-v2-matrix.md)（本文件不重複貼完整對照表，以該檔為準）  
 - **缺陷追蹤**：[`docs/defects.md`](./defects.md)  
-- **版本**：v2（收卷最終版）；v1 為第 3 天策略草稿（已併入本檔與 `minimar-qa-test.md`）
+- **版本**：v2（收卷最終版）；v1 為第 3 天策略草稿（已併入本檔與 matrix）
 
 ---
 
@@ -35,8 +35,8 @@
 
 ## 3. 規格覆蓋對照
 
-- **紙上映射**：PRD 編號規則約 161 條，皆在 `docs/minimar-qa-test.md`「規則 → 案例對照表」有唯一 Primary。  
-- **實作覆蓋**：`tests/api` + `tests/ui` + `tests/flows` 對應案例清單總表（約 55 個案例 ID；Playwright 檔內再拆多筆 `test()`）。  
+- **紙上映射**：PRD 編號規則約 164 條（含 v2.1），皆在 `docs/test-strategy-v2-matrix.md`「規則 → 案例對照表」有唯一 Primary。  
+- **實作覆蓋**：`tests/api` + `tests/ui` + `tests/flows` 對應案例清單總表（約 58 個案例 ID；Playwright 檔內再拆多筆 `test()`）。  
 - **有效覆蓋估計**：約 **88–92%**（含 reset、mock 空態／99+、Display secondary）。  
 - 其餘見下一節「先不測」——**不是漏對照，是有意不做或降優先**。
 
@@ -127,7 +127,7 @@
 | `tests/flows/*` | 高 | **C-C02 雙擊防重複**改為數訂單＋DOM 雙擊（因手動發現舊寫法無效） |
 | `tests/fixtures/pricing-cases.ts` | 中高 | 逐案對 R-2／R-4／R-5；標 DEF-021／023 |
 | `docs/defects.md` | 中 | 人確認重現與嚴重度；AI 協助整理格式 |
-| `docs/minimar-qa-test.md` | 高 | 人定原則與合併規則；AI 產對照表後抽查 |
+| `docs/test-strategy-v2-matrix.md` | 高 | 人定原則與合併規則；AI 產對照表後抽查 |
 | 本策略 v2 決策段（§4–§7） | 中 | **取捨與風險排序由人定方向**，AI 協助成文 |
 
 **非 AI 發現、後補進自動化的例子**：
@@ -155,7 +155,7 @@
 | Reset | `RESET_URL` 或預設 reset path，等 5 秒 |
 | Browser | chromium only |
 
-細節與案例總表：[`minimar-qa-test.md`](./minimar-qa-test.md)。
+細節與案例總表：[`test-strategy-v2-matrix.md`](./test-strategy-v2-matrix.md)。
 
 ---
 
@@ -163,5 +163,6 @@
 
 | 日期 | 說明 |
 |---|---|
-| 2026-07-17 | v1／工作稿：`minimar-qa-test.md` 全規則映射與分層 |
+| 2026-07-17 | v1／工作稿：`test-strategy-v2-matrix.md`（原 `minimar-qa-test.md`）全規則映射與分層 |
 | 2026-07-19 | **v2 收卷**：補「沒測／MVP／假設／AI 策略與標註」；與缺陷 DEF-024、交付 README 對齊 |
+| 2026-07-20 | 細表檔名統一為 `test-strategy-v2-matrix.md`，與本決策檔成對 |

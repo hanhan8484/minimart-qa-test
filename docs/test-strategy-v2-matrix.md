@@ -1,9 +1,9 @@
-# MiniMart QA 測試策略（工作細表）
+# MiniMart 測試策略 — 規則／案例細表（v2 matrix）
 
 > **收卷用決策文件（含沒測／MVP／AI）**：請見 [`test-strategy-v2.md`](./test-strategy-v2.md)。  
-> 本檔保留完整「規則 → 案例」對照與案例總表。
+> 本檔為同一套策略的 **matrix**：完整「規則 → 案例」對照與案例總表。
 
-- 依據：`PRD.md` v2.0（行為唯一依據）
+- 依據：`PRD.md` v2.1（行為唯一依據；延續 v2.0 案例編號）
 - 目標站：依 `playwright.config.ts` 的 `baseURL`（預設 `https://cand1.tail296b14.ts.net`）
 - 原則：
   1. **每一條 `R-章.序` 規則至少對應一個 Primary 測試案例**，不得遺漏。
@@ -706,5 +706,6 @@ export async function resetEnv(request: APIRequestContext) {
 | 2026-07-17 | 難造條件 API Mock：空訂單／空通知／99+；檔案因磁碟滿曾清空後完整還原 |
 | 2026-07-19 | 決策段（沒測／MVP／AI）移至 `docs/test-strategy-v2.md`；本檔維持對照細表 |
 | 2026-07-20 | v2.1 訂單備註：新增 C-B12／C-B13／O-B07；更新 C-B04／O-B02 區塊數；案例合計 55→58 |
+| 2026-07-20 | 檔名改為 `test-strategy-v2-matrix.md`，與決策檔成對命名 |
 
 （本策略文件結束）
