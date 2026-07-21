@@ -1,4 +1,5 @@
-export { DEMO_EMAIL, DEMO_PASSWORD, PRODUCT_ORDER, SOLD_OUT_PRODUCT } from './constants';
+export { DEMO_EMAIL, DEMO_PASSWORD } from './constants';
+export { PRODUCT_ORDER, SOLD_OUT_PRODUCT } from '../fixtures/product-cases';
 export { resetEnv } from './resetEnv';
 export { loginAsDemo, loginViaApi, clearCartViaApi } from './auth';
 export { expectNavbar, NAV_PATHS } from './navbar';

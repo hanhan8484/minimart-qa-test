@@ -1,5 +1,16 @@
 import type { APIRequestContext } from '@playwright/test';
 
+export type Product = {
+  id: number;
+  name: string;
+  category: string;
+  unitPrice: number;
+  stock: number;
+  imageUrl: string;
+  description: string;
+  sortOrder?: number;
+};
+
 export async function clearCartRequest(request: APIRequestContext) {
   const cartResponse = await request.get('/api/cart');
   if (!cartResponse.ok()) {
@@ -29,9 +40,7 @@ export async function addCartItem(
 export async function getProducts(request: APIRequestContext) {
   const res = await request.get('/api/products');
   if (!res.ok()) throw new Error(`products ${res.status()}`);
-  return res.json() as Promise<
-    { id: number; name: string; category: string; unitPrice: number; stock: number }[]
-  >;
+  return res.json() as Promise<Product[]>;
 }
 
 export async function checkoutViaApi(
