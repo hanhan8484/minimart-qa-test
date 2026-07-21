@@ -62,41 +62,92 @@ test.describe('C-A05 / C-A06 checkout effects', () => {
     request,
   }) => {
     test.setTimeout(90_000);
-    test.fail(
-      true,
-      'DEF-012/DEF-013: 庫存未扣減且庫存不足仍可下單（R-3.4／R-3.5）',
-    );
-
-    await loginViaApi(request);
+    const login = await loginViaApi(request);
+    expect(login.ok(), `POST /api/auth/login: ${login.status()}`).toBeTruthy();
     await clearCartRequest(request);
 
     const products = await getProducts(request);
-    const chair = products.find((p) => p.name === '折疊露營椅')!;
-    expect(chair.stock).toBe(1);
+    const mug = products.find((p) => p.name === '陶瓷馬克杯')!;
+    expect(mug.stock).toBe(0);
 
-    await addCartItem(request, chair.id, 1);
-    const first = await checkoutViaApi(request, DEFAULT_API_SHIPPING);
-    expect(first.status()).toBe(201);
+    // Black-box setup: current SUT permits this invalid cart state (DEF-028).
+    // Once DEF-028 is fixed, a dedicated stale-cart fixture is required to
+    // keep exercising checkout's independent R-3.4 defense.
+    const addSoldOut = await request.post('/api/cart/items', {
+      data: { productId: mug.id, quantity: 1 },
+    });
+    test.skip(
+      !addSoldOut.ok(),
+      'Sold-out add is now blocked; C-A06 needs a stale-cart fixture to reach checkout validation',
+    );
 
-    const afterFirst = await getProducts(request);
-    expect(afterFirst.find((p) => p.id === chair.id)!.stock).toBe(0);
+    const cartBeforeRes = await request.get('/api/cart');
+    expect(cartBeforeRes.ok()).toBeTruthy();
+    const cartBefore = await cartBeforeRes.json();
+    const cartLinesBefore = (cartBefore.items ?? []).map(
+      (item: { productId: number; quantity: number }) => ({
+        productId: item.productId,
+        quantity: item.quantity,
+      }),
+    );
+    test.skip(
+      !cartLinesBefore.some(
+        (item: { productId: number; quantity: number }) =>
+          item.productId === mug.id && item.quantity === 1,
+      ),
+      'Unable to establish sold-out mug ×1 in cart; C-A06 needs a stale-cart fixture',
+    );
 
-    await addCartItem(request, chair.id, 1);
-    const couponsBefore = await (await request.get('/api/coupons')).json();
+    const ordersBeforeRes = await request.get('/api/orders');
+    expect(ordersBeforeRes.ok()).toBeTruthy();
+    const orderIdsBefore = ((await ordersBeforeRes.json()) as { id: string }[]).map((o) => o.id);
+
+    const couponsBeforeRes = await request.get('/api/coupons');
+    expect(couponsBeforeRes.ok()).toBeTruthy();
+    const couponsBefore = await couponsBeforeRes.json();
     const freeshipBefore = couponsBefore.find((c: { code: string }) => c.code === 'FREESHIP');
 
     const fail = await checkoutViaApi(request, {
       ...DEFAULT_API_SHIPPING,
       couponCode: 'FREESHIP',
     });
-    expect(fail.ok()).toBeFalsy();
+    expect(fail.status()).toBe(409);
+    expect(await fail.json()).toMatchObject({
+      error: 'OUT_OF_STOCK',
+      productName: '陶瓷馬克杯',
+      remaining: 0,
+      message: '商品〈陶瓷馬克杯〉庫存不足，目前僅剩 0 件',
+    });
 
-    const cart = await (await request.get('/api/cart')).json();
-    expect(cart.items?.length ?? 0).toBeGreaterThan(0);
+    const ordersAfterRes = await request.get('/api/orders');
+    expect(ordersAfterRes.ok()).toBeTruthy();
+    const orderIdsAfter = ((await ordersAfterRes.json()) as { id: string }[]).map((o) => o.id);
+    expect(orderIdsAfter).toEqual(orderIdsBefore);
 
-    const couponsAfter = await (await request.get('/api/coupons')).json();
+    const cartAfterRes = await request.get('/api/cart');
+    expect(cartAfterRes.ok()).toBeTruthy();
+    const cartAfter = await cartAfterRes.json();
+    const cartLinesAfter = (cartAfter.items ?? []).map(
+      (item: { productId: number; quantity: number }) => ({
+        productId: item.productId,
+        quantity: item.quantity,
+      }),
+    );
+    expect(cartLinesAfter).toEqual(cartLinesBefore);
+    expect(cartAfter.count).toBe(cartBefore.count);
+
+    const productsAfter = await getProducts(request);
+    expect(productsAfter.find((p) => p.id === mug.id)!.stock).toBe(0);
+
+    const couponsAfterRes = await request.get('/api/coupons');
+    expect(couponsAfterRes.ok()).toBeTruthy();
+    const couponsAfter = await couponsAfterRes.json();
     const freeshipAfter = couponsAfter.find((c: { code: string }) => c.code === 'FREESHIP');
-    expect(freeshipAfter.status).toBe(freeshipBefore.status);
-    expect(freeshipAfter.usedByOrderId).toBe(freeshipBefore.usedByOrderId);
+    test.fail(
+      true,
+      'DEF-029: OUT_OF_STOCK checkout returns 409 but still consumes FREESHIP (R-3.4 / R-12.10)',
+    );
+    expect.soft(freeshipAfter.status).toBe(freeshipBefore.status);
+    expect.soft(freeshipAfter.usedByOrderId).toBe(freeshipBefore.usedByOrderId);
   });
 });

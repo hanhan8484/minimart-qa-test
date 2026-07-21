@@ -1,10 +1,16 @@
 import type { APIRequestContext } from '@playwright/test';
 
 export async function clearCartRequest(request: APIRequestContext) {
-  const cart = await (await request.get('/api/cart')).json();
+  const cartResponse = await request.get('/api/cart');
+  if (!cartResponse.ok()) {
+    throw new Error(`load cart failed ${cartResponse.status()} ${await cartResponse.text()}`);
+  }
+  const cart = await cartResponse.json();
   for (const item of cart.items || []) {
     const res = await request.delete(`/api/cart/items/${item.productId}`);
-    if (!res.ok()) throw new Error(`clear cart failed ${res.status()}`);
+    if (!res.ok()) {
+      throw new Error(`clear cart item ${item.productId} failed ${res.status()} ${await res.text()}`);
+    }
   }
 }
 

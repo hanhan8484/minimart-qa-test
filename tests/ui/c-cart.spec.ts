@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { clearCartViaApi, loginAsDemo, resetEnv } from '../helpers';
+import { clearCartViaApi, loginAsDemo, resetEnv, setCartLines } from '../helpers';
 
 /**
  * Batch 1 — C cart page basics
@@ -55,6 +55,40 @@ test.describe('C-B01 / C-B02 / C-B03 cart page', () => {
     await expect(page.getByText('商品小計')).toBeVisible();
     await expect(page.getByText('運費')).toHaveCount(0);
     await expect(page.getByText('應付金額')).toHaveCount(0);
+  });
+
+  test('C-B02: quantity picker stays within 1..min(5, stock)', async ({ page }) => {
+    await setCartLines(page, [{ productName: '手沖咖啡濾杯', quantity: 1 }]);
+    await page.goto('/cart');
+
+    let row = page.locator('.cart-row').filter({ hasText: '手沖咖啡濾杯' });
+    const decrease = row.getByRole('button', { name: '減少數量' });
+    const increase = row.getByRole('button', { name: '增加數量' });
+    await expect(row.locator('.quantity-picker-value')).toHaveText('1');
+    await expect(decrease).toBeDisabled();
+
+    for (let quantity = 2; quantity <= 5; quantity++) {
+      await Promise.all([
+        page.waitForResponse(
+          (response) =>
+            response.request().method() === 'PATCH' &&
+            response.url().includes('/api/cart/items/'),
+        ),
+        increase.click(),
+      ]);
+      await expect(row.locator('.quantity-picker-value')).toHaveText(String(quantity));
+    }
+    await expect(increase).toBeDisabled();
+    await expect(decrease).toBeEnabled();
+
+    await clearCartViaApi(page);
+    await setCartLines(page, [{ productName: '折疊露營椅', quantity: 1 }]);
+    await page.reload();
+
+    row = page.locator('.cart-row').filter({ hasText: '折疊露營椅' });
+    await expect(row.locator('.quantity-picker-value')).toHaveText('1');
+    await expect(row.getByRole('button', { name: '減少數量' })).toBeDisabled();
+    await expect(row.getByRole('button', { name: '增加數量' })).toBeDisabled();
   });
 
   test('DEF-019: cart badge updates immediately after UI add (no reload)', async ({ page }) => {
