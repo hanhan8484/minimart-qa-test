@@ -30,7 +30,9 @@ export async function setCartLines(
 
   if ('evaluate' in pageOrRequest) {
     await pageOrRequest.evaluate(async (items) => {
-      const cart = await fetch('/api/cart', { credentials: 'include' }).then((r) => r.json());
+      const cartResponse = await fetch('/api/cart', { credentials: 'include' });
+      if (!cartResponse.ok) throw new Error(`load cart failed ${cartResponse.status}`);
+      const cart = await cartResponse.json();
       for (const item of cart.items || []) {
         const del = await fetch(`/api/cart/items/${item.productId}`, {
           method: 'DELETE',
@@ -52,6 +54,7 @@ export async function setCartLines(
   }
 
   const cartRes = await pageOrRequest.get('/api/cart');
+  if (!cartRes.ok()) throw new Error(`load cart failed ${cartRes.status()}`);
   const cart = await cartRes.json();
   for (const item of cart.items || []) {
     const del = await pageOrRequest.delete(`/api/cart/items/${item.productId}`);

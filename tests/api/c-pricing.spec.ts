@@ -1,7 +1,25 @@
 import { test, expect } from '@playwright/test';
 import { loginViaApi, resetEnv } from '../helpers';
-import { PRICING_CASES_API, PRICING_CASES_KNOWN_FAIL } from '../fixtures/pricing-cases';
+import {
+  PRICING_CASES_API,
+  PRICING_CASES_KNOWN_FAIL,
+  type PricingCase,
+  type PricingExpect,
+} from '../fixtures/pricing-cases';
 import { applyPricingCaseCart, previewCheckout } from '../helpers/pricing';
+
+function expectPricing(actual: PricingExpect, pricingCase: PricingCase) {
+  expect.soft(actual.subtotal, `${pricingCase.id} subtotal`).toBe(pricingCase.expect.subtotal);
+  expect
+    .soft(actual.bulkDiscount, `${pricingCase.id} bulkDiscount`)
+    .toBe(pricingCase.expect.bulkDiscount);
+  expect
+    .soft(actual.couponDiscount, `${pricingCase.id} couponDiscount`)
+    .toBe(pricingCase.expect.couponDiscount);
+  expect.soft(actual.shipping, `${pricingCase.id} shipping`).toBe(pricingCase.expect.shipping);
+  expect.soft(actual.payable, `${pricingCase.id} payable`).toBe(pricingCase.expect.payable);
+  expect.soft(actual.couponName, `${pricingCase.id} couponName`).toBe(pricingCase.expect.couponName);
+}
 
 /**
  * Batch 4 — C-A03 Primary API pricing
@@ -14,35 +32,32 @@ test.describe('C-A03 checkout pricing preview', () => {
   });
 
   test.beforeEach(async ({ request }) => {
-    await loginViaApi(request);
+    const login = await loginViaApi(request);
+    expect(login.ok(), `POST /api/auth/login: ${login.status()}`).toBeTruthy();
   });
 
   for (const c of PRICING_CASES_API) {
     test(`${c.id}: ${c.title}`, async ({ request }) => {
       await applyPricingCaseCart(request, c);
       const preview = await previewCheckout(request, c.couponCode);
-
-      expect(preview.subtotal, 'subtotal').toBe(c.expect.subtotal);
-      expect(preview.bulkDiscount, 'bulkDiscount').toBe(c.expect.bulkDiscount);
-      expect(preview.couponDiscount, 'couponDiscount').toBe(c.expect.couponDiscount);
-      expect(preview.shipping, 'shipping').toBe(c.expect.shipping);
-      expect(preview.payable, 'payable').toBe(c.expect.payable);
-      expect(preview.couponName, 'couponName').toBe(c.expect.couponName);
+      expectPricing(preview, c);
     });
   }
 
   for (const { case: c, defect } of PRICING_CASES_KNOWN_FAIL) {
     test(`${c.id}: ${c.title}`, async ({ request }) => {
-      test.fail(true, defect);
       await applyPricingCaseCart(request, c);
       const preview = await previewCheckout(request, c.couponCode);
 
-      expect(preview.subtotal, 'subtotal').toBe(c.expect.subtotal);
-      expect(preview.bulkDiscount, 'bulkDiscount').toBe(c.expect.bulkDiscount);
-      expect(preview.couponDiscount, 'couponDiscount').toBe(c.expect.couponDiscount);
-      expect(preview.shipping, 'shipping').toBe(c.expect.shipping);
-      expect(preview.payable, 'payable').toBe(c.expect.payable);
-      expect(preview.couponName, 'couponName').toBe(c.expect.couponName);
+      test.fail(true, defect);
+      expectPricing(preview, c);
     });
   }
+
+  test('R-2.6: total discount caps at subtotal and discounted amount stays non-negative', async () => {
+    test.fixme(
+      true,
+      'No A.1/A.2 fixture can make discounts exceed subtotal; requires a synthetic coupon or pricing test hook',
+    );
+  });
 });

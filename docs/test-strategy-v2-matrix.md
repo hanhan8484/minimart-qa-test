@@ -280,10 +280,11 @@ await expect(page.getByText('還沒有任何訂單')).toBeVisible();
 - **Fixture**：`tests/fixtures/pricing-cases.ts`
 - **Display secondary**：見 **C-B10**
 - **2026-07-21 實作審查**：
-  - table-driven golden fixture、六個金額／券名欄位斷言及 DEF-021／DEF-023 `test.fail` 設計正確
-  - **R-2.6 尚屬覆蓋缺口**：目前沒有「折扣總額大於商品小計」案例驗證折扣封頂與折扣後金額不得為負
-  - **R-5.1 為級距覆蓋、非完整邊界覆蓋**：已有 480／960／1000／3021，但尚缺 499／500、999／1000、1999／2000 成對邊界
-  - helper 已檢查 preview／加車 response；登入與讀取購物車的 response status 仍可補強
+  - table-driven golden fixture、六個金額／券名 soft assertions；DEF-021／DEF-023 的 `test.fail` 移至 setup／preview 成功後，避免前置錯誤被誤當已知缺陷
+  - **R-5.1 已強化**：新增目前 A.1／A.2 可達的最接近成對值 480／670、994／1000、1994／2003，完整跨過四個運費級距
+  - **Fixture 限制**：現有商品價格、庫存上限與券無法精確造出 499／500、999（已有 1000）、1999／2000；不可用 DEF-027 的非法負數購物車假造邊界
+  - **R-2.6 仍為明確 testability gap**：現有券不可能讓折扣總額超過商品小計；已加入 `test.fixme`，待 synthetic coupon／pricing test hook
+  - 登入、讀取購物車、清車、加車與 preview 皆檢查 response status
 
 ### C-A05｜API：下單成功副作用（扣庫存、券已使用）
 - **類型**：A

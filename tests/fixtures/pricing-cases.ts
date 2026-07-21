@@ -195,6 +195,111 @@ export const CASE_SHIP_LT500: PricingCase = {
   }),
 };
 
+/** Closest achievable value above 500 with current A.1/A.2 fixtures: 690 − 20 = 670. */
+export const CASE_SHIP_ABOVE_500: PricingCase = {
+  id: 'CASE_SHIP_ABOVE_500',
+  title: '保溫瓶 − NEWBIE20 → 折扣後 670 → 運費 60',
+  cart: [{ productName: '不鏽鋼保溫瓶', quantity: 1 }],
+  couponCode: 'NEWBIE20',
+  expect: {
+    subtotal: 690,
+    bulkDiscount: 0,
+    couponDiscount: 20,
+    shipping: 60,
+    payable: 730,
+    couponName: '新人小禮券',
+  },
+  display: pack({
+    subtotal: 690,
+    bulkDiscount: 0,
+    couponDiscount: 20,
+    shipping: 60,
+    payable: 730,
+    couponName: null,
+  }),
+};
+
+/** Closest achievable value below 1000: (480 + 690) − round(15%) = 994. */
+export const CASE_SHIP_BELOW_1000: PricingCase = {
+  id: 'CASE_SHIP_BELOW_1000',
+  title: '濾杯＋保溫瓶 + PCT15 → 折扣後 994 → 運費 60',
+  cart: [
+    { productName: '手沖咖啡濾杯', quantity: 1 },
+    { productName: '不鏽鋼保溫瓶', quantity: 1 },
+  ],
+  couponCode: 'PCT15',
+  expect: {
+    subtotal: 1170,
+    bulkDiscount: 0,
+    couponDiscount: 176,
+    shipping: 60,
+    payable: 1054,
+    couponName: '全站 85 折券',
+  },
+  display: pack({
+    subtotal: 1170,
+    bulkDiscount: 0,
+    couponDiscount: 176,
+    shipping: 60,
+    payable: 1054,
+    couponName: null,
+  }),
+};
+
+/** Closest achievable value below 2000: 2120 − 106 − 20 = 1994. */
+export const CASE_SHIP_BELOW_2000: PricingCase = {
+  id: 'CASE_SHIP_BELOW_2000',
+  title: 'T恤＋蠟燭×2 − 滿額 − NEWBIE20 → 折扣後 1994 → 運費 30',
+  cart: [
+    { productName: '純棉素色 T 恤', quantity: 1 },
+    { productName: '香氛蠟燭禮盒', quantity: 2 },
+  ],
+  couponCode: 'NEWBIE20',
+  expect: {
+    subtotal: 2120,
+    bulkDiscount: 106,
+    couponDiscount: 20,
+    shipping: 30,
+    payable: 2024,
+    couponName: '新人小禮券',
+  },
+  display: pack({
+    subtotal: 2120,
+    bulkDiscount: 106,
+    couponDiscount: 20,
+    shipping: 30,
+    payable: 2024,
+    couponName: null,
+  }),
+};
+
+/** Closest achievable value above 2000: 2130 − 107 − 20 = 2003. */
+export const CASE_SHIP_ABOVE_2000: PricingCase = {
+  id: 'CASE_SHIP_ABOVE_2000',
+  title: '濾杯×3＋保溫瓶 − 滿額 − NEWBIE20 → 折扣後 2003 → 免運',
+  cart: [
+    { productName: '手沖咖啡濾杯', quantity: 3 },
+    { productName: '不鏽鋼保溫瓶', quantity: 1 },
+  ],
+  couponCode: 'NEWBIE20',
+  expect: {
+    subtotal: 2130,
+    bulkDiscount: 107,
+    couponDiscount: 20,
+    shipping: 0,
+    payable: 2003,
+    couponName: '新人小禮券',
+  },
+  display: pack({
+    subtotal: 2130,
+    bulkDiscount: 107,
+    couponDiscount: 20,
+    shipping: 0,
+    payable: 2003,
+    couponName: null,
+  }),
+};
+
 /** Shipping tier 500–999 → 60 (R-5.6.1) */
 export const CASE_SHIP_500_999: PricingCase = CASE_R56_1;
 
@@ -341,7 +446,11 @@ export const PRICING_CASES_API: PricingCase[] = [
   CASE_R56_4,
   CASE_FREESHIP,
   CASE_SHIP_LT500,
+  CASE_SHIP_ABOVE_500,
+  CASE_SHIP_BELOW_1000,
   CASE_SHIP_AT_1000,
+  CASE_SHIP_BELOW_2000,
+  CASE_SHIP_ABOVE_2000,
   CASE_NO_BULK,
   CASE_COUPON_BELOW_THRESHOLD,
 ];
