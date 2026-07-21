@@ -467,6 +467,10 @@ await expect(page.getByText('還沒有任何訂單')).toBeVisible();
 ### N-A01｜API：五類通知各自新增、不覆寫不合併；內文結構
 - **類型**：A
 - **覆蓋**：R-8.1, R-8.2, R-15.7
+- **下單通知**：精確比對下單時間、逐項商品行、格式化應付金額、收件人與區段順序；訂單備註不得混入；現況以 DEF-015 `test.fail` 鎖定
+- **五類事件**：checkout +1、ship +1、confirm receipt +0、return apply +1、review approved +2（審核結果＋退款完成）；每一步確認舊 ID 保留且新通知未讀
+- **駁回分支**：另驗 `RETURN_REJECTED`，且不得新增 `REFUND_COMPLETED`
+- **隔離與防護**：每案例 reset；登入及所有 lifecycle／讀取 API 先驗 response status
 
 ### N-B01｜UI：列表排序、欄位、空狀態、未讀計數、全部已讀、徽章、不可刪
 - **類型**：B
