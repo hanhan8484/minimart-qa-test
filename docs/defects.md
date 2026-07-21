@@ -33,15 +33,15 @@
 
 | 狀態 | 數量 |
 |---|---|
-| Open / Confirmed | 24 |
+| Open / Confirmed | 26 |
 | Fixed（待回歸） | 0 |
 | Verified（已關閉） | 5 |
-| **合計** | **29** |
+| **合計** | **31** |
 
 | 嚴重度 | 數量 |
 |---|---|
 | S1 | 0 |
-| S2 | 11 |
+| S2 | 13 |
 | S3 | 11 |
 | S4 | 2 |
 
@@ -97,6 +97,8 @@
 | DEF-027 | 購物車 API 接受負數 quantity | S2 | Confirmed | R-11.5 | 手動 API／C-A02 | 2026-07-21 |
 | DEF-028 | 購物車 API 允許加入庫存為 0 的商品 | S3 | Confirmed | R-11.5 | 手動 API／C-A02 | 2026-07-21 |
 | DEF-029 | 缺貨 checkout 失敗仍消耗優惠券 | S2 | Confirmed | R-3.4, R-12.10 | C-A06 | 2026-07-21 |
+| DEF-030 | 未登入可直接存取所有核心資料 API | S2 | Confirmed | Security baseline（R-1.10 API extension） | G-A03 | 2026-07-21 |
+| DEF-031 | Session cookie 缺少 Secure 與 SameSite | S2 | Confirmed | Security baseline（R-1.2 extension） | G-A01 | 2026-07-21 |
 
 ---
 
@@ -788,6 +790,54 @@
 
 ---
 
+### DEF-030｜未登入可直接存取所有核心資料 API
+
+| 欄位 | 內容 |
+|---|---|
+| **狀態** | Confirmed |
+| **嚴重度** | S2 Major |
+| **相關 PRD** | Security baseline；R-1.10 僅明訂 UI 路由，此項為 API authorization extension |
+| **環境** | `https://cand1.tail296b14.ts.net/`（v2.1） |
+| **發現方式** | G-A03 auth 正式審查；全新無 cookie request context |
+| **重現步驟** | 未登入直接 GET `/api/products`、`/api/cart`、`/api/orders`、`/api/coupons`、`/api/notifications` |
+| **期望結果** | 未帶有效 session 時回 401 或 403，不回傳應用資料 |
+| **實際結果** | 五支 API 全部回 200；訂單 API 直接暴露收件人、手機、地址，優惠券與通知資料也可匿名讀取 |
+| **影響** | 登入只保護前端路由，無法阻止直接呼叫 API；造成個資與業務資料未授權存取 |
+| **自動化處理** | `g-auth.spec.ts` G-A03：五支 endpoint 各自以 DEF-030 `test.fail` 鎖定 |
+| **附件／備註** | PRD 尚未明訂 API authorization；此缺陷依安全基準建立，建議 RD 補正式 contract，並決定商品 API 是否允許公開 |
+
+**歷程**
+
+| 日期 | 動作 |
+|---|---|
+| 2026-07-21 | 匿名探測五支核心 API 皆回 200；開單 Confirmed |
+
+---
+
+### DEF-031｜Session cookie 缺少 Secure 與 SameSite
+
+| 欄位 | 內容 |
+|---|---|
+| **狀態** | Confirmed |
+| **嚴重度** | S2 Major |
+| **相關 PRD** | Security baseline；R-1.2 session extension |
+| **環境** | `https://cand1.tail296b14.ts.net/`（HTTPS，v2.1） |
+| **發現方式** | G-A01 登入 response `Set-Cookie` 檢查 |
+| **重現步驟** | 使用正確帳密 POST `/api/auth/login`，檢查 response 的 `Set-Cookie` |
+| **期望結果** | Session cookie 至少包含 `HttpOnly`、`Secure` 與明確 `SameSite=Lax` 或 `SameSite=Strict` |
+| **實際結果** | `session=demo-session; Path=/; HttpOnly`；缺少 `Secure` 與 `SameSite` |
+| **影響** | Cookie transport 與跨站請求防護不足；HTTPS 部署未強制 cookie 只走加密連線 |
+| **自動化處理** | `g-auth.spec.ts`：cookie hardening 案例以 DEF-031 `test.fail` 鎖定 |
+| **附件／備註** | 登入 200、`{ok:true}` 與 `HttpOnly` 正常；缺陷只針對缺少的安全屬性 |
+
+**歷程**
+
+| 日期 | 動作 |
+|---|---|
+| 2026-07-21 | 正式 auth 審查確認 cookie 缺少 Secure／SameSite；開單 Confirmed |
+
+---
+
 ## 登錄範本（複製新增）
 
 ### DEF-XXX｜標題
@@ -838,3 +888,4 @@
 | 2026-07-21 | 登錄 DEF-029（缺貨 checkout 回 409 仍消耗優惠券）；合計 29 |
 | 2026-07-21 | 重構 O-A01～O-A05；DEF-014 改驗狀態 invariant 後確認為誤報 → Verified；補強 DEF-006 運費 0 證據 |
 | 2026-07-21 | 重構 N-A01：補齊五類通知、駁回分支與精確下單 body；DEF-015 仍 Confirmed |
+| 2026-07-21 | 正式審查 G-A01／G-A02；登錄 DEF-030（匿名 API 存取）與 DEF-031（cookie 安全屬性）；合計 31 |

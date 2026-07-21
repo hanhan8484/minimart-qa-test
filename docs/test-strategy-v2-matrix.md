@@ -184,10 +184,20 @@ await expect(page.getByText('還沒有任何訂單')).toBeVisible();
 ### G-A01｜API：內建帳號可登入並取得 session
 - **類型**：A
 - **覆蓋**：R-1.2
+- **正向 contract**：200、`{ok:true}`、session cookie、`HttpOnly`
+- **負向 contract**：錯誤密碼與不存在帳號皆回 401／`INVALID_CREDENTIALS`，且不得建立 session
 
 ### G-A02｜API：核心 API 冒煙（系統範圍／單機可運作）
 - **類型**：A
 - **覆蓋**：R-1.1
+- **定位**：登入後的 infrastructure smoke，不宣稱單靠 API 完整證明 R-1.1
+- **最低 shape**：products／orders／coupons／notifications 為 array；cart 具有 `items` array 與 `count` number
+
+### G-A03｜API Security：未登入不得存取應用資料
+- **類型**：A（security extension；不取代 G-B04 的 R-1.10 UI Primary）
+- **依據**：API authorization baseline；PRD R-1.10 僅明訂畫面，需 RD 補正式 API contract
+- **案例**：未帶 session 存取 products／cart／orders／coupons／notifications 應回 401 或 403；現況以 DEF-030 `test.fail` 鎖定
+- **Cookie hardening**：session cookie 應有 `HttpOnly`、`Secure`、`SameSite=Lax|Strict`；現況以 DEF-031 `test.fail` 鎖定
 
 ### G-B01｜UI：登入頁初始位置、成功導向、失敗文案
 - **類型**：B
@@ -580,12 +590,13 @@ await expect(page.getByText('還沒有任何訂單')).toBeVisible();
 
 ## 案例清單總表（定稿）
 
-### A｜後端 API（16）
+### A｜後端 API（17）
 
 | ID | 標題 | 覆蓋規則 |
 |---|---|---|
 | G-A01 | 內建帳號登入 session | R-1.2 |
 | G-A02 | 核心 API 冒煙 | R-1.1 |
+| G-A03 | 未登入 API authorization＋session cookie security | Security baseline（R-1.10 API extension） |
 | P-A01 | 商品清單與庫存整數 | R-3.1, R-3.2 |
 | P-A02 | 加車不扣庫存 | R-3.3 |
 | C-A01 | 車持久／同品累加／上限 5 | R-11.1, R-11.3, R-11.4 |
@@ -716,11 +727,11 @@ export async function resetEnv(request: APIRequestContext) {
 
 | 類型 | 案例數 |
 |---|---|
-| A 後端 API（Primary） | 16 |
+| A 後端 API（含 defensive／security extension） | 17 |
 | B 前端 UI 單點 | 29 |
 | B-D Display secondary | 3 |
 | C 前端連續流程 | 10 |
-| **合計** | **58** |
+| **合計** | **59** |
 | PRD 編號規則 | 約 164 條（v2.1 新增 R-12.12／R-14.11／R-18.10）皆有唯一 Primary；secondary／mock 不另佔主歸屬 |
 | 預估有效覆蓋 | **約 88–92%**（重置 + Display + Mock）；紙上規則映射 ~98% |
 
@@ -737,5 +748,6 @@ export async function resetEnv(request: APIRequestContext) {
 | 2026-07-19 | 決策段（沒測／MVP／AI）移至 `docs/test-strategy-v2.md`；本檔維持對照細表 |
 | 2026-07-20 | v2.1 訂單備註：新增 C-B12／C-B13／O-B07；更新 C-B04／O-B02 區塊數；案例合計 55→58 |
 | 2026-07-20 | 檔名改為 `test-strategy-v2-matrix.md`，與決策檔成對命名 |
+| 2026-07-21 | 正式審查 G-A01／G-A02；新增 G-A03 API security extension，案例合計 58→59 |
 
 （本策略文件結束）
