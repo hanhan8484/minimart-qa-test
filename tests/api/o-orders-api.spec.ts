@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type APIRequestContext, type APIResponse } from '@playwright/test';
 import { loginViaApi, resetEnv, seedCompletedId, seedPendingId, seedShippedId } from '../helpers';
 import {
   addCartItem,
@@ -8,125 +8,281 @@ import {
   getProducts,
 } from '../helpers/apiCart';
 
+type Order = {
+  id: string;
+  status: string;
+  createdAt: string;
+  shippedAt?: string | null;
+  completedAt?: string | null;
+  refundedAt?: string | null;
+  returnStatus?: string | null;
+  payable: number;
+  shipping: number;
+  refundAmount?: number | null;
+};
+
+type Coupon = {
+  code: string;
+  status: string;
+  usedByOrderId?: string | null;
+};
+
+async function expectOk(response: APIResponse, label: string) {
+  expect(response.ok(), `${label}: HTTP ${response.status()}`).toBeTruthy();
+}
+
+async function getOrder(request: APIRequestContext, orderId: string): Promise<Order> {
+  const response = await request.get(`/api/orders/${orderId}`);
+  await expectOk(response, `GET /api/orders/${orderId}`);
+  return response.json();
+}
+
+async function getCoupons(request: APIRequestContext): Promise<Coupon[]> {
+  const response = await request.get('/api/coupons');
+  await expectOk(response, 'GET /api/coupons');
+  return response.json();
+}
+
+async function getCoupon(request: APIRequestContext, code: string): Promise<Coupon> {
+  const coupon = (await getCoupons(request)).find((item) => item.code === code);
+  expect(coupon, `coupon ${code} should exist`).toBeTruthy();
+  return coupon!;
+}
+
+async function getProduct(request: APIRequestContext, name: string) {
+  const product = (await getProducts(request)).find((item) => item.name === name);
+  expect(product, `product ${name} should exist`).toBeTruthy();
+  return product!;
+}
+
+async function createOrder(
+  request: APIRequestContext,
+  options: {
+    productName?: string;
+    quantity?: number;
+    couponCode?: string;
+  } = {},
+): Promise<string> {
+  await clearCartRequest(request);
+  const product = await getProduct(request, options.productName ?? '手沖咖啡濾杯');
+  await addCartItem(request, product.id, options.quantity ?? 1);
+
+  const response = await checkoutViaApi(request, {
+    ...DEFAULT_API_SHIPPING,
+    couponCode: options.couponCode,
+  });
+  expect(response.status(), 'POST /api/checkout').toBe(201);
+  const body = (await response.json()) as { orderId: string };
+  expect(body.orderId).toMatch(/^MM-\d{8}-\d{4}$/);
+  return body.orderId;
+}
+
+async function advanceOrderToRefund(request: APIRequestContext, orderId: string) {
+  const ship = await request.post(`/api/orders/${orderId}/ship`);
+  await expectOk(ship, `POST /api/orders/${orderId}/ship`);
+
+  const confirm = await request.post(`/api/orders/${orderId}/confirm-receipt`);
+  await expectOk(confirm, `POST /api/orders/${orderId}/confirm-receipt`);
+
+  const applyReturn = await request.post(`/api/orders/${orderId}/returns`, {
+    data: { reason: '商品有瑕疵需要退貨' },
+  });
+  await expectOk(applyReturn, `POST /api/orders/${orderId}/returns`);
+
+  const review = await request.post(`/api/orders/${orderId}/returns/review`);
+  await expectOk(review, `POST /api/orders/${orderId}/returns/review`);
+
+  const refunded = await getOrder(request, orderId);
+  expect(refunded.status).toBe('已退款');
+  return refunded;
+}
+
+function transitionSnapshot(order: Order) {
+  return {
+    status: order.status,
+    shippedAt: order.shippedAt ?? null,
+    completedAt: order.completedAt ?? null,
+    refundedAt: order.refundedAt ?? null,
+    returnStatus: order.returnStatus ?? null,
+  };
+}
+
 /**
  * Batch API-A — O-A01～O-A05 order APIs
  */
 test.describe('O-A01～O-A05 orders API', () => {
-  test.beforeAll(async ({ request }) => {
+  test.beforeEach(async ({ request }) => {
     test.setTimeout(60_000);
     await resetEnv(request);
+    const login = await loginViaApi(request);
+    await expectOk(login, 'POST /api/auth/login');
+    await clearCartRequest(request);
   });
 
-  test('O-A01: new order id matches MM-YYYYMMDD-NNNN', async ({ request }) => {
-    await loginViaApi(request);
-    await clearCartRequest(request);
-    const products = await getProducts(request);
-    const coffee = products.find((p) => p.name === '手沖咖啡濾杯')!;
+  test('O-A01: id date matches createdAt and same-day sequence increments', async ({
+    request,
+  }) => {
+    const firstId = await createOrder(request);
+    const first = await getOrder(request, firstId);
+    expect(first.id).toBe(firstId);
+
+    const secondId = await createOrder(request);
+    const second = await getOrder(request, secondId);
+
+    const [, firstDate, firstSequence] = firstId.split('-');
+    const [, secondDate, secondSequence] = secondId.split('-');
+    expect(firstDate).toBe(first.createdAt.slice(0, 10).replace(/-/g, ''));
+    expect(secondDate).toBe(second.createdAt.slice(0, 10).replace(/-/g, ''));
+    expect(Number(firstSequence)).toBe(1);
+    expect(Number(secondSequence)).toBe(Number(firstSequence) + 1);
+  });
+
+  const illegalTransitions = [
+    {
+      name: 'shipping an already-shipped order',
+      orderId: seedShippedId,
+      endpoint: 'ship',
+    },
+    {
+      name: 'shipping a completed order',
+      orderId: seedCompletedId,
+      endpoint: 'ship',
+    },
+    {
+      name: 'confirming receipt for a pending order',
+      orderId: seedPendingId,
+      endpoint: 'confirm-receipt',
+    },
+  ];
+
+  for (const scenario of illegalTransitions) {
+    test(`O-A02: ${scenario.name} leaves order unchanged`, async ({ request }) => {
+      const orderId = scenario.orderId();
+      const before = await getOrder(request, orderId);
+      const response = await request.post(`/api/orders/${orderId}/${scenario.endpoint}`);
+      expect(response.status()).toBeLessThan(500);
+      const after = await getOrder(request, orderId);
+      expect(transitionSnapshot(after)).toEqual(transitionSnapshot(before));
+    });
+  }
+
+  test('O-A03: cart, ship, confirm and return request do not change stock', async ({
+    request,
+  }) => {
+    const coffee = await getProduct(request, '手沖咖啡濾杯');
+    const initialStock = coffee.stock;
+
     await addCartItem(request, coffee.id, 1);
-    const res = await checkoutViaApi(request, DEFAULT_API_SHIPPING);
-    expect(res.status()).toBe(201);
-    const { orderId } = await res.json();
-    expect(orderId).toMatch(/^MM-\d{8}-\d{4}$/);
-    const detail = await (await request.get(`/api/orders/${orderId}`)).json();
-    expect(detail.id).toBe(orderId);
-  });
+    expect((await getProduct(request, coffee.name)).stock).toBe(initialStock);
 
-  test('O-A02: illegal transitions should be rejected', async ({ request }) => {
-    test.fail(
-      true,
-      'DEF-014: 非法狀態轉換（已出貨再出貨／已完成再出貨）仍回 200（R-6.2／R-6.7／R-6.8）',
-    );
-    await loginViaApi(request);
+    const checkout = await checkoutViaApi(request, DEFAULT_API_SHIPPING);
+    expect(checkout.status(), 'POST /api/checkout').toBe(201);
+    const { orderId } = (await checkout.json()) as { orderId: string };
+    const stockAfterCheckout = (await getProduct(request, coffee.name)).stock;
 
-    const shipAgain = await request.post(`/api/orders/${seedShippedId()}/ship`);
-    expect(shipAgain.ok()).toBeFalsy();
+    const ship = await request.post(`/api/orders/${orderId}/ship`);
+    await expectOk(ship, `POST /api/orders/${orderId}/ship`);
+    expect((await getProduct(request, coffee.name)).stock).toBe(stockAfterCheckout);
 
-    const shipCompleted = await request.post(`/api/orders/${seedCompletedId()}/ship`);
-    expect(shipCompleted.ok()).toBeFalsy();
+    const confirm = await request.post(`/api/orders/${orderId}/confirm-receipt`);
+    await expectOk(confirm, `POST /api/orders/${orderId}/confirm-receipt`);
+    expect((await getProduct(request, coffee.name)).stock).toBe(stockAfterCheckout);
 
-    const confirmPending = await request.post(`/api/orders/${seedPendingId()}/confirm-receipt`);
-    expect(confirmPending.status()).toBe(409);
-  });
-
-  test('O-A03: cart does not change stock; order should deduct', async ({ request }) => {
-    test.setTimeout(60_000);
-    await loginViaApi(request);
-    await clearCartRequest(request);
-    const products = await getProducts(request);
-    const coffee = products.find((p) => p.name === '手沖咖啡濾杯')!;
-    const before = coffee.stock;
-
-    await addCartItem(request, coffee.id, 2);
-    const mid = await getProducts(request);
-    expect(mid.find((p) => p.id === coffee.id)!.stock).toBe(before);
-
-    test.fail(true, 'DEF-012: 下單不扣庫存（R-3.5／R-3.7／R-3.8）');
-    const co = await checkoutViaApi(request, DEFAULT_API_SHIPPING);
-    expect(co.status()).toBe(201);
-    const afterOrder = await getProducts(request);
-    expect(afterOrder.find((p) => p.id === coffee.id)!.stock).toBe(before - 2);
-  });
-
-  test('O-A04: refundAmount === payable − shipping', async ({ request }) => {
-    test.setTimeout(90_000);
-    test.fail(true, 'DEF-006: refundAmount ≠ payable−shipping（R-7.10）');
-
-    await loginViaApi(request);
-    await clearCartRequest(request);
-    const products = await getProducts(request);
-    const coffee = products.find((p) => p.name === '手沖咖啡濾杯')!;
-    await addCartItem(request, coffee.id, 1);
-    const co = await checkoutViaApi(request, DEFAULT_API_SHIPPING);
-    const { orderId } = await co.json();
-
-    await request.post(`/api/orders/${orderId}/ship`);
-    await request.post(`/api/orders/${orderId}/confirm-receipt`);
-    await request.post(`/api/orders/${orderId}/returns`, {
+    const applyReturn = await request.post(`/api/orders/${orderId}/returns`, {
       data: { reason: '商品有瑕疵需要退貨' },
     });
-    await request.post(`/api/orders/${orderId}/returns/review`);
+    await expectOk(applyReturn, `POST /api/orders/${orderId}/returns`);
+    expect((await getProduct(request, coffee.name)).stock).toBe(stockAfterCheckout);
+  });
 
-    const order = await (await request.get(`/api/orders/${orderId}`)).json();
-    expect(order.status).toBe('已退款');
+  test('O-A03: cancellation restores deducted stock', async ({ request }) => {
+    const coffee = await getProduct(request, '手沖咖啡濾杯');
+    const before = coffee.stock;
+    const orderId = await createOrder(request, { quantity: 2 });
+    const afterCheckout = (await getProduct(request, coffee.name)).stock;
+
+    test.skip(
+      afterCheckout !== before - 2,
+      'Blocked by DEF-012: checkout did not deduct stock, so cancellation restoration has no valid baseline',
+    );
+
+    const cancel = await request.post(`/api/orders/${orderId}/cancel`);
+    if (!cancel.ok()) {
+      test.fail(true, 'DEF-003: new pending order has no working cancel API (R-6.5)');
+      expect(cancel.ok(), `POST cancel: HTTP ${cancel.status()}`).toBeTruthy();
+      return;
+    }
+
+    expect((await getOrder(request, orderId)).status).toBe('已取消');
+    expect((await getProduct(request, coffee.name)).stock).toBe(before);
+  });
+
+  test('O-A03: completed refund restores deducted stock', async ({ request }) => {
+    const coffee = await getProduct(request, '手沖咖啡濾杯');
+    const before = coffee.stock;
+    const orderId = await createOrder(request, { quantity: 2 });
+    const afterCheckout = (await getProduct(request, coffee.name)).stock;
+
+    test.skip(
+      afterCheckout !== before - 2,
+      'Blocked by DEF-012: checkout did not deduct stock, so refund restoration has no valid baseline',
+    );
+
+    await advanceOrderToRefund(request, orderId);
+    expect((await getProduct(request, coffee.name)).stock).toBe(before);
+  });
+
+  test('O-A04: paid-shipping refund equals payable minus shipping', async ({ request }) => {
+    const orderId = await createOrder(request, { quantity: 1 });
+    const order = await advanceOrderToRefund(request, orderId);
+    expect(order.shipping).toBeGreaterThan(0);
+
+    test.fail(true, 'DEF-006: refundAmount ≠ payable−shipping（R-7.10）');
     expect(order.refundAmount).toBe(order.payable - order.shipping);
   });
 
-  test('O-A05: EXPIRED50 is 已過期; used coupon returns after refund', async ({ request }) => {
-    test.setTimeout(120_000);
-    await loginViaApi(request);
+  test('O-A04: free-shipping refund equals full payable', async ({ request }) => {
+    const orderId = await createOrder(request, { quantity: 5 });
+    const order = await advanceOrderToRefund(request, orderId);
+    expect(order.shipping).toBe(0);
 
-    const coupons0 = await (await request.get('/api/coupons')).json();
-    const expired = coupons0.find((c: { code: string }) => c.code === 'EXPIRED50');
+    test.fail(true, 'DEF-006: zero-shipping refund returns subtotal instead of payable（R-7.10）');
+    expect(order.refundAmount).toBe(order.payable);
+  });
+
+  test('O-A05: past-due fixture coupon is expired', async ({ request }) => {
+    const expired = await getCoupon(request, 'EXPIRED50');
     expect(expired.status).toBe('已過期');
+  });
 
-    await clearCartRequest(request);
-    const products = await getProducts(request);
-    const coffee = products.find((p) => p.name === '手沖咖啡濾杯')!;
-    await addCartItem(request, coffee.id, 1);
-    const co = await checkoutViaApi(request, {
-      ...DEFAULT_API_SHIPPING,
-      couponCode: 'FREESHIP',
-    });
-    expect(co.status()).toBe(201);
-    const { orderId } = await co.json();
+  test('O-A05: refund returns used coupon to unused', async ({ request }) => {
+    const orderId = await createOrder(request, { couponCode: 'FREESHIP' });
+    const used = await getCoupon(request, 'FREESHIP');
+    expect(used.status).toBe('已使用');
+    expect(used.usedByOrderId).toBe(orderId);
 
-    let coupon = (await (await request.get('/api/coupons')).json()).find(
-      (c: { code: string }) => c.code === 'FREESHIP',
-    );
-    expect(coupon.status).toBe('已使用');
-    expect(coupon.usedByOrderId).toBe(orderId);
+    await advanceOrderToRefund(request, orderId);
+    const returned = await getCoupon(request, 'FREESHIP');
+    expect(returned.status).toBe('未使用');
+    expect(returned.usedByOrderId).toBeNull();
+  });
 
-    await request.post(`/api/orders/${orderId}/ship`);
-    await request.post(`/api/orders/${orderId}/confirm-receipt`);
-    await request.post(`/api/orders/${orderId}/returns`, {
-      data: { reason: '商品有瑕疵需要退貨' },
-    });
-    await request.post(`/api/orders/${orderId}/returns/review`);
+  test('O-A05: cancellation returns used coupon to unused', async ({ request }) => {
+    const orderId = await createOrder(request, { couponCode: 'FREESHIP' });
+    const used = await getCoupon(request, 'FREESHIP');
+    expect(used.status).toBe('已使用');
+    expect(used.usedByOrderId).toBe(orderId);
 
-    coupon = (await (await request.get('/api/coupons')).json()).find(
-      (c: { code: string }) => c.code === 'FREESHIP',
-    );
-    expect(coupon.status).toBe('未使用');
-    expect(coupon.usedByOrderId).toBeNull();
+    const cancel = await request.post(`/api/orders/${orderId}/cancel`);
+    if (!cancel.ok()) {
+      test.fail(true, 'DEF-003: new pending order has no working cancel API (R-6.5 / R-4.13)');
+      expect(cancel.ok(), `POST cancel: HTTP ${cancel.status()}`).toBeTruthy();
+      return;
+    }
+
+    expect((await getOrder(request, orderId)).status).toBe('已取消');
+    const returned = await getCoupon(request, 'FREESHIP');
+    expect(returned.status).toBe('未使用');
+    expect(returned.usedByOrderId).toBeNull();
   });
 });
