@@ -444,9 +444,12 @@ await expect(page.getByText('還沒有任何訂單')).toBeVisible();
 
 # V. 我的優惠券
 
-### V-A01｜API：帳號初始券與附錄 A.2／可領折扣碼 A.3
+### V-A01｜API：帳號初始券符合附錄 A.2
 - **類型**：A
 - **覆蓋**：R-4.5
+- **Fixture**：`tests/fixtures/coupon-cases.ts`
+- **精確斷言**：初始清單恰為六張、券碼唯一，逐張驗證名稱、型別、面額／折扣率、門檻、D0 相對到期日、狀態與 `usedByOrderId=null`
+- **責任邊界**：PRD 未規定 `GET /api/discount-codes`；不再假設此 endpoint。A.3 WELCOME50／SHIPFREE 的領取行為與 DEF-009 統一由 V-C01 覆蓋
 
 ### V-B01｜UI：頁籤、卡片欄位、空頁籤文案、不可在此套用
 - **類型**：B
@@ -455,6 +458,7 @@ await expect(page.getByText('還沒有任何訂單')).toBeVisible();
 ### V-C01｜流程：領取折扣碼成功／不存在／重複
 - **類型**：C
 - **覆蓋**：R-17.1, R-17.2, R-17.3, R-17.4, R-18.8（折扣碼兩列）
+- **A.3 Primary**：以實際領取 WELCOME50／SHIPFREE 驗證可領清單，不要求產品提供未文件化的折扣碼查詢 API
 
 ---
 

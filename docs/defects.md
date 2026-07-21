@@ -300,12 +300,12 @@
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-17.1～R-17.4（折扣碼輸入、領取、錯誤文案、A.3） |
 | **環境** | `https://cand1.tail296b14.ts.net/` |
-| **發現方式** | Batch8 探測／`V-C01` |
-| **重現步驟** | 1. 登入後開啟「我的優惠券」<br>2. 尋找折扣碼輸入框與「領取」<br>3. 嘗試 `POST /api/coupons/redeem` 等常見路徑 |
+| **發現方式** | Batch8 UI／流程探測；`V-C01` |
+| **重現步驟** | 1. 登入後開啟「我的優惠券」<br>2. 尋找折扣碼輸入框與「領取」<br>3. 嘗試依 UI 領取 WELCOME50／SHIPFREE |
 | **期望結果** | 可輸入 WELCOME50／SHIPFREE 領取；無效／重複顯示 R-18.8 文案 |
-| **實際結果** | 頁面無任何 `input`／「領取」按鈕；相關 redeem API 皆 404 |
+| **實際結果** | 頁面無任何 `input`／「領取」按鈕，使用者無法觸發任何領取行為 |
 | **影響** | A.3 折扣碼完全無法領取；V-C01 主流程阻塞 |
-| **自動化處理** | `tests/ui/v-coupons.spec.ts` V-C01 以 `test.fail(…DEF-009)` 標記 |
+| **自動化處理** | `tests/ui/v-coupons.spec.ts` V-C01 以 `test.fail(…DEF-009)` 標記；V-A01 不再假設 PRD 未規定的 `GET /api/discount-codes` |
 
 **歷程**
 
