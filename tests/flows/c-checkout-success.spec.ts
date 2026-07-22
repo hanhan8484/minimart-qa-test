@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page, type Locator } from '@playwright/test';
 import {
   addFirstInStockViaApi,
   clearCartViaApi,
@@ -11,6 +11,7 @@ import {
 
 /**
  * Batch 2 — C-C02 R-12.8/R-12.9/R-13.x checkout success path
+ * Happy path and double-submit are separate so DEF-024 does not mask complete-page regressions.
  */
 test.describe('C-C02 checkout success', () => {
   test.beforeAll(async ({ request }) => {
@@ -18,9 +19,7 @@ test.describe('C-C02 checkout success', () => {
     await resetEnv(request);
   });
 
-  test('submit order shows complete page, empties cart, blocks double submit', async ({ page }) => {
-    test.setTimeout(90_000);
-
+  async function prepareCheckoutReady(page: Page): Promise<Locator> {
     await loginAsDemo(page);
     await clearCartViaApi(page);
     await addFirstInStockViaApi(page);
@@ -32,7 +31,42 @@ test.describe('C-C02 checkout success', () => {
     await fillCheckoutShipping(page);
     const submit = page.locator('.checkout-submit-btn');
     await expect(submit).toBeEnabled();
+    return submit;
+  }
 
+  async function expectCompletePage(page: Page) {
+    await expect(page.getByRole('heading', { name: '訂單已成立' })).toBeVisible();
+    await expect(page.getByText(/MM-\d{8}-\d{4}/)).toBeVisible();
+    await expect(page.getByText(/預計出貨/)).toBeVisible();
+    // Live UI uses <button>, not <a> (PRD says 按鈕)
+    await expect(page.getByRole('button', { name: '查看訂單' })).toBeVisible();
+    await expect(page.getByRole('button', { name: '繼續購物' })).toBeVisible();
+    // No detailed line items / full amount breakdown on complete page (R-13.5)
+    await expect(page.getByText('滿額折扣')).toHaveCount(0);
+  }
+
+  test('C-C02 happy path: single submit → complete page + empty cart', async ({ page }) => {
+    test.setTimeout(90_000);
+
+    const submit = await prepareCheckoutReady(page);
+
+    await Promise.all([
+      page.waitForURL(/\/orders\/.+\/complete/, { timeout: 30_000 }),
+      submit.click(),
+    ]);
+
+    await expectCompletePage(page);
+
+    await page.goto('/cart');
+    await expect(page.locator('.cart-empty-text')).toHaveText('購物車是空的');
+  });
+
+  test('C-C02 double-submit: rapid clicks must create exactly one order (DEF-024)', async ({
+    page,
+  }) => {
+    test.setTimeout(90_000);
+
+    const submit = await prepareCheckoutReady(page);
     const orderIdsBefore = await fetchOrderIds(page);
 
     let checkoutPostCount = 0;
@@ -58,15 +92,7 @@ test.describe('C-C02 checkout success', () => {
       })(),
     ]);
 
-    await expect(page.getByRole('heading', { name: '訂單已成立' })).toBeVisible();
-    await expect(page.getByText(/MM-\d{8}-\d{4}/)).toBeVisible();
-    await expect(page.getByText(/預計出貨/)).toBeVisible();
-    // Live UI uses <button>, not <a> (PRD says 按鈕)
-    await expect(page.getByRole('button', { name: '查看訂單' })).toBeVisible();
-    await expect(page.getByRole('button', { name: '繼續購物' })).toBeVisible();
-
-    // No detailed line items / full amount breakdown on complete page (R-13.5)
-    await expect(page.getByText('滿額折扣')).toHaveCount(0);
+    await expectCompletePage(page);
 
     await page.goto('/cart');
     await expect(page.locator('.cart-empty-text')).toHaveText('購物車是空的');

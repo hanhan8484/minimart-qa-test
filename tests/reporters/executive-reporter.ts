@@ -39,11 +39,20 @@ type TestRecord = {
   error: string;
 };
 
+type Severity = 'S1' | 'S2' | 'S3' | 'S4';
+
+type DefectCatalogEntry = {
+  id: string;
+  title: string;
+  severity: Severity | null;
+  status: string;
+};
+
 type DefectSummary = {
   unresolved: number | null;
   verified: number | null;
   total: number | null;
-  severity: Record<'S1' | 'S2' | 'S3' | 'S4', number | null>;
+  severity: Record<Severity, number | null>;
 };
 
 type ExecutiveSummary = {
@@ -61,10 +70,21 @@ type ExecutiveSummary = {
   uniqueDefects: string[];
   logicalCaseIds: string[];
   defects: DefectSummary;
+  /** Per-DEF fields from docs/defects.md 缺陷清單 */
+  defectCatalog: Record<string, DefectCatalogEntry>;
   requirementCoverage: typeof EXECUTIVE_REPORT_CONFIG.requirementCoverage;
   globalErrors: string[];
   tests: TestRecord[];
 };
+
+const SEVERITY_RANK: Record<Severity, number> = { S1: 1, S2: 2, S3: 3, S4: 4 };
+const SEVERITY_LABELS: Record<Severity, string> = {
+  S1: 'S1 Critical',
+  S2: 'S2 Major',
+  S3: 'S3 Minor',
+  S4: 'S4 Trivial',
+};
+const EMPTY_SEVERITY: Record<Severity, number | null> = { S1: null, S2: null, S3: null, S4: null };
 
 const OUTCOME_LABELS: Record<Outcome, string> = {
   normalPass: 'Normal pass',
@@ -179,30 +199,65 @@ function numberFromTable(markdown: string, label: string): number | null {
   return match ? Number(match[1]) : null;
 }
 
-function readDefectSummary(): DefectSummary {
+function parseDefectCatalog(markdown: string): Record<string, DefectCatalogEntry> {
+  const catalog: Record<string, DefectCatalogEntry> = {};
+  const rowPattern =
+    /^\|\s*(DEF-\d{3})\s*\|\s*([^|]+?)\s*\|\s*(S[1-4])\s*\|\s*([^|]+?)\s*\|/gm;
+  for (const match of markdown.matchAll(rowPattern)) {
+    const id = match[1];
+    catalog[id] = {
+      id,
+      title: match[2].trim(),
+      severity: match[3] as Severity,
+      status: match[4].trim(),
+    };
+  }
+  return catalog;
+}
+
+export function readDefectLog(): {
+  defects: DefectSummary;
+  defectCatalog: Record<string, DefectCatalogEntry>;
+} {
   try {
     const markdown = readFileSync(resolve('docs/defects.md'), 'utf8');
-    const unresolved = numberFromTable(markdown, 'Open / Confirmed');
-    const verified = numberFromTable(markdown, 'Verified（已關閉）');
     return {
-      unresolved,
-      verified,
-      total: numberFromTable(markdown, '合計'),
-      severity: {
-        S1: numberFromTable(markdown, 'S1'),
-        S2: numberFromTable(markdown, 'S2'),
-        S3: numberFromTable(markdown, 'S3'),
-        S4: numberFromTable(markdown, 'S4'),
+      defects: {
+        unresolved: numberFromTable(markdown, 'Open / Confirmed'),
+        verified: numberFromTable(markdown, 'Verified（已關閉）'),
+        total: numberFromTable(markdown, '合計'),
+        severity: {
+          S1: numberFromTable(markdown, 'S1'),
+          S2: numberFromTable(markdown, 'S2'),
+          S3: numberFromTable(markdown, 'S3'),
+          S4: numberFromTable(markdown, 'S4'),
+        },
       },
+      defectCatalog: parseDefectCatalog(markdown),
     };
   } catch {
     return {
-      unresolved: null,
-      verified: null,
-      total: null,
-      severity: { S1: null, S2: null, S3: null, S4: null },
+      defects: {
+        unresolved: null,
+        verified: null,
+        total: null,
+        severity: { ...EMPTY_SEVERITY },
+      },
+      defectCatalog: {},
     };
   }
+}
+
+function severityTone(severity: Severity | null | undefined): string {
+  if (severity === 'S1') return 'bad';
+  if (severity === 'S2') return 'warn';
+  if (severity === 'S3') return 'info';
+  return 'muted';
+}
+
+function renderSeverityPill(severity: Severity | null | undefined): string {
+  if (!severity) return '—';
+  return `<span class="pill sev ${severity}">${escapeHtml(SEVERITY_LABELS[severity])}</span>`;
 }
 
 function formatDuration(durationMs: number): string {
@@ -269,13 +324,25 @@ function renderDefectRows(summary: ExecutiveSummary): string {
     }
   }
   if (grouped.size === 0) {
-    return '<tr><td colspan="3">No DEF annotations found in this run.</td></tr>';
+    return '<tr><td colspan="4">No DEF annotations found in this run.</td></tr>';
   }
   return [...grouped.entries()]
-    .sort(([left], [right]) => left.localeCompare(right))
-    .map(
-      ([defectId, tests]) => `<tr>
-        <td><strong>${escapeHtml(defectId)}</strong></td>
+    .sort(([left], [right]) => {
+      const leftSeverity = summary.defectCatalog[left]?.severity;
+      const rightSeverity = summary.defectCatalog[right]?.severity;
+      const leftRank = leftSeverity ? SEVERITY_RANK[leftSeverity] : 99;
+      const rightRank = rightSeverity ? SEVERITY_RANK[rightSeverity] : 99;
+      return leftRank - rightRank || left.localeCompare(right);
+    })
+    .map(([defectId, tests]) => {
+      const entry = summary.defectCatalog[defectId];
+      return `<tr>
+        <td><strong>${escapeHtml(defectId)}</strong>${
+          entry?.title ? `<div class="subtle">${escapeHtml(entry.title)}</div>` : ''
+        }</td>
+        <td>${renderSeverityPill(entry?.severity)}${
+          entry?.status ? `<div class="subtle">${escapeHtml(entry.status)}</div>` : ''
+        }</td>
         <td>${tests.length}</td>
         <td>${tests
           .map(
@@ -283,8 +350,8 @@ function renderDefectRows(summary: ExecutiveSummary): string {
               `<div><code>${escapeHtml(`${test.file}:${test.line}`)}</code> ${escapeHtml(test.title)}</div>`,
           )
           .join('')}</td>
-      </tr>`,
-    )
+      </tr>`;
+    })
     .join('');
 }
 
@@ -350,7 +417,7 @@ function renderAttentionSections(summary: ExecutiveSummary): string {
     .join('');
 }
 
-function renderHtml(summary: ExecutiveSummary): string {
+export function renderHtml(summary: ExecutiveSummary): string {
   const coverage = summary.requirementCoverage;
   const releaseBlocked =
     summary.counts.unexpectedFailure > 0 ||
@@ -374,8 +441,8 @@ function renderHtml(summary: ExecutiveSummary): string {
   <style>
     :root{color-scheme:light dark;--bg:#f6f7f9;--surface:#fff;--alt:#eef1f5;--text:#182033;--muted:#667085;--border:#d9dee7;--accent:#2459d3;--good:#197347;--warn:#9a6700;--bad:#c53030;--info:#2463a7}
     @media(prefers-color-scheme:dark){:root{--bg:#101318;--surface:#181c23;--alt:#222833;--text:#eef2f8;--muted:#aab3c2;--border:#353d49;--accent:#80aaff;--good:#58c28b;--warn:#e6b94c;--bad:#ff7b7b;--info:#79b8ff}}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto Sans TC","Segoe UI",sans-serif;line-height:1.55}main{width:min(1180px,calc(100% - 32px));margin:auto;padding:42px 0 64px}h1{font-size:clamp(28px,4vw,42px);line-height:1.15;margin:4px 0 10px}h2{font-size:23px;margin:38px 0 14px}p{margin:7px 0}.eyebrow{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.lead{font-size:17px;color:var(--muted);max-width:880px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.meta span,.pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:3px 9px;background:var(--surface);font-size:12px}.verdict{border-left:5px solid ${releaseBlocked ? 'var(--warn)' : 'var(--good)'};background:var(--surface);border-radius:8px;padding:18px 20px;margin:22px 0}.verdict strong{font-size:22px}.metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}.metric{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:15px;min-height:112px}.metric strong{display:block;font-size:30px;line-height:1.15}.metric span{display:block;color:var(--muted);font-size:12px;margin-top:5px}.metric small{color:var(--muted)}.good{color:var(--good)}.warn{color:var(--warn)}.bad{color:var(--bad)}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}.panel h3{margin:0 0 12px}.bar-row{display:grid;grid-template-columns:58px 1fr 38px;gap:10px;align-items:center;margin:10px 0}.track{height:14px;border-radius:999px;background:var(--alt);overflow:hidden}.bar{height:100%;border-radius:inherit;background:var(--info)}table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);font-size:13px}th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}th{background:var(--alt);font-size:12px}tr:last-child td{border-bottom:0}.subtle{color:var(--muted);font-size:12px;margin-top:3px}.callout{padding:12px 14px;border-left:4px solid var(--info);background:var(--alt);border-radius:4px;margin:12px 0}.callout.warning{border-color:var(--warn)}.callout.danger{border-color:var(--bad)}.pill.normalPass{color:var(--good)}.pill.expectedFailure,.pill.skipped{color:var(--warn)}.pill.unexpectedFailure,.pill.fixCandidate{color:var(--bad)}.pill.flaky{color:var(--info)}code{font-family:"Cascadia Code",Consolas,monospace;font-size:.92em}pre{white-space:pre-wrap;max-height:320px;overflow:auto;background:var(--bg);padding:12px;border-radius:6px}.error-row td{background:var(--alt)}details summary{cursor:pointer;font-weight:600}.coverage strong{font-size:24px;display:block}.footer{margin-top:40px;border-top:1px solid var(--border);padding-top:14px;color:var(--muted);font-size:12px}
-    @media(max-width:850px){.metrics{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}table{display:block;overflow:auto}}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto Sans TC","Segoe UI",sans-serif;line-height:1.55}main{width:min(1180px,calc(100% - 32px));margin:auto;padding:42px 0 64px}h1{font-size:clamp(28px,4vw,42px);line-height:1.15;margin:4px 0 10px}h2{font-size:23px;margin:38px 0 14px}p{margin:7px 0}.eyebrow{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.lead{font-size:17px;color:var(--muted);max-width:880px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.meta span,.pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:3px 9px;background:var(--surface);font-size:12px}.verdict{border-left:5px solid ${releaseBlocked ? 'var(--warn)' : 'var(--good)'};background:var(--surface);border-radius:8px;padding:18px 20px;margin:22px 0}.verdict strong{font-size:22px}.metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}.metric{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:15px;min-height:112px}.metric strong{display:block;font-size:30px;line-height:1.15}.metric span{display:block;color:var(--muted);font-size:12px;margin-top:5px}.metric small{color:var(--muted)}.good{color:var(--good)}.warn{color:var(--warn)}.bad{color:var(--bad)}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}.panel h3{margin:0 0 12px}.bar-row{display:grid;grid-template-columns:58px 1fr 38px;gap:10px;align-items:center;margin:10px 0}.track{height:14px;border-radius:999px;background:var(--alt);overflow:hidden}.bar{height:100%;border-radius:inherit;background:var(--info)}table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);font-size:13px}th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}th{background:var(--alt);font-size:12px}tr:last-child td{border-bottom:0}.subtle{color:var(--muted);font-size:12px;margin-top:3px}.callout{padding:12px 14px;border-left:4px solid var(--info);background:var(--alt);border-radius:4px;margin:12px 0}.callout.warning{border-color:var(--warn)}.callout.danger{border-color:var(--bad)}    .pill.normalPass{color:var(--good)}.pill.expectedFailure,.pill.skipped{color:var(--warn)}.pill.unexpectedFailure,.pill.fixCandidate{color:var(--bad)}.pill.flaky{color:var(--info)}.pill.sev.S1{color:var(--bad)}.pill.sev.S2{color:var(--warn)}.pill.sev.S3{color:var(--info)}.pill.sev.S4{color:var(--muted)}.severity-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}code{font-family:"Cascadia Code",Consolas,monospace;font-size:.92em}pre{white-space:pre-wrap;max-height:320px;overflow:auto;background:var(--bg);padding:12px;border-radius:6px}.error-row td{background:var(--alt)}details summary{cursor:pointer;font-weight:600}.coverage strong{font-size:24px;display:block}.footer{margin-top:40px;border-top:1px solid var(--border);padding-top:14px;color:var(--muted);font-size:12px}
+    @media(max-width:850px){.metrics{grid-template-columns:repeat(2,1fr)}.grid,.severity-grid{grid-template-columns:1fr 1fr}table{display:block;overflow:auto}}
     @media print{:root{--bg:#fff;--surface:#fff;--alt:#f2f4f7;--text:#111827;--muted:#4b5563;--border:#d1d5db}main{width:100%;padding:0}.panel,.metric,table{break-inside:avoid}details{display:block}details>summary{display:none}details>*{display:block}}
   </style>
 </head>
@@ -423,8 +490,19 @@ function renderHtml(summary: ExecutiveSummary): string {
         <div class="grid">
           <div><strong>${summary.defects.unresolved ?? 'Unknown'}</strong><div class="subtle">Open / Confirmed</div></div>
           <div><strong>${summary.defects.verified ?? 'Unknown'}</strong><div class="subtle">Verified</div></div>
-          <div><strong>${summary.defects.severity.S2 ?? 'Unknown'}</strong><div class="subtle">Unresolved S2</div></div>
+          <div><strong>${summary.defects.total ?? 'Unknown'}</strong><div class="subtle">Total logged</div></div>
           <div><strong>${summary.uniqueDefects.length}</strong><div class="subtle">DEF IDs evidenced this run</div></div>
+        </div>
+        <p class="subtle" style="margin-top:14px">Severity distribution from docs/defects.md (all logged defects)</p>
+        <div class="severity-grid">
+          ${(['S1', 'S2', 'S3', 'S4'] as Severity[])
+            .map(
+              (level) => `<div>
+              <strong class="${severityTone(level)}">${summary.defects.severity[level] ?? 'Unknown'}</strong>
+              <div class="subtle">${escapeHtml(SEVERITY_LABELS[level])}</div>
+            </div>`,
+            )
+            .join('')}
         </div>
       </div>
     </div>
@@ -443,7 +521,7 @@ function renderHtml(summary: ExecutiveSummary): string {
     <h2>Known-defect evidence / 已知缺陷證據</h2>
     <div class="callout warning">One defect may be validated by multiple tests. These rows show unique DEF IDs separately from execution count.</div>
     <table>
-      <thead><tr><th>DEF</th><th>Executions</th><th>Affected tests</th></tr></thead>
+      <thead><tr><th>DEF</th><th>Severity</th><th>Executions</th><th>Affected tests</th></tr></thead>
       <tbody>${renderDefectRows(summary)}</tbody>
     </table>
   </section>
@@ -519,6 +597,7 @@ export default class ExecutiveReporter implements Reporter {
       ),
     ].sort();
     const baseURL = String(this.config.projects[0]?.use.baseURL || 'not configured');
+    const { defects, defectCatalog } = readDefectLog();
     const summary: ExecutiveSummary = {
       generatedAt: new Date().toISOString(),
       startedAt: this.startedAt.toISOString(),
@@ -533,7 +612,8 @@ export default class ExecutiveReporter implements Reporter {
       layers,
       uniqueDefects,
       logicalCaseIds,
-      defects: readDefectSummary(),
+      defects,
+      defectCatalog,
       requirementCoverage: EXECUTIVE_REPORT_CONFIG.requirementCoverage,
       globalErrors: this.globalErrors,
       tests,

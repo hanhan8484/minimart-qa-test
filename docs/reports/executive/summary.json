@@ -2691,5 +2691,193 @@
       ],
       "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('textbox').or(locator('input')).first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('textbox').or(locator('input')).first()\u001b[22m\n"
     }
-  ]
+  ],
+  "defectCatalog": {
+    "DEF-001": {
+      "id": "DEF-001",
+      "title": "導覽列「我的優惠卷」錯字（應為「優惠券」）",
+      "severity": "S4",
+      "status": "Open"
+    },
+    "DEF-002": {
+      "id": "DEF-002",
+      "title": "登出後伺服器購物車未清空",
+      "severity": "S2",
+      "status": "Verified"
+    },
+    "DEF-003": {
+      "id": "DEF-003",
+      "title": "未滿 10 分鐘的待出貨訂單無「取消訂單」",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-004": {
+      "id": "DEF-004",
+      "title": "結帳摘要「滿額折扣」與「優惠券折抵」數值對調",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-005": {
+      "id": "DEF-005",
+      "title": "待審核無「撤銷退貨申請」按鈕",
+      "severity": "S3",
+      "status": "Confirmed"
+    },
+    "DEF-006": {
+      "id": "DEF-006",
+      "title": "退款金額計算／顯示錯誤（非 payable−運費）",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-007": {
+      "id": "DEF-007",
+      "title": "退貨時間軸缺少「退款處理中」「已退款」",
+      "severity": "S3",
+      "status": "Confirmed"
+    },
+    "DEF-008": {
+      "id": "DEF-008",
+      "title": "退款完成未寫入／顯示退款時間",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-009": {
+      "id": "DEF-009",
+      "title": "我的優惠券缺少折扣碼領取（UI＋API）",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-010": {
+      "id": "DEF-010",
+      "title": "已使用券訂單編號省略 MM- 前綴",
+      "severity": "S3",
+      "status": "Confirmed"
+    },
+    "DEF-011": {
+      "id": "DEF-011",
+      "title": "收件地址驗證失敗不顯示紅字錯誤",
+      "severity": "S3",
+      "status": "Confirmed"
+    },
+    "DEF-012": {
+      "id": "DEF-012",
+      "title": "下單成功後庫存未扣減",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-013": {
+      "id": "DEF-013",
+      "title": "庫存不足仍可下單成功",
+      "severity": "S2",
+      "status": "Verified"
+    },
+    "DEF-014": {
+      "id": "DEF-014",
+      "title": "非法訂單狀態轉換仍回成功",
+      "severity": "S2",
+      "status": "Verified"
+    },
+    "DEF-015": {
+      "id": "DEF-015",
+      "title": "下單確認通知內文與該筆訂單不符",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-016": {
+      "id": "DEF-016",
+      "title": "商品／訂單載入文案不符合「載入中…」",
+      "severity": "S3",
+      "status": "Confirmed"
+    },
+    "DEF-017": {
+      "id": "DEF-017",
+      "title": "退貨原因空／超長無 PRD 紅字錯誤",
+      "severity": "S3",
+      "status": "Confirmed"
+    },
+    "DEF-018": {
+      "id": "DEF-018",
+      "title": "香氛蠟燭禮盒商品圖片破圖",
+      "severity": "S4",
+      "status": "Confirmed"
+    },
+    "DEF-019": {
+      "id": "DEF-019",
+      "title": "加入購物車後導覽列徽章未即時更新",
+      "severity": "S3",
+      "status": "Confirmed"
+    },
+    "DEF-020": {
+      "id": "DEF-020",
+      "title": "訂單列表商品件數與明細不符（seed 已出貨）",
+      "severity": "S3",
+      "status": "Verified"
+    },
+    "DEF-021": {
+      "id": "DEF-021",
+      "title": "折扣券折抵以滿額後金額計算（偏少）",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-022": {
+      "id": "DEF-022",
+      "title": "手機號碼超過 10 位仍可通過驗證",
+      "severity": "S3",
+      "status": "Confirmed"
+    },
+    "DEF-023": {
+      "id": "DEF-023",
+      "title": "商品小計恰好等於券門檻時無法使用",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-024": {
+      "id": "DEF-024",
+      "title": "快速雙擊送出訂單仍建立多筆訂單",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-025": {
+      "id": "DEF-025",
+      "title": "v2.1 訂單列表排序改為舊→新",
+      "severity": "S3",
+      "status": "Confirmed"
+    },
+    "DEF-026": {
+      "id": "DEF-026",
+      "title": "v2.1 訂單備註功能未出現（結帳／詳情）",
+      "severity": "S2",
+      "status": "Verified"
+    },
+    "DEF-027": {
+      "id": "DEF-027",
+      "title": "購物車 API 接受負數 quantity",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-028": {
+      "id": "DEF-028",
+      "title": "購物車 API 允許加入庫存為 0 的商品",
+      "severity": "S3",
+      "status": "Confirmed"
+    },
+    "DEF-029": {
+      "id": "DEF-029",
+      "title": "缺貨 checkout 失敗仍消耗優惠券",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-030": {
+      "id": "DEF-030",
+      "title": "未登入可直接存取所有核心資料 API",
+      "severity": "S2",
+      "status": "Confirmed"
+    },
+    "DEF-031": {
+      "id": "DEF-031",
+      "title": "Session cookie 缺少 Secure 與 SameSite",
+      "severity": "S2",
+      "status": "Confirmed"
+    }
+  }
 }

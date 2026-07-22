@@ -7,8 +7,8 @@
   <style>
     :root{color-scheme:light dark;--bg:#f6f7f9;--surface:#fff;--alt:#eef1f5;--text:#182033;--muted:#667085;--border:#d9dee7;--accent:#2459d3;--good:#197347;--warn:#9a6700;--bad:#c53030;--info:#2463a7}
     @media(prefers-color-scheme:dark){:root{--bg:#101318;--surface:#181c23;--alt:#222833;--text:#eef2f8;--muted:#aab3c2;--border:#353d49;--accent:#80aaff;--good:#58c28b;--warn:#e6b94c;--bad:#ff7b7b;--info:#79b8ff}}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto Sans TC","Segoe UI",sans-serif;line-height:1.55}main{width:min(1180px,calc(100% - 32px));margin:auto;padding:42px 0 64px}h1{font-size:clamp(28px,4vw,42px);line-height:1.15;margin:4px 0 10px}h2{font-size:23px;margin:38px 0 14px}p{margin:7px 0}.eyebrow{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.lead{font-size:17px;color:var(--muted);max-width:880px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.meta span,.pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:3px 9px;background:var(--surface);font-size:12px}.verdict{border-left:5px solid var(--warn);background:var(--surface);border-radius:8px;padding:18px 20px;margin:22px 0}.verdict strong{font-size:22px}.metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}.metric{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:15px;min-height:112px}.metric strong{display:block;font-size:30px;line-height:1.15}.metric span{display:block;color:var(--muted);font-size:12px;margin-top:5px}.metric small{color:var(--muted)}.good{color:var(--good)}.warn{color:var(--warn)}.bad{color:var(--bad)}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}.panel h3{margin:0 0 12px}.bar-row{display:grid;grid-template-columns:58px 1fr 38px;gap:10px;align-items:center;margin:10px 0}.track{height:14px;border-radius:999px;background:var(--alt);overflow:hidden}.bar{height:100%;border-radius:inherit;background:var(--info)}table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);font-size:13px}th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}th{background:var(--alt);font-size:12px}tr:last-child td{border-bottom:0}.subtle{color:var(--muted);font-size:12px;margin-top:3px}.callout{padding:12px 14px;border-left:4px solid var(--info);background:var(--alt);border-radius:4px;margin:12px 0}.callout.warning{border-color:var(--warn)}.callout.danger{border-color:var(--bad)}.pill.normalPass{color:var(--good)}.pill.expectedFailure,.pill.skipped{color:var(--warn)}.pill.unexpectedFailure,.pill.fixCandidate{color:var(--bad)}.pill.flaky{color:var(--info)}code{font-family:"Cascadia Code",Consolas,monospace;font-size:.92em}pre{white-space:pre-wrap;max-height:320px;overflow:auto;background:var(--bg);padding:12px;border-radius:6px}.error-row td{background:var(--alt)}details summary{cursor:pointer;font-weight:600}.coverage strong{font-size:24px;display:block}.footer{margin-top:40px;border-top:1px solid var(--border);padding-top:14px;color:var(--muted);font-size:12px}
-    @media(max-width:850px){.metrics{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}table{display:block;overflow:auto}}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto Sans TC","Segoe UI",sans-serif;line-height:1.55}main{width:min(1180px,calc(100% - 32px));margin:auto;padding:42px 0 64px}h1{font-size:clamp(28px,4vw,42px);line-height:1.15;margin:4px 0 10px}h2{font-size:23px;margin:38px 0 14px}p{margin:7px 0}.eyebrow{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.lead{font-size:17px;color:var(--muted);max-width:880px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.meta span,.pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:3px 9px;background:var(--surface);font-size:12px}.verdict{border-left:5px solid var(--warn);background:var(--surface);border-radius:8px;padding:18px 20px;margin:22px 0}.verdict strong{font-size:22px}.metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}.metric{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:15px;min-height:112px}.metric strong{display:block;font-size:30px;line-height:1.15}.metric span{display:block;color:var(--muted);font-size:12px;margin-top:5px}.metric small{color:var(--muted)}.good{color:var(--good)}.warn{color:var(--warn)}.bad{color:var(--bad)}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}.panel h3{margin:0 0 12px}.bar-row{display:grid;grid-template-columns:58px 1fr 38px;gap:10px;align-items:center;margin:10px 0}.track{height:14px;border-radius:999px;background:var(--alt);overflow:hidden}.bar{height:100%;border-radius:inherit;background:var(--info)}table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);font-size:13px}th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}th{background:var(--alt);font-size:12px}tr:last-child td{border-bottom:0}.subtle{color:var(--muted);font-size:12px;margin-top:3px}.callout{padding:12px 14px;border-left:4px solid var(--info);background:var(--alt);border-radius:4px;margin:12px 0}.callout.warning{border-color:var(--warn)}.callout.danger{border-color:var(--bad)}    .pill.normalPass{color:var(--good)}.pill.expectedFailure,.pill.skipped{color:var(--warn)}.pill.unexpectedFailure,.pill.fixCandidate{color:var(--bad)}.pill.flaky{color:var(--info)}.pill.sev.S1{color:var(--bad)}.pill.sev.S2{color:var(--warn)}.pill.sev.S3{color:var(--info)}.pill.sev.S4{color:var(--muted)}.severity-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}code{font-family:"Cascadia Code",Consolas,monospace;font-size:.92em}pre{white-space:pre-wrap;max-height:320px;overflow:auto;background:var(--bg);padding:12px;border-radius:6px}.error-row td{background:var(--alt)}details summary{cursor:pointer;font-weight:600}.coverage strong{font-size:24px;display:block}.footer{margin-top:40px;border-top:1px solid var(--border);padding-top:14px;color:var(--muted);font-size:12px}
+    @media(max-width:850px){.metrics{grid-template-columns:repeat(2,1fr)}.grid,.severity-grid{grid-template-columns:1fr 1fr}table{display:block;overflow:auto}}
     @media print{:root{--bg:#fff;--surface:#fff;--alt:#f2f4f7;--text:#111827;--muted:#4b5563;--border:#d1d5db}main{width:100%;padding:0}.panel,.metric,table{break-inside:avoid}details{display:block}details>summary{display:none}details>*{display:block}}
   </style>
 </head>
@@ -80,8 +80,24 @@
         <div class="grid">
           <div><strong>26</strong><div class="subtle">Open / Confirmed</div></div>
           <div><strong>5</strong><div class="subtle">Verified</div></div>
-          <div><strong>13</strong><div class="subtle">Unresolved S2</div></div>
+          <div><strong>31</strong><div class="subtle">Total logged</div></div>
           <div><strong>25</strong><div class="subtle">DEF IDs evidenced this run</div></div>
+        </div>
+        <p class="subtle" style="margin-top:14px">Severity distribution from docs/defects.md (all logged defects)</p>
+        <div class="severity-grid">
+          <div>
+              <strong class="bad">0</strong>
+              <div class="subtle">S1 Critical</div>
+            </div><div>
+              <strong class="warn">13</strong>
+              <div class="subtle">S2 Major</div>
+            </div><div>
+              <strong class="info">11</strong>
+              <div class="subtle">S3 Minor</div>
+            </div><div>
+              <strong class="muted">2</strong>
+              <div class="subtle">S4 Trivial</div>
+            </div>
         </div>
       </div>
     </div>
@@ -155,107 +171,132 @@
     <h2>Known-defect evidence / 已知缺陷證據</h2>
     <div class="callout warning">One defect may be validated by multiple tests. These rows show unique DEF IDs separately from execution count.</div>
     <table>
-      <thead><tr><th>DEF</th><th>Executions</th><th>Affected tests</th></tr></thead>
+      <thead><tr><th>DEF</th><th>Severity</th><th>Executions</th><th>Affected tests</th></tr></thead>
       <tbody><tr>
-        <td><strong>DEF-003</strong></td>
+        <td><strong>DEF-003</strong><div class="subtle">未滿 10 分鐘的待出貨訂單無「取消訂單」</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>2</td>
         <td><div><code>api/o-orders-api.spec.ts:270</code> O-A05: cancellation returns used coupon to unused</div><div><code>flows/o-cancel-order.spec.ts:16</code> new order shows cancel dialog → 已取消</div></td>
       </tr><tr>
-        <td><strong>DEF-004</strong></td>
+        <td><strong>DEF-004</strong><div class="subtle">結帳摘要「滿額折扣」與「優惠券折抵」數值對調</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>4</td>
         <td><div><code>ui/c-checkout-display.spec.ts:22</code> CASE_R56_2: summary strings match fixture</div><div><code>ui/c-checkout-display.spec.ts:22</code> CASE_R56_3: summary strings match fixture</div><div><code>ui/c-checkout-display.spec.ts:22</code> CASE_R56_4: summary strings match fixture</div><div><code>ui/o-order-detail.spec.ts:202</code> O-B05 + coupon: CASE_R56_3 detail rows vs fixture (DEF-004 family)</div></td>
       </tr><tr>
-        <td><strong>DEF-005</strong></td>
-        <td>2</td>
-        <td><div><code>flows/o-return-refund.spec.ts:68</code> DEF-005: 待審核應有撤銷退貨申請</div><div><code>flows/o-return-reject-revoke.spec.ts:104</code> revoke dialog → 無退貨／已完成</div></td>
-      </tr><tr>
-        <td><strong>DEF-006</strong></td>
+        <td><strong>DEF-006</strong><div class="subtle">退款金額計算／顯示錯誤（非 payable−運費）</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>3</td>
         <td><div><code>api/o-orders-api.spec.ts:235</code> O-A04: paid-shipping refund equals payable minus shipping</div><div><code>api/o-orders-api.spec.ts:244</code> O-A04: free-shipping refund equals full payable</div><div><code>flows/o-return-refund.spec.ts:102</code> DEF-006: 退款金額應為 payable − shipping</div></td>
       </tr><tr>
-        <td><strong>DEF-007</strong></td>
-        <td>1</td>
-        <td><div><code>flows/o-return-refund.spec.ts:126</code> DEF-007: 時間軸應含退款處理中與已退款</div></td>
-      </tr><tr>
-        <td><strong>DEF-008</strong></td>
+        <td><strong>DEF-008</strong><div class="subtle">退款完成未寫入／顯示退款時間</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>1</td>
         <td><div><code>flows/o-return-refund.spec.ts:143</code> DEF-008: 應記錄並顯示退款時間</div></td>
       </tr><tr>
-        <td><strong>DEF-009</strong></td>
+        <td><strong>DEF-009</strong><div class="subtle">我的優惠券缺少折扣碼領取（UI＋API）</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>1</td>
         <td><div><code>ui/v-coupons.spec.ts:123</code> WELCOME50 / SHIPFREE success, invalid, duplicate</div></td>
       </tr><tr>
-        <td><strong>DEF-010</strong></td>
-        <td>1</td>
-        <td><div><code>ui/v-coupons.spec.ts:101</code> DEF-010: used coupon order id should keep MM- prefix</div></td>
-      </tr><tr>
-        <td><strong>DEF-011</strong></td>
-        <td>1</td>
-        <td><div><code>ui/c-checkout-validation.spec.ts:67</code> DEF-011: address validation should show red error texts</div></td>
-      </tr><tr>
-        <td><strong>DEF-012</strong></td>
+        <td><strong>DEF-012</strong><div class="subtle">下單成功後庫存未扣減</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>3</td>
         <td><div><code>api/c-checkout-effects.spec.ts:45</code> C-A05: order deducts product stock</div><div><code>api/o-orders-api.spec.ts:198</code> O-A03: cancellation restores deducted stock</div><div><code>api/o-orders-api.spec.ts:220</code> O-A03: completed refund restores deducted stock</div></td>
       </tr><tr>
-        <td><strong>DEF-015</strong></td>
+        <td><strong>DEF-015</strong><div class="subtle">下單確認通知內文與該筆訂單不符</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>1</td>
         <td><div><code>api/n-notifications-api.spec.ts:96</code> ORDER_CONFIRMED appends exact four-part body for its own order</div></td>
       </tr><tr>
-        <td><strong>DEF-016</strong></td>
-        <td>1</td>
-        <td><div><code>ui/g-loading-datetime.spec.ts:39</code> G-B03 DEF-016: products/orders should use 載入中…</div></td>
-      </tr><tr>
-        <td><strong>DEF-017</strong></td>
-        <td>1</td>
-        <td><div><code>ui/o-order-detail.spec.ts:158</code> O-B04 DEF: reason error copy for empty / over 200</div></td>
-      </tr><tr>
-        <td><strong>DEF-018</strong></td>
-        <td>1</td>
-        <td><div><code>ui/p-products.spec.ts:81</code> P-B01 / R-9.2: all product card images load (naturalWidth &gt; 0)</div></td>
-      </tr><tr>
-        <td><strong>DEF-019</strong></td>
-        <td>1</td>
-        <td><div><code>ui/c-cart.spec.ts:94</code> DEF-019: cart badge updates immediately after UI add (no reload)</div></td>
-      </tr><tr>
-        <td><strong>DEF-021</strong></td>
+        <td><strong>DEF-021</strong><div class="subtle">折扣券折抵以滿額後金額計算（偏少）</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>1</td>
         <td><div><code>api/c-pricing.spec.ts:48</code> CASE_PCT15_WITH_BULK: 機械式鍵盤×1 + PCT15（折抵基準＝小計）</div></td>
       </tr><tr>
-        <td><strong>DEF-022</strong></td>
-        <td>1</td>
-        <td><div><code>ui/c-checkout-validation.spec.ts:89</code> DEF-022: phone longer than 10 digits must be rejected</div></td>
-      </tr><tr>
-        <td><strong>DEF-023</strong></td>
+        <td><strong>DEF-023</strong><div class="subtle">商品小計恰好等於券門檻時無法使用</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>1</td>
         <td><div><code>api/c-pricing.spec.ts:48</code> CASE_PCT15_AT_THRESHOLD: T恤×2 小計恰=800 + PCT15（門檻邊界）</div></td>
       </tr><tr>
-        <td><strong>DEF-024</strong></td>
+        <td><strong>DEF-024</strong><div class="subtle">快速雙擊送出訂單仍建立多筆訂單</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>1</td>
         <td><div><code>flows/c-checkout-success.spec.ts:21</code> submit order shows complete page, empties cart, blocks double submit</div></td>
       </tr><tr>
-        <td><strong>DEF-025</strong></td>
-        <td>1</td>
-        <td><div><code>ui/o-orders.spec.ts:50</code> DEF-025: list order must be newest→oldest (R-14.1)</div></td>
-      </tr><tr>
-        <td><strong>DEF-027</strong></td>
+        <td><strong>DEF-027</strong><div class="subtle">購物車 API 接受負數 quantity</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>1</td>
         <td><div><code>api/c-cart-api.spec.ts:92</code> DEF-027: POST rejects negative quantity without mutating cart</div></td>
       </tr><tr>
-        <td><strong>DEF-028</strong></td>
-        <td>1</td>
-        <td><div><code>api/c-cart-api.spec.ts:113</code> DEF-028: POST rejects sold-out product without mutating cart</div></td>
-      </tr><tr>
-        <td><strong>DEF-029</strong></td>
+        <td><strong>DEF-029</strong><div class="subtle">缺貨 checkout 失敗仍消耗優惠券</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>1</td>
         <td><div><code>api/c-checkout-effects.spec.ts:61</code> C-A06: checkout with qty &gt; stock fails; cart and coupon unchanged</div></td>
       </tr><tr>
-        <td><strong>DEF-030</strong></td>
+        <td><strong>DEF-030</strong><div class="subtle">未登入可直接存取所有核心資料 API</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>5</td>
         <td><div><code>api/g-auth.spec.ts:103</code> DEF-030: anonymous GET /api/products is rejected</div><div><code>api/g-auth.spec.ts:103</code> DEF-030: anonymous GET /api/cart is rejected</div><div><code>api/g-auth.spec.ts:103</code> DEF-030: anonymous GET /api/orders is rejected</div><div><code>api/g-auth.spec.ts:103</code> DEF-030: anonymous GET /api/coupons is rejected</div><div><code>api/g-auth.spec.ts:103</code> DEF-030: anonymous GET /api/notifications is rejected</div></td>
       </tr><tr>
-        <td><strong>DEF-031</strong></td>
+        <td><strong>DEF-031</strong><div class="subtle">Session cookie 缺少 Secure 與 SameSite</div></td>
+        <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>1</td>
         <td><div><code>api/g-auth.spec.ts:62</code> DEF-031: session cookie uses Secure and SameSite attributes</div></td>
+      </tr><tr>
+        <td><strong>DEF-005</strong><div class="subtle">待審核無「撤銷退貨申請」按鈕</div></td>
+        <td><span class="pill sev S3">S3 Minor</span><div class="subtle">Confirmed</div></td>
+        <td>2</td>
+        <td><div><code>flows/o-return-refund.spec.ts:68</code> DEF-005: 待審核應有撤銷退貨申請</div><div><code>flows/o-return-reject-revoke.spec.ts:104</code> revoke dialog → 無退貨／已完成</div></td>
+      </tr><tr>
+        <td><strong>DEF-007</strong><div class="subtle">退貨時間軸缺少「退款處理中」「已退款」</div></td>
+        <td><span class="pill sev S3">S3 Minor</span><div class="subtle">Confirmed</div></td>
+        <td>1</td>
+        <td><div><code>flows/o-return-refund.spec.ts:126</code> DEF-007: 時間軸應含退款處理中與已退款</div></td>
+      </tr><tr>
+        <td><strong>DEF-010</strong><div class="subtle">已使用券訂單編號省略 MM- 前綴</div></td>
+        <td><span class="pill sev S3">S3 Minor</span><div class="subtle">Confirmed</div></td>
+        <td>1</td>
+        <td><div><code>ui/v-coupons.spec.ts:101</code> DEF-010: used coupon order id should keep MM- prefix</div></td>
+      </tr><tr>
+        <td><strong>DEF-011</strong><div class="subtle">收件地址驗證失敗不顯示紅字錯誤</div></td>
+        <td><span class="pill sev S3">S3 Minor</span><div class="subtle">Confirmed</div></td>
+        <td>1</td>
+        <td><div><code>ui/c-checkout-validation.spec.ts:67</code> DEF-011: address validation should show red error texts</div></td>
+      </tr><tr>
+        <td><strong>DEF-016</strong><div class="subtle">商品／訂單載入文案不符合「載入中…」</div></td>
+        <td><span class="pill sev S3">S3 Minor</span><div class="subtle">Confirmed</div></td>
+        <td>1</td>
+        <td><div><code>ui/g-loading-datetime.spec.ts:39</code> G-B03 DEF-016: products/orders should use 載入中…</div></td>
+      </tr><tr>
+        <td><strong>DEF-017</strong><div class="subtle">退貨原因空／超長無 PRD 紅字錯誤</div></td>
+        <td><span class="pill sev S3">S3 Minor</span><div class="subtle">Confirmed</div></td>
+        <td>1</td>
+        <td><div><code>ui/o-order-detail.spec.ts:158</code> O-B04 DEF: reason error copy for empty / over 200</div></td>
+      </tr><tr>
+        <td><strong>DEF-019</strong><div class="subtle">加入購物車後導覽列徽章未即時更新</div></td>
+        <td><span class="pill sev S3">S3 Minor</span><div class="subtle">Confirmed</div></td>
+        <td>1</td>
+        <td><div><code>ui/c-cart.spec.ts:94</code> DEF-019: cart badge updates immediately after UI add (no reload)</div></td>
+      </tr><tr>
+        <td><strong>DEF-022</strong><div class="subtle">手機號碼超過 10 位仍可通過驗證</div></td>
+        <td><span class="pill sev S3">S3 Minor</span><div class="subtle">Confirmed</div></td>
+        <td>1</td>
+        <td><div><code>ui/c-checkout-validation.spec.ts:89</code> DEF-022: phone longer than 10 digits must be rejected</div></td>
+      </tr><tr>
+        <td><strong>DEF-025</strong><div class="subtle">v2.1 訂單列表排序改為舊→新</div></td>
+        <td><span class="pill sev S3">S3 Minor</span><div class="subtle">Confirmed</div></td>
+        <td>1</td>
+        <td><div><code>ui/o-orders.spec.ts:50</code> DEF-025: list order must be newest→oldest (R-14.1)</div></td>
+      </tr><tr>
+        <td><strong>DEF-028</strong><div class="subtle">購物車 API 允許加入庫存為 0 的商品</div></td>
+        <td><span class="pill sev S3">S3 Minor</span><div class="subtle">Confirmed</div></td>
+        <td>1</td>
+        <td><div><code>api/c-cart-api.spec.ts:113</code> DEF-028: POST rejects sold-out product without mutating cart</div></td>
+      </tr><tr>
+        <td><strong>DEF-018</strong><div class="subtle">香氛蠟燭禮盒商品圖片破圖</div></td>
+        <td><span class="pill sev S4">S4 Trivial</span><div class="subtle">Confirmed</div></td>
+        <td>1</td>
+        <td><div><code>ui/p-products.spec.ts:81</code> P-B01 / R-9.2: all product card images load (naturalWidth &gt; 0)</div></td>
       </tr></tbody>
     </table>
   </section>
