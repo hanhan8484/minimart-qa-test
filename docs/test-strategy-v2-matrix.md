@@ -4,7 +4,7 @@
 > 本檔為同一套策略的 **matrix**：完整「規則 → 案例」對照與案例總表。
 
 - 依據：`PRD.md` v2.1（行為唯一依據；延續 v2.0 案例編號）
-- 目標站：依 `playwright.config.ts` 的 `baseURL`（預設 `https://cand1.tail296b14.ts.net`）
+- 目標站：依環境變數 `BASE_URL`（見根目錄 `.env.example`／`README.md`；不在公開文件寫死私人主機）
 - 原則：
   1. **每一條 `R-章.序` 規則至少對應一個 Primary 測試案例**，不得遺漏。
   2. **同一條規則只有一個 Primary 類型**（API / UI 單點 / 連續流程三選一），禁止用第二套邏輯重算同一公式。
@@ -692,19 +692,17 @@ tests/
 
 | 項目 | 說明 |
 |---|---|
-| 重置網址 | [`https://cand1.tail296b14.ts.net/reset-4712a2d2`](https://cand1.tail296b14.ts.net/reset-4712a2d2)（亦可用 `RESET_URL` 覆寫） |
+| 重置網址 | 設 `RESET_URL`，或設 `BASE_URL` + 可選 `RESET_PATH`（見 `.env.example`／`tests/helpers/constants.ts`；**公開文件不寫死私人主機**） |
 | 方法 | **GET**（頁面顯示「環境已重置為初始狀態」／Day-0 seed） |
 | 等待 | 呼叫後 **等待 5 秒**（官方提示 3–5 秒），再登入或下斷言 |
 | 重置範圍 | 庫存、優惠券用量、訂單全部歸零（回到附錄 A 初始態；**仍含內建三單／三則通知**） |
-| Helper | `resetEnv()` → `request.get(RESET_URL)` → wait 5000ms |
+| Helper | `resetEnv()` → `resolveResetUrl()` → `request.get` → wait 5000ms |
 | 必重置案例 | P-A01、O-B01（真實分支）、N-B02、V-A01、V-C01、C-A03、庫存相關 |
 | 不靠重置、改 `@mock` | 空訂單、空通知、通知徽章 `99+` |
 
 ```ts
-const DEFAULT_RESET_URL = 'https://cand1.tail296b14.ts.net/reset-4712a2d2';
-
 export async function resetEnv(request: APIRequestContext) {
-  const url = process.env.RESET_URL || DEFAULT_RESET_URL;
+  const url = resolveResetUrl(); // RESET_URL or BASE_URL + RESET_PATH
   const res = await request.get(url);
   if (!res.ok()) throw new Error(`reset failed: ${res.status()}`);
   await new Promise((r) => setTimeout(r, 5_000));
@@ -723,7 +721,7 @@ export async function resetEnv(request: APIRequestContext) {
 
 | 項目 | 說明 |
 |---|---|
-| 測試帳號 | `demo@minimart.test` / `demo1234` |
+| 測試帳號 | PRD R-1.2 內建測試帳（可用 `TEST_USER`／`TEST_PASS` 覆寫） |
 | 資料基準 | 重置後＝附錄 A；空態／99+ 用 mock |
 | Browser | 本機若 C 槽不足，使用 `PLAYWRIGHT_BROWSERS_PATH=D:\ms-playwright` |
 
@@ -748,7 +746,7 @@ export async function resetEnv(request: APIRequestContext) {
 | 日期 | 說明 |
 |---|---|
 | 2026-07-17 | 初版：依 PRD v2.0 全規則映射；三類型；同畫面合併；全域導覽帳號／登出 |
-| 2026-07-17 | 環境重置 `…/reset-4712a2d2`（GET、Day-0、等 5 秒） |
+| 2026-07-17 | 環境重置（GET Day-0、等 5 秒；見 `RESET_URL`／`BASE_URL`） |
 | 2026-07-17 | Primary + Display secondary（C-B10／O-B05／O-B06） |
 | 2026-07-17 | 難造條件 API Mock：空訂單／空通知／99+；檔案因磁碟滿曾清空後完整還原 |
 | 2026-07-19 | 決策段（沒測／MVP／AI）移至 `docs/test-strategy-v2.md`；本檔維持對照細表 |

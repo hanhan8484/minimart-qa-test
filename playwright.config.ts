@@ -15,7 +15,8 @@ export default defineConfig({
   ],
   timeout: 60_000,
   use: {
-    baseURL: process.env.BASE_URL || 'https://cand1.tail296b14.ts.net',
+    // Required: set BASE_URL to the assignment SUT (see .env.example / README). No private host default.
+    baseURL: process.env.BASE_URL,
     trace: 'on-first-retry',
   },
   projects: [

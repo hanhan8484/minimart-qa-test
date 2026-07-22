@@ -86,7 +86,7 @@
 
 | 項目 | 假設／判斷 | 影響 |
 |---|---|---|
-| 環境重置 | `GET …/reset-4712a2d2` 後等 5 秒即 Day-0（含 A.4 三單、A.5 三則通知） | 重置失敗會導致列表筆數／券狀態亂掉 |
+| 環境重置 | `GET` reset path（`RESET_URL` 或 `BASE_URL`+`RESET_PATH`）後等 5 秒即 Day-0（含 A.4 三單、A.5 三則通知） | 重置失敗會導致列表筆數／券狀態亂掉 |
 | 共用 SUT | 同一時間只有一個測試執行者（`workers: 1`） | 與他人並行會互相污染 |
 | R-12.8 防重複下單 | 以「訂單筆數 +1」與 `POST /api/checkout` 次數為準，不只看完成頁 | 舊測試曾漏測；現以 DEF-024 鎖定 |
 | R-1.4 徽章 | 「即時」＝加購後同一頁、不 reload 就要更新 | C-B03 曾 reload 後才查，另立 DEF-019 |
@@ -151,9 +151,9 @@
 |---|---|
 | 工具 | Playwright + TypeScript |
 | `BASE_URL` | 可覆寫（見 README） |
-| 帳號 | `demo@minimart.test` / `demo1234` |
+| 帳號 | PRD R-1.2 內建測試帳（可用 env 覆寫；見 README） |
 | Reset | `RESET_URL` 或預設 reset path，等 5 秒 |
-| Browser | chromium only |
+| Browser | chromium（另可選 firefox／webkit projects） |
 
 細節與案例總表：[`test-strategy-v2-matrix.md`](./test-strategy-v2-matrix.md)。
 

@@ -111,7 +111,7 @@
 | **狀態** | Open |
 | **嚴重度** | S4 Trivial |
 | **相關 PRD** | R-1.3（導覽列由左至右含「我的優惠券」） |
-| **環境** | `https://cand1.tail296b14.ts.net/`（MiniMart v2.0） |
+| **環境** | 受測站（`BASE_URL`；見 README／`.env.example`） |
 | **發現方式** | Batch1 自動化 `G-B02`；`page.locator('header.navbar a')` 實際文案為「我的優惠卷」 |
 | **重現步驟** | 1. 以 `demo@minimart.test` 登入<br>2. 檢視頂部導覽列「優惠券」連結文案 |
 | **期望結果** | 顯示「我的優惠券」（券） |
@@ -135,7 +135,7 @@
 | **狀態** | Verified — v2.1 G-C01 通過（2026-07-20） |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-1.7（點擊「登出」後，系統清空購物車內所有商品，並回到登入頁。再次登入時購物車為空。） |
-| **環境** | `https://cand1.tail296b14.ts.net/`（MiniMart v2.0） |
+| **環境** | 受測站（`BASE_URL`；見 README／`.env.example`） |
 | **發現方式** | Batch2 自動化 `G-C01`；另以 `/api/cart` 在登出再登入後複驗 |
 | **重現步驟** | 1. 登入並加入至少 1 件商品<br>2. 確認 `GET /api/cart` 有品項<br>3. 點「登出」<br>4. 再次登入<br>5. 再呼叫 `GET /api/cart` |
 | **期望結果** | 再次登入後購物車為空（`count=0` / `items=[]`） |
@@ -159,7 +159,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-6.5、R-14.9（待出貨且下單未滿 10 分鐘應顯示「取消訂單」；確認後→「已取消」） |
-| **環境** | `https://cand1.tail296b14.ts.net/`（MiniMart v2.0） |
+| **環境** | 受測站（`BASE_URL`；見 README／`.env.example`） |
 | **發現方式** | Batch3 探測／自動化 `O-C02`；新下單後開詳情 |
 | **重現步驟** | 1. Reset 後登入<br>2. 加入商品並完成結帳<br>3. 點「查看訂單」進入剛成立的待出貨詳情<br>4. 檢視「狀態與操作」區塊與 `GET /api/orders/{id}` |
 | **期望結果** | 顯示「取消訂單」；點擊後對話框「確定要取消這筆訂單嗎？」；確認後狀態「已取消」 |
@@ -183,7 +183,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-12.5（摘要五列順序與含義）、R-2.8（金額格式）、R-4.15（計算順序） |
-| **環境** | `https://cand1.tail296b14.ts.net/`（MiniMart v2.0） |
+| **環境** | 受測站（`BASE_URL`；見 README／`.env.example`） |
 | **發現方式** | Batch4 探測；`POST /api/checkout/preview` 與結帳頁摘要對照 |
 | **重現步驟** | 1. Reset 後登入<br>2. 購物車加入「機械式鍵盤」×1<br>3. 開啟結帳頁（不使用優惠券）<br>4. 對照 `POST /api/checkout/preview` |
 | **期望結果** | API：`bulkDiscount=159`、`couponDiscount=0`。畫面：「滿額折扣 −NT$159」、「優惠券折抵 NT$0」 |
@@ -207,7 +207,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S3 Minor |
 | **相關 PRD** | R-7.12（待審核時應提供「撤銷退貨申請」） |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | Batch6 O-C03 |
 | **重現步驟** | 1. 對已完成訂單送出退貨申請<br>2. 詳情狀態為「退貨中／待審核」時檢視操作區 |
 | **期望結果** | 有「撤銷退貨申請」與「賣家審核（Demo）」 |
@@ -230,7 +230,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-7.10、R-8.6 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | Batch6 O-C03；`GET /api/orders/{id}` |
 | **重現步驟** | 1. A.4 第二筆（應付 1290／運費 30）走退貨審核通過<br>2. 對照申請頁「預計退款」、詳情「退款金額」、退款通知 |
 | **期望結果** | 退款 = 1290−30 = **1260**；通知「退款金額 NT$1,260」 |
@@ -254,7 +254,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S3 Minor |
 | **相關 PRD** | R-7.8、R-16.7 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | Batch6 O-C03／`returnTimeline` |
 | **重現步驟** | 審核通過至已退款後讀取 `returnTimeline` |
 | **期望結果** | 由舊到新含「待審核」「退款處理中」「已退款」 |
@@ -277,7 +277,7 @@
 | **狀態** | Confirmed — v2.1 宣稱已修；2026-07-20 O-C03 複驗 `refundedAt` 仍為 **null** |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-7.9（須顯示退款時間） |
-| **環境** | `https://cand1.tail296b14.ts.net/`（v2.1） |
+| **環境** | 受測站（`BASE_URL`；v2.1） |
 | **發現方式** | Batch6 O-C03；v2.1 迴歸複驗 |
 | **重現步驟** | 1. 已完成單申請退貨 → 賣家審核通過至已退款<br>2. 查 API `refundedAt` 與詳情「退款時間」 |
 | **期望結果** | `refundedAt` 有 `YYYY-MM-DD HH:mm`；畫面同步顯示 |
@@ -301,7 +301,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-17.1～R-17.4（折扣碼輸入、領取、錯誤文案、A.3） |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | Batch8 UI／流程探測；`V-C01` |
 | **重現步驟** | 1. 登入後開啟「我的優惠券」<br>2. 尋找折扣碼輸入框與「領取」<br>3. 嘗試依 UI 領取 WELCOME50／SHIPFREE |
 | **期望結果** | 可輸入 WELCOME50／SHIPFREE 領取；無效／重複顯示 R-18.8 文案 |
@@ -324,7 +324,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S3 Minor |
 | **相關 PRD** | R-17.7（顯示使用它的訂單編號）、R-6.9（`MM-YYYYMMDD-NNNN`） |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | Batch8 V-B01（下單耗券後開「已使用」） |
 | **重現步驟** | 1. 結帳使用「新人小禮券」下單<br>2. 開啟我的優惠券 → 已使用 |
 | **期望結果** | 顯示完整訂單編號，例如 `訂單編號 MM-20260717-0001` |
@@ -347,7 +347,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S3 Minor |
 | **相關 PRD** | R-18.5、R-18.7、R-18.8（空／字數不符應顯示紅字於欄位下方） |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | Batch10 C-B07 |
 | **重現步驟** | 1. 結帳頁填妥姓名／手機<br>2. 地址留空、少於 5 字、或多於 100 字後 blur |
 | **期望結果** | 「請輸入收件地址」或「收件地址須為 5 至 100 個字」；送出停用 |
@@ -370,7 +370,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-3.5 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | API-A C-A05／O-A03；`GET /api/products` 下單前後對照 |
 | **重現步驟** | 1. 記錄「手沖咖啡濾杯」庫存<br>2. `POST /api/checkout` 購買 N 件<br>3. 再讀庫存 |
 | **期望結果** | 庫存減少 N |
@@ -393,7 +393,7 @@
 | **狀態** | **Verified（重新設計前置條件後通過）** |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-3.4 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | 舊 C-A06 與 DEF-012 耦合；2026-07-21 改用初始 stock=0 的陶瓷馬克杯重新複驗 |
 | **舊重現問題** | 折疊露營椅第一次下單因 DEF-012 未扣庫存，後端仍看到 stock=1；第二次 201 無法獨立證明庫存檢核失效 |
 | **重新複驗** | 將初始 stock=0 的陶瓷馬克杯 ×1 放入購物車後 checkout |
@@ -418,7 +418,7 @@
 | **狀態** | **Verified（誤報關閉）** |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-6.2、R-6.7、R-6.8 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | 舊 O-A02 只檢查 HTTP status；2026-07-21 改為操作前後訂單快照複驗 |
 | **複驗步驟** | 分別執行：已出貨再出貨、已完成再出貨、待出貨確認收貨；比較 status、shippedAt、completedAt、returnStatus、refundedAt |
 | **規格判定** | PRD 要求非法狀態轉換「不會發生」，但沒有規定 API 必須回 4xx；僅因 idempotent endpoint 回 200 不足以判缺陷 |
@@ -442,7 +442,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-8.2、R-15.7 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | API-A N-A01 |
 | **重現步驟** | 1. 新下單（自訂收件人／多品項）<br>2. `GET /api/notifications` 找該 `orderId` |
 | **期望結果** | 標題／內文四段對應該筆訂單；明細行數＝項數 |
@@ -466,7 +466,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S3 Minor |
 | **相關 PRD** | R-1.9 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | G-B03 |
 | **重現步驟** | 1. 登入後 throttle `GET /api/products` 或 `/api/orders`<br>2. 開 `/` 或 `/orders` |
 | **期望結果** | 內容區顯示「載入中…」 |
@@ -489,7 +489,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S3 Minor |
 | **相關 PRD** | R-18.6、R-18.8（退貨原因） |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | O-B04 |
 | **重現步驟** | 1. 已完成訂單開申請退貨<br>2. 原因留空或輸入 >200 字後 blur |
 | **期望結果** | 「請填寫退貨原因」／「退貨原因不可超過 200 個字」；送出停用 |
@@ -512,7 +512,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S4 Trivial |
 | **相關 PRD** | R-9.2 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | 複驗 RD D-02；P-B01 |
 | **重現步驟** | 1. 登入開商品列表<br>2. 檢視「香氛蠟燭禮盒」卡片圖片 |
 | **期望結果** | 圖片正常載入（`naturalWidth > 0`） |
@@ -536,7 +536,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S3 Minor |
 | **相關 PRD** | R-1.4 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | 複驗 RD D-03；C-B03（原案會 reload 故漏抓） |
 | **重現步驟** | 1. 清空購物車後開 `/`<br>2. 點「加入購物車」、**不重整** |
 | **期望結果** | 導覽列 `cart-badge` 立即顯示數量 |
@@ -560,7 +560,7 @@
 | **狀態** | Verified — v2.1 UI／API 件數正確（已出貨「2 件」）；2026-07-20 |
 | **嚴重度** | S3 Minor |
 | **相關 PRD** | R-14.2、附錄 A.4 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | 複驗 RD D-05；O-B01 |
 | **重現步驟** | 1. reset 後開 `/orders`<br>2. 看 `MM-20260710-0001`（已出貨）件數<br>3. 對照訂單詳情商品明細 |
 | **期望結果** | 列表「2 件」（手沖咖啡濾杯 × 2） |
@@ -584,7 +584,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-4.7 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | 複驗 RD D-06；`POST /api/checkout/preview` + PCT15 |
 | **重現步驟** | 1. 購物車：機械式鍵盤 × 1<br>2. preview 套用 `PCT15` |
 | **期望結果** | `couponDiscount = 3180 × 15% = 477`（基準＝商品小計） |
@@ -608,7 +608,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S3 Minor |
 | **相關 PRD** | R-18.4 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | 複驗 RD D-07；C-B07 |
 | **重現步驟** | 1. 結帳頁填妥姓名／地址<br>2. 手機填 `09123456789`（11 位）後 blur |
 | **期望結果** | 顯示「請輸入正確的手機號碼（09 開頭，共 10 位數字）」；送出停用 |
@@ -632,7 +632,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-4.6 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | 複驗 RD D-08；`POST /api/checkout/preview` |
 | **重現步驟** | 1. 購物車：純棉素色 T 恤 × 2（小計 NT$800）<br>2. preview 套用 `PCT15`（門檻 NT$800） |
 | **期望結果** | 恰等於門檻可用；`couponDiscount = 120`、`couponName = 全站 85 折券` |
@@ -656,7 +656,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-12.8 |
-| **環境** | `https://cand1.tail296b14.ts.net/` |
+| **環境** | 受測站（`BASE_URL`） |
 | **發現方式** | 手動 UI 快速雙擊「送出訂單」；C-C02 補強後複驗 |
 | **重現步驟** | 1. 登入、購物車有品項、填完收件資訊<br>2. 快速連續點擊「送出訂單」兩次 |
 | **期望結果** | 按鈕立即停用並顯示「處理中…」；同一次結帳只建立 **一** 張訂單 |
@@ -680,7 +680,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S3 Minor |
 | **相關 PRD** | R-14.1 |
-| **環境** | `https://cand1.tail296b14.ts.net/`（v2.1） |
+| **環境** | 受測站（`BASE_URL`；v2.1） |
 | **發現方式** | v2.1 迴歸；O-B01 |
 | **重現步驟** | 1. Reset 後開啟「我的訂單」 |
 | **期望結果** | 新→舊：待出貨 → 已完成 → 已出貨 |
@@ -703,7 +703,7 @@
 | **狀態** | **Verified（誤報關閉）** — 功能存在（`#checkout-note`）；先前自動化未等結帳載入完 |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-12.12, R-14.11, R-18.10（`PRD.md` v2.1） |
-| **環境** | `https://cand1.tail296b14.ts.net/`（v2.1） |
+| **環境** | 受測站（`BASE_URL`；v2.1） |
 | **發現方式** | v2.1 迴歸；手動複驗可見欄位 |
 | **實際結果（更正）** | 結帳有「訂單備註（選填）」＋`#checkout-note`；詳情可顯示備註／「（無備註）」 |
 | **自動化處理** | C-B12／C-B13／O-B07（`c-checkout-structure`／`c-checkout-validation`／`o-order-detail`）；2026-07-20 通過 |
@@ -725,7 +725,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-11.5（購物車數量下限為 1） |
-| **環境** | `https://cand1.tail296b14.ts.net/`（v2.1） |
+| **環境** | 受測站（`BASE_URL`；v2.1） |
 | **發現方式** | 手動呼叫 `POST /api/cart/items`；C-A02 負向案例 |
 | **重現步驟** | 1. Reset 並登入<br>2. `POST /api/cart/items`，body 傳入合法 `productId` 與 `quantity: -9`<br>3. 查詢 response 與 `GET /api/cart` |
 | **期望結果** | API 回傳 4xx，購物車維持空白；任何購物車品項數量不得小於 1 |
@@ -749,7 +749,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S3 Minor |
 | **相關 PRD** | R-11.5（車內數量不得超過當前庫存） |
-| **環境** | `https://cand1.tail296b14.ts.net/`（v2.1） |
+| **環境** | 受測站（`BASE_URL`；v2.1） |
 | **發現方式** | 手動呼叫 `POST /api/cart/items`；C-A02 負向案例 |
 | **重現步驟** | 1. Reset 並登入<br>2. 確認「陶瓷馬克杯」stock=0<br>3. POST `/api/cart/items`：`productId=6, quantity=1`<br>4. GET `/api/cart` |
 | **期望結果** | API 回 4xx，購物車維持空白；quantity 不得大於 stock |
@@ -773,7 +773,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | R-3.4、R-12.10 |
-| **環境** | `https://cand1.tail296b14.ts.net/`（v2.1） |
+| **環境** | 受測站（`BASE_URL`；v2.1） |
 | **發現方式** | C-A06 重新設計：stock=0 陶瓷馬克杯 + FREESHIP checkout |
 | **重現步驟** | 1. 將 stock=0 的陶瓷馬克杯 ×1 放入購物車<br>2. 記錄 FREESHIP 狀態<br>3. 使用 FREESHIP 呼叫 checkout<br>4. 收到 409 後再次查券狀態 |
 | **期望結果** | checkout 回 409；不建單、車／庫存／券皆不變，FREESHIP 保持未使用 |
@@ -797,7 +797,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | Security baseline；R-1.10 僅明訂 UI 路由，此項為 API authorization extension |
-| **環境** | `https://cand1.tail296b14.ts.net/`（v2.1） |
+| **環境** | 受測站（`BASE_URL`；v2.1） |
 | **發現方式** | G-A03 auth 正式審查；全新無 cookie request context |
 | **重現步驟** | 未登入直接 GET `/api/products`、`/api/cart`、`/api/orders`、`/api/coupons`、`/api/notifications` |
 | **期望結果** | 未帶有效 session 時回 401 或 403，不回傳應用資料 |
@@ -821,7 +821,7 @@
 | **狀態** | Confirmed |
 | **嚴重度** | S2 Major |
 | **相關 PRD** | Security baseline；R-1.2 session extension |
-| **環境** | `https://cand1.tail296b14.ts.net/`（HTTPS，v2.1） |
+| **環境** | 受測站（`BASE_URL`；HTTPS／v2.1） |
 | **發現方式** | G-A01 登入 response `Set-Cookie` 檢查 |
 | **重現步驟** | 使用正確帳密 POST `/api/auth/login`，檢查 response 的 `Set-Cookie` |
 | **期望結果** | Session cookie 至少包含 `HttpOnly`、`Secure` 與明確 `SameSite=Lax` 或 `SameSite=Strict` |
@@ -880,7 +880,7 @@
 | 2026-07-17 | 登錄 DEF-016（載入文案）、DEF-017（退貨原因紅字） |
 | 2026-07-17 | 複驗 RD D-01～D-08；登錄 DEF-018～DEF-023；統計／清單／詳情對齊為 23 筆 |
 | 2026-07-17 | 登錄 DEF-024（快速雙擊重複下單）；統計／清單／詳情對齊為 24 筆 |
-| 2026-07-20 | RD v2.1：DEF-002／008／020 標 Fixed（待複驗）；cand1 抽測仍見 002／020 失敗；補訂單備註測 |
+| 2026-07-20 | RD v2.1：DEF-002／008／020 標 Fixed（待複驗）；受測站抽測仍見 002／020 失敗；補訂單備註測 |
 | 2026-07-20 | 確認同 URL 即 v2.1；DEF-002／020 → Verified；登錄 DEF-025／026；合計 26 |
 | 2026-07-20 | DEF-008 v2.1 複驗仍 Fail（refundedAt=null）；改回 Confirmed + test.fail |
 | 2026-07-21 | 登錄 DEF-027（購物車 API 接受負數 quantity）；合計 27 |

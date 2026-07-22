@@ -4,15 +4,17 @@
 
 ## 建議交卷步驟
 
-1. 設定受測網址並全量執行：
+1. 設定受測網址並全量執行（**勿把真實 `BASE_URL` 寫進公開 repo**）：
 
    **PowerShell**
 
    ```powershell
-   $env:BASE_URL = "https://cand1.tail296b14.ts.net"
+   $env:BASE_URL = "https://<your-minimart-host>"
    # 若需要：$env:PLAYWRIGHT_BROWSERS_PATH = "D:\ms-playwright"
    npm test
    ```
+
+   變數說明見根目錄 [`.env.example`](../../.env.example) 與 [`README.md`](../../README.md)。
 
 2. 將報告複製到本目錄（可進 git、方便面試官 clone 後離線開）：
 

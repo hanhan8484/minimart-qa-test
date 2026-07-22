@@ -8,6 +8,11 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 
+# Local secrets / private SUT (never commit)
+.env
+.env.local
+.env.*.local
+
 # Keep archived handoff reports under docs/reports/ (see docs/reports/README.md)
 !docs/reports/
 !docs/reports/**
