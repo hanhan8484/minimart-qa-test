@@ -11,6 +11,7 @@ export default defineConfig({
     ['list'],
     ['html', { open: 'never' }],
     ['json', { outputFile: 'test-results/results.json' }],
+    ['./tests/reporters/executive-reporter.ts'],
   ],
   timeout: 60_000,
   use: {

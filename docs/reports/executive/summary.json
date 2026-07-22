@@ -1,0 +1,2695 @@
+{
+  "generatedAt": "2026-07-22T01:26:06.742Z",
+  "startedAt": "2026-07-22T01:05:38.379Z",
+  "durationMs": 1228363,
+  "playwrightStatus": "passed",
+  "commit": "36a4b9bf0834",
+  "product": "MiniMart",
+  "sutVersion": "v2.1",
+  "baseURL": "https://cand1.tail296b14.ts.net",
+  "projects": [
+    "chromium"
+  ],
+  "counts": {
+    "total": 123,
+    "normalPass": 84,
+    "expectedFailure": 36,
+    "skipped": 3,
+    "unexpectedFailure": 0,
+    "fixCandidate": 0,
+    "flaky": 0
+  },
+  "layers": {
+    "API": 51,
+    "UI": 56,
+    "Flow": 16,
+    "Other": 0
+  },
+  "uniqueDefects": [
+    "DEF-003",
+    "DEF-004",
+    "DEF-005",
+    "DEF-006",
+    "DEF-007",
+    "DEF-008",
+    "DEF-009",
+    "DEF-010",
+    "DEF-011",
+    "DEF-012",
+    "DEF-015",
+    "DEF-016",
+    "DEF-017",
+    "DEF-018",
+    "DEF-019",
+    "DEF-021",
+    "DEF-022",
+    "DEF-023",
+    "DEF-024",
+    "DEF-025",
+    "DEF-027",
+    "DEF-028",
+    "DEF-029",
+    "DEF-030",
+    "DEF-031"
+  ],
+  "logicalCaseIds": [
+    "C-A01",
+    "C-A02",
+    "C-A03",
+    "C-A05",
+    "C-A06",
+    "C-B01",
+    "C-B02",
+    "C-B03",
+    "C-B04",
+    "C-B05",
+    "C-B06",
+    "C-B07",
+    "C-B08",
+    "C-B09",
+    "C-B10",
+    "C-B11",
+    "C-B12",
+    "C-B13",
+    "C-C01",
+    "C-C02",
+    "G-A01",
+    "G-A02",
+    "G-A03",
+    "G-B01",
+    "G-B02",
+    "G-B03",
+    "G-B04",
+    "G-B05",
+    "G-C01",
+    "G-C02",
+    "N-A01",
+    "N-B01",
+    "N-B02",
+    "O-A01",
+    "O-A02",
+    "O-A03",
+    "O-A04",
+    "O-A05",
+    "O-B01",
+    "O-B02",
+    "O-B03",
+    "O-B04",
+    "O-B05",
+    "O-B06",
+    "O-B07",
+    "O-C01",
+    "O-C02",
+    "O-C03",
+    "O-C04",
+    "O-C05",
+    "P-A01",
+    "P-A02",
+    "P-B01",
+    "P-B02",
+    "P-B03",
+    "P-B04",
+    "P-B05",
+    "V-A01",
+    "V-B01",
+    "V-C01"
+  ],
+  "defects": {
+    "unresolved": 26,
+    "verified": 5,
+    "total": 31,
+    "severity": {
+      "S1": 0,
+      "S2": 13,
+      "S3": 11,
+      "S4": 2
+    }
+  },
+  "requirementCoverage": {
+    "total": 164,
+    "mapped": 164,
+    "executable": 162,
+    "conforming": 126,
+    "note": "Requirement coverage from PRD R-1.1 through R-18.x; not source-code coverage."
+  },
+  "globalErrors": [],
+  "tests": [
+    {
+      "id": "e006a3dd354f01052d00-5af0118d146e6035ebd0",
+      "title": "C-A01: same product accumulates and caps at 5",
+      "titlePath": "chromium › api\\c-cart-api.spec.ts › C-A01 / C-A02 cart API › C-A01: same product accumulates and caps at 5",
+      "file": "api/c-cart-api.spec.ts",
+      "line": 26,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1495,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "e006a3dd354f01052d00-90749aac25e9a99758e7",
+      "title": "C-A02: PATCH preserves quantity within 1..min(5, stock)",
+      "titlePath": "chromium › api\\c-cart-api.spec.ts › C-A01 / C-A02 cart API › C-A02: PATCH preserves quantity within 1..min(5, stock)",
+      "file": "api/c-cart-api.spec.ts",
+      "line": 51,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1995,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "e006a3dd354f01052d00-9febc4a0d82993744172",
+      "title": "DEF-027: POST rejects negative quantity without mutating cart",
+      "titlePath": "chromium › api\\c-cart-api.spec.ts › C-A01 / C-A02 cart API › DEF-027: POST rejects negative quantity without mutating cart",
+      "file": "api/c-cart-api.spec.ts",
+      "line": 92,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 1015,
+      "retries": 0,
+      "defectIds": [
+        "DEF-027"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-027: POST /api/cart/items accepts quantity=-9 and violates R-11.5 cart quantity lower bound",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\c-cart-api.spec.ts",
+            "line": 93,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: unexpected status 200\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeFalsy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mtrue\u001b[39m\n\nError: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m400\u001b[39m\nReceived:    \u001b[31m200\u001b[39m\n\nError: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m0\u001b[39m\nReceived length: \u001b[31m1\u001b[39m\nReceived array:  \u001b[31m[{\"imageUrl\": \"/images/coffee-dripper.svg\", \"lineTotal\": -4320, \"name\": \"手沖咖啡濾杯\", \"productId\": 1, \"quantity\": -9, \"unitPrice\": 480}]\u001b[39m"
+    },
+    {
+      "id": "e006a3dd354f01052d00-0904b309a7e6aa12bd4c",
+      "title": "DEF-028: POST rejects sold-out product without mutating cart",
+      "titlePath": "chromium › api\\c-cart-api.spec.ts › C-A01 / C-A02 cart API › DEF-028: POST rejects sold-out product without mutating cart",
+      "file": "api/c-cart-api.spec.ts",
+      "line": 113,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 984,
+      "retries": 0,
+      "defectIds": [
+        "DEF-028"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-028: POST /api/cart/items accepts stock=0 product and violates R-11.5 cart stock bound",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\c-cart-api.spec.ts",
+            "line": 114,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: unexpected status 200\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeFalsy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mtrue\u001b[39m\n\nError: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m400\u001b[39m\nReceived:    \u001b[31m200\u001b[39m\n\nError: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m0\u001b[39m\nReceived length: \u001b[31m1\u001b[39m\nReceived array:  \u001b[31m[{\"imageUrl\": \"/images/mug.svg\", \"lineTotal\": 260, \"name\": \"陶瓷馬克杯\", \"productId\": 6, \"quantity\": 1, \"unitPrice\": 260}]\u001b[39m"
+    },
+    {
+      "id": "ee32091b385271fffa67-e684b83afa004ab9608d",
+      "title": "C-A05: order marks coupon used and clears cart",
+      "titlePath": "chromium › api\\c-checkout-effects.spec.ts › C-A05 / C-A06 checkout effects › C-A05: order marks coupon used and clears cart",
+      "file": "api/c-checkout-effects.spec.ts",
+      "line": 20,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1324,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "ee32091b385271fffa67-581969856a1f9b18cc87",
+      "title": "C-A05: order deducts product stock",
+      "titlePath": "chromium › api\\c-checkout-effects.spec.ts › C-A05 / C-A06 checkout effects › C-A05: order deducts product stock",
+      "file": "api/c-checkout-effects.spec.ts",
+      "line": 45,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 1138,
+      "retries": 0,
+      "defectIds": [
+        "DEF-012"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-012: 下單成功後商品庫存未扣減（R-3.5）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\c-checkout-effects.spec.ts",
+            "line": 46,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m6\u001b[39m\nReceived: \u001b[31m8\u001b[39m"
+    },
+    {
+      "id": "ee32091b385271fffa67-98f466adfd312b1984ab",
+      "title": "C-A06: checkout with qty > stock fails; cart and coupon unchanged",
+      "titlePath": "chromium › api\\c-checkout-effects.spec.ts › C-A05 / C-A06 checkout effects › C-A06: checkout with qty > stock fails; cart and coupon unchanged",
+      "file": "api/c-checkout-effects.spec.ts",
+      "line": 61,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 2759,
+      "retries": 0,
+      "defectIds": [
+        "DEF-029"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-029: OUT_OF_STOCK checkout returns 409 but still consumes FREESHIP (R-3.4 / R-12.10)",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\c-checkout-effects.spec.ts",
+            "line": 146,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7m未\u001b[27m使用\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7m已\u001b[27m使用\"\u001b[39m\n\nError: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mnull\u001b[39m\nReceived: \u001b[31m\"MM-20260722-0003\"\u001b[39m"
+    },
+    {
+      "id": "c2318372447c29107bfe-a22509944ccffd48475b",
+      "title": "CASE_R56_1: 咖啡濾杯×2 無券",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_R56_1: 咖啡濾杯×2 無券",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 856,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-9445b99c2ea678a85bb3",
+      "title": "CASE_R56_2: 機械式鍵盤×1 無券",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_R56_2: 機械式鍵盤×1 無券",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1005,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-0b3370b39caab85c8898",
+      "title": "CASE_R56_3: 機械式鍵盤×1 + SAVE300",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_R56_3: 機械式鍵盤×1 + SAVE300",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1024,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-4f01bb833f5228ee8c89",
+      "title": "CASE_R56_4: 無線藍牙耳機×1 無券（四捨五入）",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_R56_4: 無線藍牙耳機×1 無券（四捨五入）",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 991,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-1d19d5ce842499778593",
+      "title": "CASE_FREESHIP: T恤×1 + FREESHIP → 運費 0",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_FREESHIP: T恤×1 + FREESHIP → 運費 0",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1001,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-4d0a04430ab665e7d6eb",
+      "title": "CASE_SHIP_LT500: 濾杯×1 折扣後 480 → 運費 80",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_SHIP_LT500: 濾杯×1 折扣後 480 → 運費 80",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1065,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-ac4f2397cc8487fb10ce",
+      "title": "CASE_SHIP_ABOVE_500: 保溫瓶 − NEWBIE20 → 折扣後 670 → 運費 60",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_SHIP_ABOVE_500: 保溫瓶 − NEWBIE20 → 折扣後 670 → 運費 60",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1112,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-dc3297097c9250c7a2f3",
+      "title": "CASE_SHIP_BELOW_1000: 濾杯＋保溫瓶 + PCT15 → 折扣後 994 → 運費 60",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_SHIP_BELOW_1000: 濾杯＋保溫瓶 + PCT15 → 折扣後 994 → 運費 60",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1164,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-e78a4a1ce3842c11a160",
+      "title": "CASE_SHIP_AT_1000: 露營椅 − NEWBIE20 → 折扣後 1000 → 運費 30",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_SHIP_AT_1000: 露營椅 − NEWBIE20 → 折扣後 1000 → 運費 30",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1138,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-20c170575558014badd3",
+      "title": "CASE_SHIP_BELOW_2000: T恤＋蠟燭×2 − 滿額 − NEWBIE20 → 折扣後 1994 → 運費 30",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_SHIP_BELOW_2000: T恤＋蠟燭×2 − 滿額 − NEWBIE20 → 折扣後 1994 → 運費 30",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1159,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-fd0bfe981a8de9846aae",
+      "title": "CASE_SHIP_ABOVE_2000: 濾杯×3＋保溫瓶 − 滿額 − NEWBIE20 → 折扣後 2003 → 免運",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_SHIP_ABOVE_2000: 濾杯×3＋保溫瓶 − 滿額 − NEWBIE20 → 折扣後 2003 → 免運",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1333,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-3a446a43faf28af69f95",
+      "title": "CASE_NO_BULK: 濾杯×4 小計 1920 → 無滿額折扣",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_NO_BULK: 濾杯×4 小計 1920 → 無滿額折扣",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1310,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-34fbfab850bd456a254e",
+      "title": "CASE_COUPON_BELOW_THRESHOLD: 濾杯×2 套用 SAVE100（未達門檻）→ 不折抵",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_COUPON_BELOW_THRESHOLD: 濾杯×2 套用 SAVE100（未達門檻）→ 不折抵",
+      "file": "api/c-pricing.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 953,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c2318372447c29107bfe-7039524720b86c8ea24f",
+      "title": "CASE_PCT15_WITH_BULK: 機械式鍵盤×1 + PCT15（折抵基準＝小計）",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_PCT15_WITH_BULK: 機械式鍵盤×1 + PCT15（折抵基準＝小計）",
+      "file": "api/c-pricing.spec.ts",
+      "line": 48,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 1001,
+      "retries": 0,
+      "defectIds": [
+        "DEF-021"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-021: 折扣券折抵以滿額後金額為基準，非商品小計（R-4.7）；實際 couponDiscount=453",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\c-pricing.spec.ts",
+            "line": 52,
+            "column": 12
+          }
+        }
+      ],
+      "error": "Error: CASE_PCT15_WITH_BULK couponDiscount\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m477\u001b[39m\nReceived: \u001b[31m453\u001b[39m\n\nError: CASE_PCT15_WITH_BULK payable\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2544\u001b[39m\nReceived: \u001b[31m2568\u001b[39m"
+    },
+    {
+      "id": "c2318372447c29107bfe-ed09211f41cbdeee63d6",
+      "title": "CASE_PCT15_AT_THRESHOLD: T恤×2 小計恰=800 + PCT15（門檻邊界）",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › CASE_PCT15_AT_THRESHOLD: T恤×2 小計恰=800 + PCT15（門檻邊界）",
+      "file": "api/c-pricing.spec.ts",
+      "line": 48,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 996,
+      "retries": 0,
+      "defectIds": [
+        "DEF-023"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-023: 商品小計恰好等於門檻時券不可用（R-4.6）；PCT15@800 未折抵",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\c-pricing.spec.ts",
+            "line": 52,
+            "column": 12
+          }
+        }
+      ],
+      "error": "Error: CASE_PCT15_AT_THRESHOLD couponDiscount\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m120\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nError: CASE_PCT15_AT_THRESHOLD payable\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m740\u001b[39m\nReceived: \u001b[31m860\u001b[39m\n\nError: CASE_PCT15_AT_THRESHOLD couponName\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"全站 85 折券\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m"
+    },
+    {
+      "id": "c2318372447c29107bfe-ed2514d17c040705ac75",
+      "title": "R-2.6: total discount caps at subtotal and discounted amount stays non-negative",
+      "titlePath": "chromium › api\\c-pricing.spec.ts › C-A03 checkout pricing preview › R-2.6: total discount caps at subtotal and discounted amount stays non-negative",
+      "file": "api/c-pricing.spec.ts",
+      "line": 57,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "skipped",
+      "expectedStatus": "skipped",
+      "actualStatus": "skipped",
+      "durationMs": 169,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [
+        {
+          "type": "fixme",
+          "description": "No A.1/A.2 fixture can make discounts exceed subtotal; requires a synthetic coupon or pricing test hook",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\c-pricing.spec.ts",
+            "line": 58,
+            "column": 10
+          }
+        }
+      ],
+      "error": ""
+    },
+    {
+      "id": "fa5b1394a8dc11a2c922-3bf76c7bb7f538f0b253",
+      "title": "G-A01: valid built-in credentials return an HttpOnly session cookie",
+      "titlePath": "chromium › api\\g-auth.spec.ts › G-A01 / G-A02 / G-A03 auth & API smoke › G-A01: valid built-in credentials return an HttpOnly session cookie",
+      "file": "api/g-auth.spec.ts",
+      "line": 28,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 174,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "fa5b1394a8dc11a2c922-764f82941dd51892fa84",
+      "title": "G-A01: wrong password is rejected without creating a session",
+      "titlePath": "chromium › api\\g-auth.spec.ts › G-A01 / G-A02 / G-A03 auth & API smoke › G-A01: wrong password is rejected without creating a session",
+      "file": "api/g-auth.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 188,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "fa5b1394a8dc11a2c922-f9d857fb6904acfe4f62",
+      "title": "G-A01: unknown account is rejected without revealing account existence",
+      "titlePath": "chromium › api\\g-auth.spec.ts › G-A01 / G-A02 / G-A03 auth & API smoke › G-A01: unknown account is rejected without revealing account existence",
+      "file": "api/g-auth.spec.ts",
+      "line": 50,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 173,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "fa5b1394a8dc11a2c922-833b5525fc4cb32cfd9d",
+      "title": "DEF-031: session cookie uses Secure and SameSite attributes",
+      "titlePath": "chromium › api\\g-auth.spec.ts › G-A01 / G-A02 / G-A03 auth & API smoke › DEF-031: session cookie uses Secure and SameSite attributes",
+      "file": "api/g-auth.spec.ts",
+      "line": 62,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 167,
+      "retries": 0,
+      "defectIds": [
+        "DEF-031"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-031: HTTPS session cookie lacks Secure and SameSite attributes (security baseline)",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\g-auth.spec.ts",
+            "line": 68,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/;\\s*Secure(?:;|$)/i\u001b[39m\nReceived string:  \u001b[31m\"session=demo-session; Path=/; HttpOnly\"\u001b[39m\n\nError: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/;\\s*SameSite=(?:Lax|Strict)(?:;|$)/i\u001b[39m\nReceived string:  \u001b[31m\"session=demo-session; Path=/; HttpOnly\"\u001b[39m"
+    },
+    {
+      "id": "fa5b1394a8dc11a2c922-c7f73241ccc247d711c5",
+      "title": "G-A02: authenticated core APIs return their minimum response shapes",
+      "titlePath": "chromium › api\\g-auth.spec.ts › G-A01 / G-A02 / G-A03 auth & API smoke › G-A02: authenticated core APIs return their minimum response shapes",
+      "file": "api/g-auth.spec.ts",
+      "line": 76,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1008,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "fa5b1394a8dc11a2c922-d6782c321e63f04f91ad",
+      "title": "DEF-030: anonymous GET /api/products is rejected",
+      "titlePath": "chromium › api\\g-auth.spec.ts › G-A01 / G-A02 / G-A03 auth & API smoke › DEF-030: anonymous GET /api/products is rejected",
+      "file": "api/g-auth.spec.ts",
+      "line": 103,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 176,
+      "retries": 0,
+      "defectIds": [
+        "DEF-030"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-030: /api/products exposes application data without a session (API authorization baseline)",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\g-auth.spec.ts",
+            "line": 104,
+            "column": 12
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m200\u001b[39m\nReceived array: \u001b[31m[401, 403]\u001b[39m"
+    },
+    {
+      "id": "fa5b1394a8dc11a2c922-dbde94c9d84189b44182",
+      "title": "DEF-030: anonymous GET /api/cart is rejected",
+      "titlePath": "chromium › api\\g-auth.spec.ts › G-A01 / G-A02 / G-A03 auth & API smoke › DEF-030: anonymous GET /api/cart is rejected",
+      "file": "api/g-auth.spec.ts",
+      "line": 103,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 170,
+      "retries": 0,
+      "defectIds": [
+        "DEF-030"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-030: /api/cart exposes application data without a session (API authorization baseline)",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\g-auth.spec.ts",
+            "line": 104,
+            "column": 12
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m200\u001b[39m\nReceived array: \u001b[31m[401, 403]\u001b[39m"
+    },
+    {
+      "id": "fa5b1394a8dc11a2c922-26b2bad4eb378ccc8ae9",
+      "title": "DEF-030: anonymous GET /api/orders is rejected",
+      "titlePath": "chromium › api\\g-auth.spec.ts › G-A01 / G-A02 / G-A03 auth & API smoke › DEF-030: anonymous GET /api/orders is rejected",
+      "file": "api/g-auth.spec.ts",
+      "line": 103,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 179,
+      "retries": 0,
+      "defectIds": [
+        "DEF-030"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-030: /api/orders exposes application data without a session (API authorization baseline)",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\g-auth.spec.ts",
+            "line": 104,
+            "column": 12
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m200\u001b[39m\nReceived array: \u001b[31m[401, 403]\u001b[39m"
+    },
+    {
+      "id": "fa5b1394a8dc11a2c922-25807f3284c19d38da1f",
+      "title": "DEF-030: anonymous GET /api/coupons is rejected",
+      "titlePath": "chromium › api\\g-auth.spec.ts › G-A01 / G-A02 / G-A03 auth & API smoke › DEF-030: anonymous GET /api/coupons is rejected",
+      "file": "api/g-auth.spec.ts",
+      "line": 103,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 166,
+      "retries": 0,
+      "defectIds": [
+        "DEF-030"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-030: /api/coupons exposes application data without a session (API authorization baseline)",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\g-auth.spec.ts",
+            "line": 104,
+            "column": 12
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m200\u001b[39m\nReceived array: \u001b[31m[401, 403]\u001b[39m"
+    },
+    {
+      "id": "fa5b1394a8dc11a2c922-c69f32fa430a593c0fa4",
+      "title": "DEF-030: anonymous GET /api/notifications is rejected",
+      "titlePath": "chromium › api\\g-auth.spec.ts › G-A01 / G-A02 / G-A03 auth & API smoke › DEF-030: anonymous GET /api/notifications is rejected",
+      "file": "api/g-auth.spec.ts",
+      "line": 103,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 185,
+      "retries": 0,
+      "defectIds": [
+        "DEF-030"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-030: /api/notifications exposes application data without a session (API authorization baseline)",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\g-auth.spec.ts",
+            "line": 104,
+            "column": 12
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m200\u001b[39m\nReceived array: \u001b[31m[401, 403]\u001b[39m"
+    },
+    {
+      "id": "1c88052ee281ee9d1ce5-205d3b58f823dcce8060",
+      "title": "ORDER_CONFIRMED appends exact four-part body for its own order",
+      "titlePath": "chromium › api\\n-notifications-api.spec.ts › N-A01 notifications API › ORDER_CONFIRMED appends exact four-part body for its own order",
+      "file": "api/n-notifications-api.spec.ts",
+      "line": 96,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 7511,
+      "retries": 0,
+      "defectIds": [
+        "DEF-015"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-015: 下單確認通知 body 未對應該筆訂單（錯用其他訂單內容）（R-8.2／R-15.7）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\n-notifications-api.spec.ts",
+            "line": 132,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\n\u001b[32m- Expected  - 5\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- 下單時間 2026-07-\u001b[7m22 09:06\u001b[27m\u001b[39m\n\u001b[31m+ 下單時間 2026-07-\u001b[7m01 10:15\u001b[27m\u001b[39m\n\u001b[32m- 手沖咖啡濾杯 × \u001b[7m1\u001b[27m\u001b[39m\n\u001b[32m- 香氛蠟燭禮盒 × 1\u001b[39m\n\u001b[31m+ 手沖咖啡濾杯 × \u001b[7m2\u001b[27m\u001b[39m\n\u001b[32m- 應付金額 NT$1,\u001b[7m37\u001b[27m0\u001b[39m\n\u001b[31m+ 應付金額 NT$1,\u001b[7m02\u001b[27m0\u001b[39m\n\u001b[32m- 收件人 \u001b[7m通知\u001b[27m測試收件\u001b[39m\n\u001b[31m+ 收件人 測試收件\u001b[7m人 1\u001b[27m\u001b[39m"
+    },
+    {
+      "id": "1c88052ee281ee9d1ce5-10b614304e249449af44",
+      "title": "five event categories append independently without overwrite or merge",
+      "titlePath": "chromium › api\\n-notifications-api.spec.ts › N-A01 notifications API › five event categories append independently without overwrite or merge",
+      "file": "api/n-notifications-api.spec.ts",
+      "line": 140,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 8609,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "1c88052ee281ee9d1ce5-1f64571c1dbeb1d3230d",
+      "title": "rejected review appends rejection notification without refund notification",
+      "titlePath": "chromium › api\\n-notifications-api.spec.ts › N-A01 notifications API › rejected review appends rejection notification without refund notification",
+      "file": "api/n-notifications-api.spec.ts",
+      "line": 211,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 7189,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3ae74d8a4fdb21a883f1-44841f981a0f36c46089",
+      "title": "O-A01: id date matches createdAt and same-day sequence increments",
+      "titlePath": "chromium › api\\o-orders-api.spec.ts › O-A01～O-A05 orders API › O-A01: id date matches createdAt and same-day sequence increments",
+      "file": "api/o-orders-api.spec.ts",
+      "line": 122,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 8100,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3ae74d8a4fdb21a883f1-f6f3d2b1dc3d9088b557",
+      "title": "O-A02: shipping an already-shipped order leaves order unchanged",
+      "titlePath": "chromium › api\\o-orders-api.spec.ts › O-A01～O-A05 orders API › O-A02: shipping an already-shipped order leaves order unchanged",
+      "file": "api/o-orders-api.spec.ts",
+      "line": 159,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 6898,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3ae74d8a4fdb21a883f1-e9a7bc18d6f979cf56be",
+      "title": "O-A02: shipping a completed order leaves order unchanged",
+      "titlePath": "chromium › api\\o-orders-api.spec.ts › O-A01～O-A05 orders API › O-A02: shipping a completed order leaves order unchanged",
+      "file": "api/o-orders-api.spec.ts",
+      "line": 159,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 6645,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3ae74d8a4fdb21a883f1-78f6fe817a724ffa7c7b",
+      "title": "O-A02: confirming receipt for a pending order leaves order unchanged",
+      "titlePath": "chromium › api\\o-orders-api.spec.ts › O-A01～O-A05 orders API › O-A02: confirming receipt for a pending order leaves order unchanged",
+      "file": "api/o-orders-api.spec.ts",
+      "line": 159,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 6649,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3ae74d8a4fdb21a883f1-83ed5771ced302085428",
+      "title": "O-A03: cart, ship, confirm and return request do not change stock",
+      "titlePath": "chromium › api\\o-orders-api.spec.ts › O-A01～O-A05 orders API › O-A03: cart, ship, confirm and return request do not change stock",
+      "file": "api/o-orders-api.spec.ts",
+      "line": 169,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 8247,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3ae74d8a4fdb21a883f1-85ebc75796f8a22ad8f4",
+      "title": "O-A03: cancellation restores deducted stock",
+      "titlePath": "chromium › api\\o-orders-api.spec.ts › O-A01～O-A05 orders API › O-A03: cancellation restores deducted stock",
+      "file": "api/o-orders-api.spec.ts",
+      "line": 198,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "skipped",
+      "expectedStatus": "skipped",
+      "actualStatus": "skipped",
+      "durationMs": 7425,
+      "retries": 0,
+      "defectIds": [
+        "DEF-012"
+      ],
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Blocked by DEF-012: checkout did not deduct stock, so cancellation restoration has no valid baseline",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\o-orders-api.spec.ts",
+            "line": 204,
+            "column": 10
+          }
+        }
+      ],
+      "error": ""
+    },
+    {
+      "id": "3ae74d8a4fdb21a883f1-7d2246dc2cd82284b4ea",
+      "title": "O-A03: completed refund restores deducted stock",
+      "titlePath": "chromium › api\\o-orders-api.spec.ts › O-A01～O-A05 orders API › O-A03: completed refund restores deducted stock",
+      "file": "api/o-orders-api.spec.ts",
+      "line": 220,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "skipped",
+      "expectedStatus": "skipped",
+      "actualStatus": "skipped",
+      "durationMs": 7357,
+      "retries": 0,
+      "defectIds": [
+        "DEF-012"
+      ],
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Blocked by DEF-012: checkout did not deduct stock, so refund restoration has no valid baseline",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\o-orders-api.spec.ts",
+            "line": 226,
+            "column": 10
+          }
+        }
+      ],
+      "error": ""
+    },
+    {
+      "id": "3ae74d8a4fdb21a883f1-0255e268e855a220e279",
+      "title": "O-A04: paid-shipping refund equals payable minus shipping",
+      "titlePath": "chromium › api\\o-orders-api.spec.ts › O-A01～O-A05 orders API › O-A04: paid-shipping refund equals payable minus shipping",
+      "file": "api/o-orders-api.spec.ts",
+      "line": 235,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 7936,
+      "retries": 0,
+      "defectIds": [
+        "DEF-006"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-006: refundAmount ≠ payable−shipping（R-7.10）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\o-orders-api.spec.ts",
+            "line": 240,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m480\u001b[39m\nReceived: \u001b[31m400\u001b[39m"
+    },
+    {
+      "id": "3ae74d8a4fdb21a883f1-c51cec7c546b60c1748e",
+      "title": "O-A04: free-shipping refund equals full payable",
+      "titlePath": "chromium › api\\o-orders-api.spec.ts › O-A01～O-A05 orders API › O-A04: free-shipping refund equals full payable",
+      "file": "api/o-orders-api.spec.ts",
+      "line": 244,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 8048,
+      "retries": 0,
+      "defectIds": [
+        "DEF-006"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-006: zero-shipping refund returns subtotal instead of payable（R-7.10）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\o-orders-api.spec.ts",
+            "line": 249,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2280\u001b[39m\nReceived: \u001b[31m2400\u001b[39m"
+    },
+    {
+      "id": "3ae74d8a4fdb21a883f1-d09e95e7db5d3cdce704",
+      "title": "O-A05: past-due fixture coupon is expired",
+      "titlePath": "chromium › api\\o-orders-api.spec.ts › O-A01～O-A05 orders API › O-A05: past-due fixture coupon is expired",
+      "file": "api/o-orders-api.spec.ts",
+      "line": 253,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 6300,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3ae74d8a4fdb21a883f1-1ce8aa14df61aac88277",
+      "title": "O-A05: refund returns used coupon to unused",
+      "titlePath": "chromium › api\\o-orders-api.spec.ts › O-A01～O-A05 orders API › O-A05: refund returns used coupon to unused",
+      "file": "api/o-orders-api.spec.ts",
+      "line": 258,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 8297,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3ae74d8a4fdb21a883f1-de41500bd6ac4ce768e3",
+      "title": "O-A05: cancellation returns used coupon to unused",
+      "titlePath": "chromium › api\\o-orders-api.spec.ts › O-A01～O-A05 orders API › O-A05: cancellation returns used coupon to unused",
+      "file": "api/o-orders-api.spec.ts",
+      "line": 270,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 7664,
+      "retries": 0,
+      "defectIds": [
+        "DEF-003"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-003: new pending order has no working cancel API (R-6.5 / R-4.13)",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\api\\o-orders-api.spec.ts",
+            "line": 278,
+            "column": 12
+          }
+        }
+      ],
+      "error": "Error: POST cancel: HTTP 404\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m"
+    },
+    {
+      "id": "f0d91f185d9c92dad9ef-3dbcf41d4483aeaadc89",
+      "title": "P-A01: products exactly match A.1 and expose complete R-3.1 fields",
+      "titlePath": "chromium › api\\p-products.spec.ts › P-A01 / P-A02 products API › P-A01: products exactly match A.1 and expose complete R-3.1 fields",
+      "file": "api/p-products.spec.ts",
+      "line": 20,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 501,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "f0d91f185d9c92dad9ef-23994d8bd9201868bef2",
+      "title": "P-A02: adding multiple products changes cart but no product stock",
+      "titlePath": "chromium › api\\p-products.spec.ts › P-A01 / P-A02 products API › P-A02: adding multiple products changes cart but no product stock",
+      "file": "api/p-products.spec.ts",
+      "line": 50,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 1261,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "2db65025d58cc5f8f164-9231f09ac5b495dba2b8",
+      "title": "A.2 has exactly six coupons with complete R-4.5 fields",
+      "titlePath": "chromium › api\\v-coupons-api.spec.ts › V-A01 coupons seed API › A.2 has exactly six coupons with complete R-4.5 fields",
+      "file": "api/v-coupons-api.spec.ts",
+      "line": 25,
+      "project": "chromium",
+      "layer": "API",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 348,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "e65fc56164d128fe2fe9-ffaed07dab6b3007537f",
+      "title": "submit order shows complete page, empties cart, blocks double submit",
+      "titlePath": "chromium › flows\\c-checkout-success.spec.ts › C-C02 checkout success › submit order shows complete page, empties cart, blocks double submit",
+      "file": "flows/c-checkout-success.spec.ts",
+      "line": 21,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 26615,
+      "retries": 0,
+      "defectIds": [
+        "DEF-024"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-024: 快速雙擊「送出訂單」仍可能建立多筆訂單（R-12.8）；手動／同步 DOM 雙擊可重現",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\flows\\c-checkout-success.spec.ts",
+            "line": 75,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m4\u001b[39m\nReceived: \u001b[31m7\u001b[39m"
+    },
+    {
+      "id": "68807c998b8a236c9dc6-b47672a971f67a15b349",
+      "title": "cancel keeps item; confirm removes it",
+      "titlePath": "chromium › flows\\c-remove-cart-item.spec.ts › C-C01 remove cart item confirm › cancel keeps item; confirm removes it",
+      "file": "flows/c-remove-cart-item.spec.ts",
+      "line": 18,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9901,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "4f927896cd3c2da3917f-17821c008cb340747ab4",
+      "title": "logout empties cart; login again still empty",
+      "titlePath": "chromium › flows\\g-logout-clears-cart.spec.ts › G-C01 logout clears cart › logout empties cart; login again still empty",
+      "file": "flows/g-logout-clears-cart.spec.ts",
+      "line": 19,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 12117,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3f2837abfaeff76593b1-4d66ed3c18820a721df9",
+      "title": "after logout and re-login, orders coupons notifications unchanged",
+      "titlePath": "chromium › flows\\g-logout-preserves-data.spec.ts › G-C02 logout preserves account data › after logout and re-login, orders coupons notifications unchanged",
+      "file": "flows/g-logout-preserves-data.spec.ts",
+      "line": 40,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 13730,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "ae1c9abd760ace9cf9b1-817665e88c0ad2c1be61",
+      "title": "login, add first in-stock product, see it in cart with badge 1",
+      "titlePath": "chromium › flows\\login-to-cart.spec.ts › Flow: login → add to cart → open cart › login, add first in-stock product, see it in cart with badge 1",
+      "file": "flows/login-to-cart.spec.ts",
+      "line": 14,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9825,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "ec74a4e79c605a163cbb-fec9aa9898ca9df5ef8c",
+      "title": "new order shows cancel dialog → 已取消",
+      "titlePath": "chromium › flows\\o-cancel-order.spec.ts › O-C02 cancel order within 10 minutes › new order shows cancel dialog → 已取消",
+      "file": "flows/o-cancel-order.spec.ts",
+      "line": 16,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 26724,
+      "retries": 0,
+      "defectIds": [
+        "DEF-003"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-003: 待出貨且未滿 10 分鐘仍無「取消訂單」按鈕／無 cancel API（R-6.5）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\flows\\o-cancel-order.spec.ts",
+            "line": 18,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '取消訂單' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '取消訂單' })\u001b[22m\n"
+    },
+    {
+      "id": "d1e8fd724518e8ea0122-aef7705bea8fe0677e4a",
+      "title": "apply page + submit → 退貨中／待審核 + 受理通知",
+      "titlePath": "chromium › flows\\o-return-refund.spec.ts › O-C03 return to refund › apply page + submit → 退貨中／待審核 + 受理通知",
+      "file": "flows/o-return-refund.spec.ts",
+      "line": 31,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9944,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "d1e8fd724518e8ea0122-7fed0cec594e9fe66927",
+      "title": "DEF-005: 待審核應有撤銷退貨申請",
+      "titlePath": "chromium › flows\\o-return-refund.spec.ts › O-C03 return to refund › DEF-005: 待審核應有撤銷退貨申請",
+      "file": "flows/o-return-refund.spec.ts",
+      "line": 68,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 12892,
+      "retries": 0,
+      "defectIds": [
+        "DEF-005"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-005: 待審核狀態缺少「撤銷退貨申請」按鈕（R-7.12）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\flows\\o-return-refund.spec.ts",
+            "line": 69,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '撤銷退貨申請' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '撤銷退貨申請' })\u001b[22m\n"
+    },
+    {
+      "id": "d1e8fd724518e8ea0122-adf9928e492d2fab9fce",
+      "title": "seller review → 已退款 + 通過／退款通知",
+      "titlePath": "chromium › flows\\o-return-refund.spec.ts › O-C03 return to refund › seller review → 已退款 + 通過／退款通知",
+      "file": "flows/o-return-refund.spec.ts",
+      "line": 75,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 10146,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "d1e8fd724518e8ea0122-a9b3350538af820020cf",
+      "title": "DEF-006: 退款金額應為 payable − shipping",
+      "titlePath": "chromium › flows\\o-return-refund.spec.ts › O-C03 return to refund › DEF-006: 退款金額應為 payable − shipping",
+      "file": "flows/o-return-refund.spec.ts",
+      "line": 102,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 8581,
+      "retries": 0,
+      "defectIds": [
+        "DEF-006"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-006: refundAmount/畫面為 NT$1,230（應 NT$1,260）；通知曾顯示應付全額（R-7.10）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\flows\\o-return-refund.spec.ts",
+            "line": 103,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1260\u001b[39m\nReceived: \u001b[31m1230\u001b[39m"
+    },
+    {
+      "id": "d1e8fd724518e8ea0122-7159b51a22bee46b55a8",
+      "title": "DEF-007: 時間軸應含退款處理中與已退款",
+      "titlePath": "chromium › flows\\o-return-refund.spec.ts › O-C03 return to refund › DEF-007: 時間軸應含退款處理中與已退款",
+      "file": "flows/o-return-refund.spec.ts",
+      "line": 126,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 9156,
+      "retries": 0,
+      "defectIds": [
+        "DEF-007"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-007: returnTimeline 審核通過後仍只有「待審核」（R-7.8 / R-16.7）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\flows\\o-return-refund.spec.ts",
+            "line": 127,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected: \u001b[32mArrayContaining [\"待審核\", \"退款處理中\", \"已退款\"]\u001b[39m\nReceived: \u001b[31m[\"待審核\"]\u001b[39m"
+    },
+    {
+      "id": "d1e8fd724518e8ea0122-e4bd28fb898168e0a471",
+      "title": "DEF-008: 應記錄並顯示退款時間",
+      "titlePath": "chromium › flows\\o-return-refund.spec.ts › O-C03 return to refund › DEF-008: 應記錄並顯示退款時間",
+      "file": "flows/o-return-refund.spec.ts",
+      "line": 143,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 8353,
+      "retries": 0,
+      "defectIds": [
+        "DEF-008"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-008: v2.1 宣稱已修，但退款後 refundedAt 仍為 null、詳情退款時間空白（R-7.9）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\flows\\o-return-refund.spec.ts",
+            "line": 144,
+            "column": 10
+          }
+        }
+      ],
+      "error": "TypeError: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a string\n\nReceived has value: \u001b[31mnull\u001b[39m"
+    },
+    {
+      "id": "76c713d9196503bc0225-2b6e0c38c1c7fdb7a01e",
+      "title": "short reason → 賣家審核 → 已駁回／已完成 + 可再申請",
+      "titlePath": "chromium › flows\\o-return-reject-revoke.spec.ts › O-C04 return reject and re-apply › short reason → 賣家審核 → 已駁回／已完成 + 可再申請",
+      "file": "flows/o-return-reject-revoke.spec.ts",
+      "line": 24,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 12345,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "76c713d9196503bc0225-dca7450089db64ab34d0",
+      "title": "re-apply after reject → 再次進入待審核",
+      "titlePath": "chromium › flows\\o-return-reject-revoke.spec.ts › O-C04 return reject and re-apply › re-apply after reject → 再次進入待審核",
+      "file": "flows/o-return-reject-revoke.spec.ts",
+      "line": 75,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 8160,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "76c713d9196503bc0225-2af6e311d007d2744052",
+      "title": "revoke dialog → 無退貨／已完成",
+      "titlePath": "chromium › flows\\o-return-reject-revoke.spec.ts › O-C05 revoke return application › revoke dialog → 無退貨／已完成",
+      "file": "flows/o-return-reject-revoke.spec.ts",
+      "line": 104,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 14997,
+      "retries": 0,
+      "defectIds": [
+        "DEF-005"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-005: 待審核無「撤銷退貨申請」按鈕，O-C05 無法執行（R-7.12）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\flows\\o-return-reject-revoke.spec.ts",
+            "line": 106,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '撤銷退貨申請' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '撤銷退貨申請' })\u001b[22m\n"
+    },
+    {
+      "id": "f71f814c4ccb53832141-bddfd0d608e30a584e6a",
+      "title": "Demo ship → notification → confirm → completed",
+      "titlePath": "chromium › flows\\o-ship-confirm.spec.ts › O-C01 ship then confirm receipt › Demo ship → notification → confirm → completed",
+      "file": "flows/o-ship-confirm.spec.ts",
+      "line": 18,
+      "project": "chromium",
+      "layer": "Flow",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 13178,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "fd4fcf9638efcdf1eab0-dcd8d97b76d501fb0db8",
+      "title": "C-B01: empty cart UI",
+      "titlePath": "chromium › ui\\c-cart.spec.ts › C-B01 / C-B02 / C-B03 cart page › C-B01: empty cart UI",
+      "file": "ui/c-cart.spec.ts",
+      "line": 21,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 8797,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "fd4fcf9638efcdf1eab0-dfa63a260d6441ae485c",
+      "title": "C-B02 / C-B03: cart row fields and badge after add",
+      "titlePath": "chromium › ui\\c-cart.spec.ts › C-B01 / C-B02 / C-B03 cart page › C-B02 / C-B03: cart row fields and badge after add",
+      "file": "ui/c-cart.spec.ts",
+      "line": 31,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9859,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "fd4fcf9638efcdf1eab0-d36dc71cfa9c34a0aef8",
+      "title": "C-B02: quantity picker stays within 1..min(5, stock)",
+      "titlePath": "chromium › ui\\c-cart.spec.ts › C-B01 / C-B02 / C-B03 cart page › C-B02: quantity picker stays within 1..min(5, stock)",
+      "file": "ui/c-cart.spec.ts",
+      "line": 60,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 10860,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "fd4fcf9638efcdf1eab0-52927a1d0a7550324b2b",
+      "title": "DEF-019: cart badge updates immediately after UI add (no reload)",
+      "titlePath": "chromium › ui\\c-cart.spec.ts › C-B01 / C-B02 / C-B03 cart page › DEF-019: cart badge updates immediately after UI add (no reload)",
+      "file": "ui/c-cart.spec.ts",
+      "line": 94,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 13451,
+      "retries": 0,
+      "defectIds": [
+        "DEF-019"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-019: 加入購物車後導覽列徽章未即時更新（需重整才出現）（R-1.4）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\c-cart.spec.ts",
+            "line": 95,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('cart-badge')\nExpected: \u001b[32m\"1\"\u001b[39m\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('cart-badge')\u001b[22m\n"
+    },
+    {
+      "id": "3756a062c6580adbac37-ada3d9132bda648fa1cd",
+      "title": "C-B05: default none; threshold/expired reasons",
+      "titlePath": "chromium › ui\\c-checkout-coupons.spec.ts › C-B05 / C-B06 checkout coupons › C-B05: default none; threshold/expired reasons",
+      "file": "ui/c-checkout-coupons.spec.ts",
+      "line": 25,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 11390,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3756a062c6580adbac37-d33f5726498ad1998618",
+      "title": "C-B06: select / switch / clear coupon updates payable",
+      "titlePath": "chromium › ui\\c-checkout-coupons.spec.ts › C-B05 / C-B06 checkout coupons › C-B06: select / switch / clear coupon updates payable",
+      "file": "ui/c-checkout-coupons.spec.ts",
+      "line": 42,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 11030,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3756a062c6580adbac37-f117282ee8f11115c83e",
+      "title": "C-B05: used coupon shows 已使用 reason",
+      "titlePath": "chromium › ui\\c-checkout-coupons.spec.ts › C-B05 / C-B06 checkout coupons › C-B05: used coupon shows 已使用 reason",
+      "file": "ui/c-checkout-coupons.spec.ts",
+      "line": 66,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 13540,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c0b09d6f2fe7b6738a44-35c5eacebfaafa5b88d1",
+      "title": "CASE_R56_1: summary strings match fixture",
+      "titlePath": "chromium › ui\\c-checkout-display.spec.ts › C-B10 checkout summary display › CASE_R56_1: summary strings match fixture",
+      "file": "ui/c-checkout-display.spec.ts",
+      "line": 22,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9685,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "c0b09d6f2fe7b6738a44-3abf77a8a1c0c6e58a31",
+      "title": "CASE_R56_2: summary strings match fixture",
+      "titlePath": "chromium › ui\\c-checkout-display.spec.ts › C-B10 checkout summary display › CASE_R56_2: summary strings match fixture",
+      "file": "ui/c-checkout-display.spec.ts",
+      "line": 22,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 11987,
+      "retries": 0,
+      "defectIds": [
+        "DEF-004"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-004: checkout summary swaps 滿額折扣 ↔ 優惠券折抵 (R-12.5 / R-2.8)",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\c-checkout-display.spec.ts",
+            "line": 28,
+            "column": 12
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7m−\u001b[27mNT$\u001b[7m159\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"NT$\u001b[7m0\u001b[27m\"\u001b[39m"
+    },
+    {
+      "id": "c0b09d6f2fe7b6738a44-495fc4923f57f57c2582",
+      "title": "CASE_R56_3: summary strings match fixture",
+      "titlePath": "chromium › ui\\c-checkout-display.spec.ts › C-B10 checkout summary display › CASE_R56_3: summary strings match fixture",
+      "file": "ui/c-checkout-display.spec.ts",
+      "line": 22,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 11014,
+      "retries": 0,
+      "defectIds": [
+        "DEF-004"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-004: checkout summary swaps 滿額折扣 ↔ 優惠券折抵 (R-12.5 / R-2.8)",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\c-checkout-display.spec.ts",
+            "line": 28,
+            "column": 12
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"−NT$\u001b[7m159\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"−NT$\u001b[7m300\u001b[27m\"\u001b[39m"
+    },
+    {
+      "id": "c0b09d6f2fe7b6738a44-1fc7fcd8f9271e7fd066",
+      "title": "CASE_R56_4: summary strings match fixture",
+      "titlePath": "chromium › ui\\c-checkout-display.spec.ts › C-B10 checkout summary display › CASE_R56_4: summary strings match fixture",
+      "file": "ui/c-checkout-display.spec.ts",
+      "line": 22,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 9530,
+      "retries": 0,
+      "defectIds": [
+        "DEF-004"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-004: checkout summary swaps 滿額折扣 ↔ 優惠券折抵 (R-12.5 / R-2.8)",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\c-checkout-display.spec.ts",
+            "line": 28,
+            "column": 12
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7m−\u001b[27mNT$\u001b[7m108\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"NT$\u001b[7m0\u001b[27m\"\u001b[39m"
+    },
+    {
+      "id": "3f2c152535971e8ad5ba-836da45e18f6da541caa",
+      "title": "C-B04: five blocks (v2.1), summary order, COD only",
+      "titlePath": "chromium › ui\\c-checkout-structure.spec.ts › C-B04 / C-B08 / C-B09 / C-B11 / C-B12 checkout UI › C-B04: five blocks (v2.1), summary order, COD only",
+      "file": "ui/c-checkout-structure.spec.ts",
+      "line": 25,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9751,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3f2c152535971e8ad5ba-69b75960a71c3239537e",
+      "title": "C-B12: order note between shipping and coupons; counter 0/100; blank ok",
+      "titlePath": "chromium › ui\\c-checkout-structure.spec.ts › C-B04 / C-B08 / C-B09 / C-B11 / C-B12 checkout UI › C-B12: order note between shipping and coupons; counter 0/100; blank ok",
+      "file": "ui/c-checkout-structure.spec.ts",
+      "line": 55,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 10096,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3f2c152535971e8ad5ba-6da202d2d31be4f65bf5",
+      "title": "C-B08: empty cart opening /checkout redirects to /cart",
+      "titlePath": "chromium › ui\\c-checkout-structure.spec.ts › C-B04 / C-B08 / C-B09 / C-B11 / C-B12 checkout UI › C-B08: empty cart opening /checkout redirects to /cart",
+      "file": "ui/c-checkout-structure.spec.ts",
+      "line": 79,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 11937,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3f2c152535971e8ad5ba-aa9dd72480af4d47f25e",
+      "title": "C-B09: stock error stays on checkout; submit re-enabled",
+      "titlePath": "chromium › ui\\c-checkout-structure.spec.ts › C-B04 / C-B08 / C-B09 / C-B11 / C-B12 checkout UI › C-B09: stock error stays on checkout; submit re-enabled",
+      "file": "ui/c-checkout-structure.spec.ts",
+      "line": 87,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9633,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3f2c152535971e8ad5ba-03e94d4b4e99a347dea5",
+      "title": "C-B11: complete page payable string matches fixture",
+      "titlePath": "chromium › ui\\c-checkout-structure.spec.ts › C-B04 / C-B08 / C-B09 / C-B11 / C-B12 checkout UI › C-B11: complete page payable string matches fixture",
+      "file": "ui/c-checkout-structure.spec.ts",
+      "line": 113,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 10158,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "24e356e1437d856e2853-b1dd2503f3549e1aab66",
+      "title": "empty / bad fields disable submit; name & phone show exact errors",
+      "titlePath": "chromium › ui\\c-checkout-validation.spec.ts › C-B07 checkout shipping validation › empty / bad fields disable submit; name & phone show exact errors",
+      "file": "ui/c-checkout-validation.spec.ts",
+      "line": 27,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 11096,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "24e356e1437d856e2853-028b74fd915017d34867",
+      "title": "name over 20 chars not truncated; shows exact error",
+      "titlePath": "chromium › ui\\c-checkout-validation.spec.ts › C-B07 checkout shipping validation › name over 20 chars not truncated; shows exact error",
+      "file": "ui/c-checkout-validation.spec.ts",
+      "line": 45,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9268,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "24e356e1437d856e2853-d389c6160572081651a8",
+      "title": "trim allows submit when padded name is otherwise valid",
+      "titlePath": "chromium › ui\\c-checkout-validation.spec.ts › C-B07 checkout shipping validation › trim allows submit when padded name is otherwise valid",
+      "file": "ui/c-checkout-validation.spec.ts",
+      "line": 54,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 8591,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "24e356e1437d856e2853-44aba062baee0499772c",
+      "title": "address over 100 chars not truncated",
+      "titlePath": "chromium › ui\\c-checkout-validation.spec.ts › C-B07 checkout shipping validation › address over 100 chars not truncated",
+      "file": "ui/c-checkout-validation.spec.ts",
+      "line": 61,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 10174,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "24e356e1437d856e2853-0a484fa440d05dc70996",
+      "title": "DEF-011: address validation should show red error texts",
+      "titlePath": "chromium › ui\\c-checkout-validation.spec.ts › C-B07 checkout shipping validation › DEF-011: address validation should show red error texts",
+      "file": "ui/c-checkout-validation.spec.ts",
+      "line": 67,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 13305,
+      "retries": 0,
+      "defectIds": [
+        "DEF-011"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-011: 收件地址空／過短／過長時不顯示 R-18.8 紅字（僅停用送出）（R-18.7）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\c-checkout-validation.spec.ts",
+            "line": 68,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('請輸入收件地址')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('請輸入收件地址')\u001b[22m\n"
+    },
+    {
+      "id": "24e356e1437d856e2853-943c997e3a7af00926ab",
+      "title": "DEF-022: phone longer than 10 digits must be rejected",
+      "titlePath": "chromium › ui\\c-checkout-validation.spec.ts › C-B07 checkout shipping validation › DEF-022: phone longer than 10 digits must be rejected",
+      "file": "ui/c-checkout-validation.spec.ts",
+      "line": 89,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 15151,
+      "retries": 0,
+      "defectIds": [
+        "DEF-022"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-022: 手機 11 位（如 09123456789）仍可啟用送出、無錯誤（R-18.4）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\c-checkout-validation.spec.ts",
+            "line": 90,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('請輸入正確的手機號碼（09 開頭，共 10 位數字）')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('請輸入正確的手機號碼（09 開頭，共 10 位數字）')\u001b[22m\n"
+    },
+    {
+      "id": "24e356e1437d856e2853-1c4e38845655afc1c931",
+      "title": "C-B13: over 100 chars shows red error and disables submit",
+      "titlePath": "chromium › ui\\c-checkout-validation.spec.ts › C-B13 checkout order-note validation (v2.1) › C-B13: over 100 chars shows red error and disables submit",
+      "file": "ui/c-checkout-validation.spec.ts",
+      "line": 127,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9493,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "4a9de63b53a103996480-c551da7e922deb5cb074",
+      "title": "G-B03: content area shows loading copy while APIs slow",
+      "titlePath": "chromium › ui\\g-loading-datetime.spec.ts › G-B03 / G-B05 global UI › G-B03: content area shows loading copy while APIs slow",
+      "file": "ui/g-loading-datetime.spec.ts",
+      "line": 14,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 19977,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "4a9de63b53a103996480-81ecbe07fe5c3d25b84f",
+      "title": "G-B03 DEF-016: products/orders should use 載入中…",
+      "titlePath": "chromium › ui\\g-loading-datetime.spec.ts › G-B03 / G-B05 global UI › G-B03 DEF-016: products/orders should use 載入中…",
+      "file": "ui/g-loading-datetime.spec.ts",
+      "line": 39,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 29388,
+      "retries": 0,
+      "defectIds": [
+        "DEF-016"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-016: 商品／訂單載入文案為「載入商品中...」「載入訂單中...」而非「載入中…」（R-1.9）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\g-loading-datetime.spec.ts",
+            "line": 41,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('載入中…')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('載入中…')\u001b[22m\n"
+    },
+    {
+      "id": "4a9de63b53a103996480-cdadf71be25ff051bec5",
+      "title": "G-B05: datetimes use YYYY-MM-DD HH:mm; date-only YYYY-MM-DD",
+      "titlePath": "chromium › ui\\g-loading-datetime.spec.ts › G-B03 / G-B05 global UI › G-B05: datetimes use YYYY-MM-DD HH:mm; date-only YYYY-MM-DD",
+      "file": "ui/g-loading-datetime.spec.ts",
+      "line": 61,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 10318,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "b0f78cc58d8e4ed78ee5-d81a2c1d4ff20924ed22",
+      "title": "G-B01: login page, wrong password message, success goes to product list",
+      "titlePath": "chromium › ui\\g-login.spec.ts › G-B01 / G-B04 login page & auth guard › G-B01: login page, wrong password message, success goes to product list",
+      "file": "ui/g-login.spec.ts",
+      "line": 15,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9418,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "b0f78cc58d8e4ed78ee5-d183f900ace519563ec9",
+      "title": "G-B04: unauthenticated routes redirect to login",
+      "titlePath": "chromium › ui\\g-login.spec.ts › G-B01 / G-B04 login page & auth guard › G-B04: unauthenticated routes redirect to login",
+      "file": "ui/g-login.spec.ts",
+      "line": 35,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9587,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "33290a9526f31a51d93f-e2f5be0e04fe1319aaf6",
+      "title": "navbar structure on all main pages; brand returns to products",
+      "titlePath": "chromium › ui\\g-navbar.spec.ts › G-B02 navbar always shows account & logout › navbar structure on all main pages; brand returns to products",
+      "file": "ui/g-navbar.spec.ts",
+      "line": 17,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 13324,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "e37a83df5592b983d43e-647c1db6691d45b873be",
+      "title": "N-B02 + N-B01 real: A.5 seed, read one, mark all, no delete",
+      "titlePath": "chromium › ui\\n-notifications.spec.ts › N-B01 / N-B02 notifications › N-B02 + N-B01 real: A.5 seed, read one, mark all, no delete",
+      "file": "ui/n-notifications.spec.ts",
+      "line": 42,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 10190,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "e37a83df5592b983d43e-77ec27ae8cb0f5cbd5e2",
+      "title": "N-B01 @mock: empty list shows 目前沒有通知",
+      "titlePath": "chromium › ui\\n-notifications.spec.ts › N-B01 / N-B02 notifications › N-B01 @mock: empty list shows 目前沒有通知",
+      "file": "ui/n-notifications.spec.ts",
+      "line": 113,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 20203,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "e37a83df5592b983d43e-573538a42cdc32911fb4",
+      "title": "N-B01 @mock: unread ≥100 shows badge 99+",
+      "titlePath": "chromium › ui\\n-notifications.spec.ts › N-B01 / N-B02 notifications › N-B01 @mock: unread ≥100 shows badge 99+",
+      "file": "ui/n-notifications.spec.ts",
+      "line": 125,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 20850,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "42315a7a286367af713d-9d307635157041d0b0ff",
+      "title": "O-B02: detail six blocks (v2.1); completed has 完成時間; summary order",
+      "titlePath": "chromium › ui\\o-order-detail.spec.ts › O-B02～O-B07 order UI › O-B02: detail six blocks (v2.1); completed has 完成時間; summary order",
+      "file": "ui/o-order-detail.spec.ts",
+      "line": 34,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9013,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "42315a7a286367af713d-bc917ec6928c7a5f2956",
+      "title": "O-B07: seed / pre-v2.1 orders show （無備註）",
+      "titlePath": "chromium › ui\\o-order-detail.spec.ts › O-B02～O-B07 order UI › O-B07: seed / pre-v2.1 orders show （無備註）",
+      "file": "ui/o-order-detail.spec.ts",
+      "line": 68,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 8316,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "42315a7a286367af713d-eb1edca8185726f0c64f",
+      "title": "O-B07: blank note allowed; detail shows （無備註）",
+      "titlePath": "chromium › ui\\o-order-detail.spec.ts › O-B02～O-B07 order UI › O-B07: blank note allowed; detail shows （無備註）",
+      "file": "ui/o-order-detail.spec.ts",
+      "line": 75,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 10632,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "42315a7a286367af713d-433b2f3933297175b152",
+      "title": "O-B07: filled note trimmed on detail; absent on list and complete",
+      "titlePath": "chromium › ui\\o-order-detail.spec.ts › O-B02～O-B07 order UI › O-B07: filled note trimmed on detail; absent on list and complete",
+      "file": "ui/o-order-detail.spec.ts",
+      "line": 92,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 11161,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "42315a7a286367af713d-f408ff42e5dc88669e70",
+      "title": "O-B04: cancel does not create return; illegal entry redirects",
+      "titlePath": "chromium › ui\\o-order-detail.spec.ts › O-B02～O-B07 order UI › O-B04: cancel does not create return; illegal entry redirects",
+      "file": "ui/o-order-detail.spec.ts",
+      "line": 123,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 10264,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "42315a7a286367af713d-184f20c27f447f1499aa",
+      "title": "O-B04: empty / over-200 reason disables submit; counter",
+      "titlePath": "chromium › ui\\o-order-detail.spec.ts › O-B02～O-B07 order UI › O-B04: empty / over-200 reason disables submit; counter",
+      "file": "ui/o-order-detail.spec.ts",
+      "line": 142,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 8225,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "42315a7a286367af713d-158cd39800a06d3af14d",
+      "title": "O-B04 DEF: reason error copy for empty / over 200",
+      "titlePath": "chromium › ui\\o-order-detail.spec.ts › O-B02～O-B07 order UI › O-B04 DEF: reason error copy for empty / over 200",
+      "file": "ui/o-order-detail.spec.ts",
+      "line": 158,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 14363,
+      "retries": 0,
+      "defectIds": [
+        "DEF-017"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-017: 退貨原因空／超過 200 字時未顯示 PRD 紅字「請填寫退貨原因」「退貨原因不可超過 200 個字」",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\o-order-detail.spec.ts",
+            "line": 159,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('請填寫退貨原因')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('請填寫退貨原因')\u001b[22m\n"
+    },
+    {
+      "id": "42315a7a286367af713d-722728622ca74960f6e5",
+      "title": "O-B06: return apply page refund strings match seed completed order",
+      "titlePath": "chromium › ui\\o-order-detail.spec.ts › O-B02～O-B07 order UI › O-B06: return apply page refund strings match seed completed order",
+      "file": "ui/o-order-detail.spec.ts",
+      "line": 174,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 8454,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "42315a7a286367af713d-0f86d7cf9833b598af11",
+      "title": "O-B05: order detail summary matches CASE_R56_2 fixture",
+      "titlePath": "chromium › ui\\o-order-detail.spec.ts › O-B02～O-B07 order UI › O-B05: order detail summary matches CASE_R56_2 fixture",
+      "file": "ui/o-order-detail.spec.ts",
+      "line": 183,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 13654,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "42315a7a286367af713d-fda598768efbf3aad2a9",
+      "title": "O-B05 + coupon: CASE_R56_3 detail rows vs fixture (DEF-004 family)",
+      "titlePath": "chromium › ui\\o-order-detail.spec.ts › O-B02～O-B07 order UI › O-B05 + coupon: CASE_R56_3 detail rows vs fixture (DEF-004 family)",
+      "file": "ui/o-order-detail.spec.ts",
+      "line": 202,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 11564,
+      "retries": 0,
+      "defectIds": [
+        "DEF-004"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-004: 訂單詳情金額摘要亦可能滿額／券折抵對調；以 PRD 標籤對齊 fixture",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\o-order-detail.spec.ts",
+            "line": 206,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"−NT$300\"\u001b[39m\nReceived: \u001b[31m\"−NT$300\u001b[7m（滿三千折三百券）\u001b[27m\"\u001b[39m"
+    },
+    {
+      "id": "42315a7a286367af713d-cedd0ae22946ee738b04",
+      "title": "O-B03: action buttons by status",
+      "titlePath": "chromium › ui\\o-order-detail.spec.ts › O-B02～O-B07 order UI › O-B03: action buttons by status",
+      "file": "ui/o-order-detail.spec.ts",
+      "line": 232,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 18298,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "69cb8f521d4c372e02f3-09938f65adb472b028d8",
+      "title": "real seed: fields + itemCounts by status; open newest detail",
+      "titlePath": "chromium › ui\\o-orders.spec.ts › O-B01 order list › real seed: fields + itemCounts by status; open newest detail",
+      "file": "ui/o-orders.spec.ts",
+      "line": 19,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 8866,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "69cb8f521d4c372e02f3-e3177e68799495655a74",
+      "title": "DEF-025: list order must be newest→oldest (R-14.1)",
+      "titlePath": "chromium › ui\\o-orders.spec.ts › O-B01 order list › DEF-025: list order must be newest→oldest (R-14.1)",
+      "file": "ui/o-orders.spec.ts",
+      "line": 50,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 12621,
+      "retries": 0,
+      "defectIds": [
+        "DEF-025"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-025: v2.1 訂單列表改為舊→新（已出貨在最上），違反 R-14.1 新→舊",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\o-orders.spec.ts",
+            "line": 51,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.order-row').first().locator('.order-row-id')\nExpected: \u001b[32m\"MM-2026071\u001b[7m7\u001b[27m-0001\"\u001b[39m\nReceived: \u001b[31m\"MM-2026071\u001b[7m5\u001b[27m-0001\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.order-row').first().locator('.order-row-id')\u001b[22m\n\u001b[2m    11 × locator resolved to <span class=\"order-row-id\">MM-20260715-0001</span>\u001b[22m\n\u001b[2m       - unexpected value \"MM-20260715-0001\"\u001b[22m\n"
+    },
+    {
+      "id": "69cb8f521d4c372e02f3-ea2f600dc24269f8ba13",
+      "title": "O-B01 @mock: empty orders shows empty copy",
+      "titlePath": "chromium › ui\\o-orders.spec.ts › O-B01 order list › O-B01 @mock: empty orders shows empty copy",
+      "file": "ui/o-orders.spec.ts",
+      "line": 63,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 15460,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "ba5754f543e20be1850e-413f8fb3ef06e2451f8d",
+      "title": "P-B04: fields, qty bounds (stock≥5 and stock=1), sold-out disables",
+      "titlePath": "chromium › ui\\p-product-detail.spec.ts › P-B04 / P-B05 product detail › P-B04: fields, qty bounds (stock≥5 and stock=1), sold-out disables",
+      "file": "ui/p-product-detail.spec.ts",
+      "line": 19,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 10705,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "ba5754f543e20be1850e-36cee5f43e3c6ea42d15",
+      "title": "P-B05: add to cart from detail uses selected qty + toast",
+      "titlePath": "chromium › ui\\p-product-detail.spec.ts › P-B04 / P-B05 product detail › P-B05: add to cart from detail uses selected qty + toast",
+      "file": "ui/p-product-detail.spec.ts",
+      "line": 59,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9670,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "d23593cf34a95d8600aa-581a7624d30aeca1dd9c",
+      "title": "P-B01: product order, card fields, no decimal prices",
+      "titlePath": "chromium › ui\\p-products.spec.ts › P-B01 / P-B02 / P-B03 product list › P-B01: product order, card fields, no decimal prices",
+      "file": "ui/p-products.spec.ts",
+      "line": 62,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9599,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "d23593cf34a95d8600aa-f6b0b80ee382474a4260",
+      "title": "P-B01 / R-9.2: all product card images load (naturalWidth > 0)",
+      "titlePath": "chromium › ui\\p-products.spec.ts › P-B01 / P-B02 / P-B03 product list › P-B01 / R-9.2: all product card images load (naturalWidth > 0)",
+      "file": "ui/p-products.spec.ts",
+      "line": 81,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 19597,
+      "retries": 0,
+      "defectIds": [
+        "DEF-018"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-018: 香氛蠟燭禮盒圖片破圖（/images/candle-gift.svg 回傳 HTML 而非圖片）（R-9.2）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\p-products.spec.ts",
+            "line": 84,
+            "column": 12
+          }
+        }
+      ],
+      "error": "Error: Broken product images: 香氛蠟燭禮盒\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"香氛蠟燭禮盒\",\u001b[39m\n\u001b[31m+ ]\u001b[39m"
+    },
+    {
+      "id": "d23593cf34a95d8600aa-56834c57f39757c6b558",
+      "title": "P-B02: sold-out product disables add-to-cart",
+      "titlePath": "chromium › ui\\p-products.spec.ts › P-B01 / P-B02 / P-B03 product list › P-B02: sold-out product disables add-to-cart",
+      "file": "ui/p-products.spec.ts",
+      "line": 92,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 10315,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "d23593cf34a95d8600aa-eaeb9591254ab3099a56",
+      "title": "P-B03: add-to-cart toast; click name opens detail",
+      "titlePath": "chromium › ui\\p-products.spec.ts › P-B01 / P-B02 / P-B03 product list › P-B03: add-to-cart toast; click name opens detail",
+      "file": "ui/p-products.spec.ts",
+      "line": 101,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 10766,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3671b11c0f09d868cf82-3a16d3e17c125380f3c0",
+      "title": "tabs, usable/expired cards, empty used, no apply on page",
+      "titlePath": "chromium › ui\\v-coupons.spec.ts › V-B01 coupons page › tabs, usable/expired cards, empty used, no apply on page",
+      "file": "ui/v-coupons.spec.ts",
+      "line": 22,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 9800,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3671b11c0f09d868cf82-2106488e8e52a64e025f",
+      "title": "used tab shows order id after checkout with coupon",
+      "titlePath": "chromium › ui\\v-coupons.spec.ts › V-B01 coupons page › used tab shows order id after checkout with coupon",
+      "file": "ui/v-coupons.spec.ts",
+      "line": 76,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "normalPass",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "durationMs": 11938,
+      "retries": 0,
+      "defectIds": [],
+      "annotations": [],
+      "error": ""
+    },
+    {
+      "id": "3671b11c0f09d868cf82-835182b784698d6602c5",
+      "title": "DEF-010: used coupon order id should keep MM- prefix",
+      "titlePath": "chromium › ui\\v-coupons.spec.ts › V-B01 coupons page › DEF-010: used coupon order id should keep MM- prefix",
+      "file": "ui/v-coupons.spec.ts",
+      "line": 101,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 15577,
+      "retries": 0,
+      "defectIds": [
+        "DEF-010"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-010: 已使用券「訂單編號」省略 MM- 前綴（R-17.7 / R-6.9）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\v-coupons.spec.ts",
+            "line": 102,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('coupon-card').filter({ hasText: '新人小禮券' })\nExpected pattern: \u001b[32m/訂單編號 MM-\\d{8}-\\d{4}/\u001b[39m\nReceived string:  \u001b[31m\"新人小禮券已使用券碼 NEWBIE20NT$20無最低消費到期日 2027-01-18訂單編號 20260722-0001\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('coupon-card').filter({ hasText: '新人小禮券' })\u001b[22m\n\u001b[2m    14 × locator resolved to <div class=\"coupon-card\" data-testid=\"coupon-card\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"新人小禮券已使用券碼 NEWBIE20NT$20無最低消費到期日 2027-01-18訂單編號 20260722-0001\"\u001b[22m\n"
+    },
+    {
+      "id": "3671b11c0f09d868cf82-379cf50e16c0cfdb0ebb",
+      "title": "WELCOME50 / SHIPFREE success, invalid, duplicate",
+      "titlePath": "chromium › ui\\v-coupons.spec.ts › V-C01 redeem discount codes › WELCOME50 / SHIPFREE success, invalid, duplicate",
+      "file": "ui/v-coupons.spec.ts",
+      "line": 123,
+      "project": "chromium",
+      "layer": "UI",
+      "outcome": "expectedFailure",
+      "expectedStatus": "failed",
+      "actualStatus": "failed",
+      "durationMs": 14779,
+      "retries": 0,
+      "defectIds": [
+        "DEF-009"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "DEF-009: 我的優惠券無折扣碼輸入／領取；POST redeem API 不存在（R-17.1～R-17.3）",
+          "location": {
+            "file": "C:\\minimart-qa-test\\tests\\ui\\v-coupons.spec.ts",
+            "line": 125,
+            "column": 10
+          }
+        }
+      ],
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('textbox').or(locator('input')).first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('textbox').or(locator('input')).first()\u001b[22m\n"
+    }
+  ]
+}

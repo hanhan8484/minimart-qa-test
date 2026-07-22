@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MiniMart 自動化測試可信度評估</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f8fa;
+      --surface: #ffffff;
+      --surface-alt: #eef1f5;
+      --text: #172033;
+      --muted: #5d687a;
+      --border: #d8dee8;
+      --accent: #2459d3;
+      --good: #197347;
+      --warn: #9a6700;
+      --bad: #c53030;
+      --info: #2463a7;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #101318;
+        --surface: #171b22;
+        --surface-alt: #202631;
+        --text: #edf1f7;
+        --muted: #aab3c2;
+        --border: #343c49;
+        --accent: #79a6ff;
+        --good: #58c28b;
+        --warn: #e6b94c;
+        --bad: #ff7b7b;
+        --info: #79b8ff;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, "Noto Sans TC", "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+    main { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 64px; }
+    h1, h2, h3 { line-height: 1.25; margin: 0; }
+    h1 { font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.02em; }
+    h2 { margin-top: 42px; margin-bottom: 16px; font-size: 24px; }
+    h3 { font-size: 17px; }
+    p { margin: 8px 0; }
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .lead { max-width: 860px; color: var(--muted); font-size: 18px; }
+    .grid { display: grid; gap: 16px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      padding: 20px;
+    }
+    .panel h3 { margin-bottom: 10px; }
+    .score {
+      margin: 8px 0 2px;
+      color: var(--warn);
+      font-size: 42px;
+      font-weight: 750;
+      letter-spacing: -0.04em;
+    }
+    .verdict {
+      display: inline-block;
+      margin-top: 8px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: var(--surface-alt);
+      color: var(--warn);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .verdict.bad { color: var(--bad); }
+    .metric { min-height: 120px; }
+    .metric strong {
+      display: block;
+      font-size: 34px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+    }
+    .metric span { color: var(--muted); font-size: 13px; }
+    .normal { color: var(--good); }
+    .expected { color: var(--warn); }
+    .skipped { color: var(--muted); }
+    .callout {
+      margin: 18px 0;
+      border-left: 4px solid var(--warn);
+      border-radius: 4px;
+      background: var(--surface-alt);
+      padding: 14px 16px;
+    }
+    .callout.info { border-color: var(--info); }
+    .callout.good { border-color: var(--good); }
+    .callout strong { display: block; margin-bottom: 4px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      font-size: 14px;
+    }
+    th, td { padding: 11px 13px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+    th { background: var(--surface-alt); font-size: 12px; letter-spacing: .02em; }
+    tr:last-child td { border-bottom: 0; }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 70px 1fr 42px;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+    .track { height: 14px; overflow: hidden; border-radius: 999px; background: var(--surface-alt); }
+    .bar { height: 100%; border-radius: inherit; background: var(--info); }
+    .stacked { display: flex; height: 20px; overflow: hidden; border-radius: 999px; background: var(--surface-alt); }
+    .stacked span { display: block; height: 100%; }
+    .stacked .pass { width: 68.29%; background: var(--good); }
+    .stacked .known { width: 29.27%; background: var(--warn); }
+    .stacked .skip { width: 2.44%; background: var(--muted); }
+    .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .dot { display: inline-block; width: 9px; height: 9px; margin-right: 5px; border-radius: 50%; }
+    ul { margin: 8px 0; padding-left: 21px; }
+    li { margin: 7px 0; }
+    .priority {
+      display: inline-block;
+      min-width: 31px;
+      border-radius: 5px;
+      padding: 1px 6px;
+      color: white;
+      text-align: center;
+      font-weight: 700;
+    }
+    .p0 { background: #b42318; }
+    .p1 { background: #9a6700; }
+    .p2 { background: #2463a7; }
+    .small { color: var(--muted); font-size: 12px; }
+    footer { margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+
+    @media (max-width: 760px) {
+      main { padding-top: 28px; }
+      .grid.two, .grid.four { grid-template-columns: 1fr; }
+      table { display: block; overflow-x: auto; }
+    }
+
+    @media print {
+      :root {
+        --bg: #fff;
+        --surface: #fff;
+        --surface-alt: #f2f4f7;
+        --text: #111827;
+        --muted: #4b5563;
+        --border: #d1d5db;
+      }
+      body { background: #fff; }
+      main { width: 100%; padding: 0; }
+      .panel, table { break-inside: avoid; }
+      h2 { break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">Independent review · 2026-07-21 · MiniMart v2.1</div>
+    <h1>自動化測試可信度評估<br>QA Automation Assessment</h1>
+    <p class="lead">第三方觀點：這是一套高於一般面試作業水準的黑箱 acceptance／regression suite，但目前不應單獨作為 production release gate。</p>
+  </header>
+
+  <h2>總評 / Executive verdict</h2>
+  <section class="grid two">
+    <article class="panel">
+      <h3>測試專案可信度 / Test-suite credibility</h3>
+      <div class="score">76 / 100</div>
+      <span class="verdict">Adopt with guardrails</span>
+      <p>我會採用它進行 PRD 驗收、缺陷回歸與開發回饋，但不會把目前的綠色 CI 等同「網站可發布」。</p>
+      <p class="small">強項是分層、golden fixtures、業務副作用斷言與缺陷追溯；限制是 shared SUT、expected-failure masking 與 CI readiness。</p>
+    </article>
+    <article class="panel">
+      <h3>待測網站 / Website release verdict</h3>
+      <div class="score" style="color: var(--bad)">Not release-ready</div>
+      <span class="verdict bad">不建議發布</span>
+      <p>目前有 26 個 Open／Confirmed defects，其中 13 個為 S2，涵蓋庫存、退款、優惠券、匿名 API 與 session cookie 安全問題。</p>
+      <p class="small">產品仍有缺陷不代表測試專案失敗；能穩定暴露並追溯這些問題正是此 suite 的價值。</p>
+    </article>
+  </section>
+
+  <h2>最新全量執行 / Latest full execution</h2>
+  <section class="grid four">
+    <article class="panel metric"><strong>123</strong><span>Total Playwright executions</span></article>
+    <article class="panel metric"><strong class="normal">84</strong><span>Normal passes</span></article>
+    <article class="panel metric"><strong class="expected">36</strong><span>Known-defect expected failures</span></article>
+    <article class="panel metric"><strong class="skipped">3</strong><span>Skipped／blocked</span></article>
+  </section>
+  <div class="callout">
+    <strong>「120 passed」需要重新解讀</strong>
+    Playwright 將 36 個符合 <code>test.fail</code> 預期的實際失敗計入 passed outcome。正確管理摘要是：84 normal pass + 36 known-defect expected failures + 3 skipped = 123 total；unexpected failures = 0。
+  </div>
+
+  <section class="grid two">
+    <article class="panel">
+      <h3>案例分層 / Executions by layer</h3>
+      <div class="bar-row"><span>API</span><div class="track"><div class="bar" style="width:91.1%"></div></div><strong>51</strong></div>
+      <div class="bar-row"><span>UI</span><div class="track"><div class="bar" style="width:100%"></div></div><strong>56</strong></div>
+      <div class="bar-row"><span>Flow</span><div class="track"><div class="bar" style="width:28.6%"></div></div><strong>16</strong></div>
+      <p class="small">X: test layer · Bar length: executions relative to 56 · Source: archived HTML report.</p>
+    </article>
+    <article class="panel">
+      <h3>結果組成 / Outcome composition</h3>
+      <div class="stacked" aria-label="84 normal pass, 36 expected failure, 3 skipped">
+        <span class="pass"></span><span class="known"></span><span class="skip"></span>
+      </div>
+      <div class="legend">
+        <span><i class="dot" style="background:var(--good)"></i>Normal 68.3%</span>
+        <span><i class="dot" style="background:var(--warn)"></i>Known defect 29.3%</span>
+        <span><i class="dot" style="background:var(--muted)"></i>Skipped 2.4%</span>
+      </div>
+      <p class="small">Expected failure 代表「缺陷被成功重現」，不是健康產品行為。</p>
+    </article>
+  </section>
+
+  <h2>覆蓋率 / Coverage</h2>
+  <table>
+    <thead><tr><th>衡量面 / Lens</th><th>結果</th><th>計算與定義</th><th>信心</th></tr></thead>
+    <tbody>
+      <tr><td>Mapped requirements</td><td><strong>100%</strong></td><td>164 / 164 條 PRD 規則皆有唯一 Primary 著落</td><td>高</td></tr>
+      <tr><td>Nominal executable</td><td><strong>98.8%</strong></td><td>162 / 164；扣除 R-2.6 fixme 與 R-3.7 庫存回補阻塞</td><td>高</td></tr>
+      <tr><td>Effective unblocked conformance</td><td><strong>76.8%</strong></td><td>126 / 164 有可執行且無已知矛盾的正向證據</td><td>中高</td></tr>
+      <tr><td>Source-code coverage</td><td><strong>未知</strong></td><td>黑箱 SUT，沒有 statement／branch instrumentation</td><td>不可推論</td></tr>
+    </tbody>
+  </table>
+  <div class="callout info">
+    <strong>對外最可辯護的說法</strong>
+    164 / 164 mapped、162 / 164 nominal executable、126 / 164 positively conforming／unblocked（約 77%）。不要將其中任何一項稱為 code coverage。
+  </div>
+
+  <h2>可信度依據 / Credibility evidence</h2>
+  <section class="grid two">
+    <article class="panel">
+      <h3>主要強項 / Strengths</h3>
+      <ul>
+        <li>PRD 約 164 條規則有 traceability matrix 與唯一 Primary 分層。</li>
+        <li>API、UI、Flow 職責清楚，金額採共用 golden fixtures，避免測試重寫產品公式。</li>
+        <li>不只驗 HTTP 200：涵蓋負數 quantity、缺貨、狀態轉換、退款、券副作用與匿名 API。</li>
+        <li>使用 reset、response status、before／after snapshots 與 test isolation。</li>
+        <li>缺陷具 ID、嚴重度、狀態、PRD rule、歷程與回歸策略，也能修正 false positive。</li>
+      </ul>
+    </article>
+    <article class="panel">
+      <h3>主要風險 / Confidence reducers</h3>
+      <ul>
+        <li>共享遠端 SUT；單 worker 無法防止兩個 CI workflows 同時重置與改資料。</li>
+        <li><code>test.fail</code> 可接受與指定缺陷無關的失敗，已有 O-B05 實例。</li>
+        <li>3 個 skipped 涵蓋折扣 cap 與庫存恢復，皆屬高商業風險。</li>
+        <li>DEF-001 錯字被 helper regex 容忍，未反映在 expected-failure 統計。</li>
+        <li>僅 Desktop Chromium；缺 Firefox、WebKit、mobile、a11y、效能與真實並發。</li>
+        <li>BASE_URL 可覆寫，但 RESET_URL 仍可能指向預設環境。</li>
+      </ul>
+    </article>
+  </section>
+
+  <h2>評分拆解 / Score breakdown</h2>
+  <table>
+    <thead><tr><th>構面</th><th>分數</th><th>第三方判斷</th></tr></thead>
+    <tbody>
+      <tr><td>Architecture</td><td>13 / 15</td><td>API、UI、Flow 與 Primary／Display secondary 分工清楚</td></tr>
+      <tr><td>Assertions &amp; fixtures</td><td>17 / 20</td><td>golden values、負向案例及 before／after 副作用驗證具深度</td></tr>
+      <tr><td>Isolation</td><td>9 / 15</td><td>單 worker 與 reset 有效，但 shared SUT 仍可能被其他 run 污染</td></tr>
+      <tr><td>Defect handling</td><td>12 / 15</td><td>31 筆 DEF 與 PRD matrix 完整；大量 test.fail 仍需人工解讀</td></tr>
+      <tr><td>False-positive resistance</td><td>8 / 15</td><td>expected failure 可遮蔽不同失敗原因</td></tr>
+      <tr><td>Maintainability</td><td>8 / 10</td><td>helper 與 fixture 集中；部分 selector 與 serial chain 有成本</td></tr>
+      <tr><td>CI readiness</td><td>5 / 10</td><td>缺 concurrency、typecheck、health preflight 與 known-defect gate</td></tr>
+      <tr><td>Execution evidence</td><td>4 / 5</td><td>有 HTML／JSON，但管理摘要需重新分類 outcomes</td></tr>
+      <tr><td><strong>總分</strong></td><td><strong>76 / 100</strong></td><td>可信且有實證，但綠色執行仍需人工判讀</td></tr>
+    </tbody>
+  </table>
+
+  <h2>截圖與證據策略 / Screenshot and evidence strategy</h2>
+  <section class="grid two">
+    <article class="panel">
+      <h3>應該附 / Recommended</h3>
+      <ul>
+        <li>UI unexpected failure：screenshot + video + trace。</li>
+        <li>Confirmed UI defect：一張標註重點的 defect evidence。</li>
+        <li>關鍵 happy path：首頁、結帳摘要、完成頁、訂單詳情各一張即可。</li>
+        <li>API defect：附 request／response JSON 與 before／after state，勝過截圖。</li>
+      </ul>
+    </article>
+    <article class="panel">
+      <h3>不建議 / Avoid</h3>
+      <ul>
+        <li>不要為 123 cases 全部截圖；會增加 repo、報告與 reviewer 負擔。</li>
+        <li>截圖不能證明 API 計算、庫存副作用或狀態機正確。</li>
+        <li>動態日期與資料容易造成無意義 diff。</li>
+        <li>Trace 可能包含姓名、電話、地址或 cookie，歸檔前需清理敏感資料。</li>
+      </ul>
+    </article>
+  </section>
+
+  <h2>報告如何更清楚 / Reporting redesign</h2>
+  <ul>
+    <li>首頁先給 release verdict、環境、commit SHA、SUT version、瀏覽器及執行時間。</li>
+    <li>分開顯示 Normal Pass、Known-defect Expected Failure、Skipped／Blocked、Unexpected Failure。</li>
+    <li>同時呈現 requirements：164 mapped、162 executable、126 positively conforming。</li>
+    <li>分開呈現 59 個 logical case IDs 與 123 個 Playwright executions。</li>
+    <li>依 Global、Product、Cart、Order、Coupon、Notification 顯示 covered、blocked、not tested。</li>
+    <li>加入 DEF → PRD → test → latest result → evidence drill-down。</li>
+    <li>保留 Playwright HTML 作技術明細，另建立 management summary 支援 release decision。</li>
+  </ul>
+
+  <h2>改善優先序 / Improvement roadmap</h2>
+  <table>
+    <thead><tr><th>優先級</th><th>行動</th><th>預期效果</th></tr></thead>
+    <tbody>
+      <tr><td><span class="priority p0">P0</span></td><td>重新定義報告首頁</td><td>拆分 84 normal、36 known-defect、3 skipped、0 unexpected，避免「120 passed」誤導。</td></tr>
+      <tr><td><span class="priority p0">P0</span></td><td>約束 expected failures</td><td>每個 test.fail 縮到單一缺陷斷言，並驗證 failure signature。</td></tr>
+      <tr><td><span class="priority p0">P0</span></td><td>建立 release-gate policy</td><td>S2／security 缺陷另列 Release Blockers，不因 expected failure 讓 release 顯示健康。</td></tr>
+      <tr><td><span class="priority p0">P0</span></td><td>鎖定 shared SUT</td><td>GitHub Actions 加 SUT-scoped concurrency；BASE_URL 與 RESET_URL 強制同源。</td></tr>
+      <tr><td><span class="priority p1">P1</span></td><td>解除 3 個 skipped</td><td>補 synthetic pricing 與可控庫存 fixtures，完成折扣 cap 與庫存回補。</td></tr>
+      <tr><td><span class="priority p1">P1</span></td><td>消除 coverage cliff</td><td>建立 stale-cart／可控 clock fixture，避免上游缺陷修復後案例反而無法執行。</td></tr>
+      <tr><td><span class="priority p1">P1</span></td><td>補失敗證據</td><td>UI 使用 screenshot／video／trace；API 附 request、response 與 state snapshots。</td></tr>
+      <tr><td><span class="priority p2">P2</span></td><td>擴展測試面</td><td>加入 Firefox、WebKit、mobile viewport、a11y、斷網／5xx 與最後一件庫存並發。</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout good">
+    <strong>最終第三方結論 / Final independent verdict</strong>
+    這份專案值得使用，也很適合作為面試作品：它展現的不只是 Playwright 語法，而是規格拆解、風險分層、缺陷治理與 false-positive 修正能力。下一個躍升點不是再堆更多 cases，而是讓測試資料更可控、讓已知失敗不再被「passed」掩蓋，並讓報告直接支援 release decision。
+  </div>
+
+  <footer>
+    Evidence sources: PRD.md、test-strategy-v2(.matrix).md、31 Playwright spec files、playwright.config.ts、defects.md、v2.1 regression report，以及歸檔的 123-test HTML report。此評分為獨立風險估計，不是 source-code coverage。
+  </footer>
+</main>
+</body>
+</html>
