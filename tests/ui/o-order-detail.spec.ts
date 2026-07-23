@@ -3,6 +3,7 @@ import {
   getDetailStatusText,
   getSummaryValueByLabel,
   looksLikeDef004DiscountSwap,
+  orderDetailCouponDiscountDisplay,
   loginAsDemo,
   openOrderDetail,
   resetEnv,
@@ -217,6 +218,9 @@ test.describe.serial('O-B02～O-B07 order UI', () => {
     await expect(page.getByRole('heading', { name: '訂單詳情' })).toBeVisible();
 
     const d = CASE_R56_3.display;
+    // R-14.7: when a coupon was used, amount is followed by （券名稱）
+    const couponDetail = orderDetailCouponDiscountDisplay(d.couponDiscount, CASE_R56_3.expect.couponName);
+
     // Hard gates — must not be swallowed by DEF-004 expected-fail
     expect(await getSummaryValueByLabel(page, '商品小計')).toBe(d.subtotal);
     expect(await getSummaryValueByLabel(page, '運費')).toBe(d.shipping);
@@ -229,7 +233,7 @@ test.describe.serial('O-B02～O-B07 order UI', () => {
       'DEF-004: 訂單詳情金額摘要滿額／券折抵數值對調；僅此模式算 expected fail',
     );
     expect(bulkShown).toBe(d.bulkDiscount);
-    expect(couponShown).toBe(d.couponDiscount);
+    expect(couponShown).toBe(couponDetail);
   });
 
   test('O-B03: action buttons by status', async ({ page }) => {

@@ -55,6 +55,8 @@
 
 | 日期 | 摘要 | 路徑 |
 |---|---|---|
+| 2026-07-23 | Executive 全量：**86 normal pass、35 expected failure、3 skipped、0 unexpected failure**（124 total，~11.2m）；Playwright status `passed`。含 O-B05 R-14.7 券名括號、DEF-004 收窄。 | `docs/reports/executive/` |
+| 2026-07-23 | chromium 全量：**121 passed、3 skipped（124 total）**（~11.2m）；0 unexpected failures。 | `docs/reports/latest/` |
 | 2026-07-22 | Executive 全量：**84 normal pass、36 expected failure、3 skipped、0 unexpected failure**（123 total，~20.5m）；commit `36a4b9bf0834`；Playwright status `passed`。 | `docs/reports/executive/` |
 | 2026-07-22 | chromium 全量：**120 passed、3 skipped（123 total）**（~20.5m）；0 unexpected failures，含 DEF `test.fail` 預期失敗案例。 | `docs/reports/latest/` |
 | 2026-07-21 | Executive reporter 驗證全量：**78 normal pass、34 expected failure、10 skipped／blocked、1 unexpected failure**（123 total，20.5m）；unexpected failure 導致同一 serial 區段後續 7 cases 未執行。 | `docs/reports/executive/` |

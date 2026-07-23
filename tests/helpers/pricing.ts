@@ -113,6 +113,7 @@ export async function getSummaryValueByLabel(page: Page, label: string): Promise
 /**
  * True only for the classic DEF-004 pattern: 滿額折扣 / 優惠券折抵 values are swapped.
  * Other mismatches (extra coupon-name text, wrong shipping, etc.) must stay unexpected.
+ * Trailing `（券名）` from R-14.7 order-detail annotation is ignored for the swap check.
  */
 export function looksLikeDef004DiscountSwap(
   bulkShown: string,
@@ -120,6 +121,27 @@ export function looksLikeDef004DiscountSwap(
   expectedBulk: string,
   expectedCoupon: string,
 ): boolean {
-  if (expectedBulk === expectedCoupon) return false;
-  return bulkShown === expectedCoupon && couponShown === expectedBulk;
+  const bulk = summaryAmountOnly(bulkShown);
+  const coupon = summaryAmountOnly(couponShown);
+  const wantBulk = summaryAmountOnly(expectedBulk);
+  const wantCoupon = summaryAmountOnly(expectedCoupon);
+  if (wantBulk === wantCoupon) return false;
+  return bulk === wantCoupon && coupon === wantBulk;
+}
+
+/** Strip trailing full-width `（…）` note (R-14.7 coupon name on order detail). */
+export function summaryAmountOnly(value: string): string {
+  return value.replace(/（[^）]*）\s*$/u, '').trim();
+}
+
+/**
+ * Order-detail「優惠券折抵」value (R-14.7): amount, plus `（券名稱）` when a coupon was used.
+ * Checkout (R-12.5 / C-B10) still uses the bare amount from `display.couponDiscount`.
+ */
+export function orderDetailCouponDiscountDisplay(
+  amountDisplay: string,
+  couponName: string | null,
+): string {
+  if (!couponName) return amountDisplay;
+  return `${amountDisplay}（${couponName}）`;
 }

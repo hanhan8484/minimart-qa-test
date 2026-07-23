@@ -31,4 +31,5 @@ export {
   applyPricingCaseCart,
   getSummaryValueByLabel,
   looksLikeDef004DiscountSwap,
+  orderDetailCouponDiscountDisplay,
 } from './pricing';

@@ -19,9 +19,9 @@
     <h1>MiniMart v2.1</h1>
     <p class="lead">Separates healthy passes, expected defect evidence, blocked coverage, regressions, fix candidates and flaky outcomes. This is a release-decision summary; use the Playwright HTML report for step-level debugging.</p>
     <div class="meta">
-      <span>Started 2026-07-22T01:05:38.379Z</span>
-      <span>Duration 20m 28s</span>
-      <span>Commit 36a4b9bf0834</span>
+      <span>Started 2026-07-23T12:23:22.275Z</span>
+      <span>Duration 11m 13s</span>
+      <span>Commit 23153b7e63ad</span>
       <span>Projects chromium</span>
       <span>Base URL https://cand1.tail296b14.ts.net</span>
     </div>
@@ -35,13 +35,13 @@
   <section>
     <h2>Execution outcomes / 執行結果</h2>
     <div class="metrics"><div class="metric">
-        <strong class="good">84</strong>
+        <strong class="good">86</strong>
         <span>Normal pass</span>
-        <small>68.3%</small>
+        <small>69.4%</small>
       </div><div class="metric">
-        <strong class="warn">36</strong>
+        <strong class="warn">35</strong>
         <span>Expected failure / known-defect evidence</span>
-        <small>29.3%</small>
+        <small>28.2%</small>
       </div><div class="metric">
         <strong class="warn">3</strong>
         <span>Skipped / blocked</span>
@@ -59,7 +59,7 @@
         <span>Flaky</span>
         <small>0.0%</small>
       </div></div>
-    <div class="callout warning"><strong>36</strong> expected-failure executions reference <strong>25</strong> unique DEF IDs. Failure signatures are not automatically verified unless each test constrains its defect assertion.</div>
+    <div class="callout warning"><strong>35</strong> expected-failure executions reference <strong>25</strong> unique DEF IDs. Failure signatures are not automatically verified unless each test constrains its defect assertion.</div>
   </section>
 
   <section>
@@ -115,10 +115,10 @@
         <strong>56</strong>
       </div><div class="bar-row">
         <span>Flow</span>
-        <div class="track"><div class="bar" style="width:28.57142857142857%"></div></div>
-        <strong>16</strong>
+        <div class="track"><div class="bar" style="width:30.357142857142854%"></div></div>
+        <strong>17</strong>
       </div>
-      <p class="subtle">60 logical case IDs observed across 123 Playwright executions.</p>
+      <p class="subtle">60 logical case IDs observed across 124 Playwright executions.</p>
     </div>
   </section>
 
@@ -181,7 +181,7 @@
         <td><strong>DEF-004</strong><div class="subtle">結帳摘要「滿額折扣」與「優惠券折抵」數值對調</div></td>
         <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>4</td>
-        <td><div><code>ui/c-checkout-display.spec.ts:22</code> CASE_R56_2: summary strings match fixture</div><div><code>ui/c-checkout-display.spec.ts:22</code> CASE_R56_3: summary strings match fixture</div><div><code>ui/c-checkout-display.spec.ts:22</code> CASE_R56_4: summary strings match fixture</div><div><code>ui/o-order-detail.spec.ts:202</code> O-B05 + coupon: CASE_R56_3 detail rows vs fixture (DEF-004 family)</div></td>
+        <td><div><code>ui/c-checkout-display.spec.ts:24</code> CASE_R56_2: summary strings match fixture</div><div><code>ui/c-checkout-display.spec.ts:24</code> CASE_R56_3: summary strings match fixture</div><div><code>ui/c-checkout-display.spec.ts:24</code> CASE_R56_4: summary strings match fixture</div><div><code>ui/o-order-detail.spec.ts:204</code> O-B05 + coupon: CASE_R56_3 detail rows vs fixture (DEF-004 family)</div></td>
       </tr><tr>
         <td><strong>DEF-006</strong><div class="subtle">退款金額計算／顯示錯誤（非 payable−運費）</div></td>
         <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
@@ -221,7 +221,7 @@
         <td><strong>DEF-024</strong><div class="subtle">快速雙擊送出訂單仍建立多筆訂單</div></td>
         <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
         <td>1</td>
-        <td><div><code>flows/c-checkout-success.spec.ts:21</code> submit order shows complete page, empties cart, blocks double submit</div></td>
+        <td><div><code>flows/c-checkout-success.spec.ts:64</code> C-C02 double-submit: rapid clicks must create exactly one order (DEF-024)</div></td>
       </tr><tr>
         <td><strong>DEF-027</strong><div class="subtle">購物車 API 接受負數 quantity</div></td>
         <td><span class="pill sev S2">S2 Major</span><div class="subtle">Confirmed</div></td>
@@ -271,7 +271,7 @@
         <td><strong>DEF-017</strong><div class="subtle">退貨原因空／超長無 PRD 紅字錯誤</div></td>
         <td><span class="pill sev S3">S3 Minor</span><div class="subtle">Confirmed</div></td>
         <td>1</td>
-        <td><div><code>ui/o-order-detail.spec.ts:158</code> O-B04 DEF: reason error copy for empty / over 200</div></td>
+        <td><div><code>ui/o-order-detail.spec.ts:160</code> O-B04 DEF: reason error copy for empty / over 200</div></td>
       </tr><tr>
         <td><strong>DEF-019</strong><div class="subtle">加入購物車後導覽列徽章未即時更新</div></td>
         <td><span class="pill sev S3">S3 Minor</span><div class="subtle">Confirmed</div></td>
@@ -304,7 +304,7 @@
   <section>
     <h2>All executions / 全部案例</h2>
     <details>
-      <summary>Show 123 test executions</summary>
+      <summary>Show 124 test executions</summary>
       <table>
         <thead><tr><th>Outcome</th><th>Layer</th><th>Test</th><th>DEF</th><th>Duration</th></tr></thead>
         <tbody><tr>
@@ -315,7 +315,7 @@
           <div class="subtle"><code>api/c-cart-api.spec.ts:26</code></div>
         </td>
         <td>—</td>
-        <td>0m 1s</td>
+        <td>0m 2s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -325,7 +325,7 @@
           <div class="subtle"><code>api/c-cart-api.spec.ts:51</code></div>
         </td>
         <td>—</td>
-        <td>0m 2s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
@@ -360,7 +360,7 @@ Received array:  [31m[{&quot;imageUrl&quot;: &quot;/images/coffee-dripper.svg&q
           <div class="subtle"><code>api/c-cart-api.spec.ts:113</code></div>
         </td>
         <td><code>DEF-028</code></td>
-        <td>0m 1s</td>
+        <td>0m 2s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: unexpected status 200
 
@@ -395,7 +395,7 @@ Received array:  [31m[{&quot;imageUrl&quot;: &quot;/images/mug.svg&quot;, &quot
           <div class="subtle"><code>api/c-checkout-effects.spec.ts:45</code></div>
         </td>
         <td><code>DEF-012</code></td>
-        <td>0m 1s</td>
+        <td>0m 2s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
 
@@ -408,7 +408,7 @@ Received: [31m8[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>api/c-checkout-effects.spec.ts:61</code></div>
         </td>
         <td><code>DEF-029</code></td>
-        <td>0m 3s</td>
+        <td>0m 2s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
 
@@ -418,7 +418,7 @@ Received: [31m&quot;[7m已[27m使用&quot;[39m
 Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
 
 Expected: [32mnull[39m
-Received: [31m&quot;MM-20260722-0003&quot;[39m</pre></details></td></tr><tr>
+Received: [31m&quot;MM-20260723-0003&quot;[39m</pre></details></td></tr><tr>
         <td><span class="pill normalPass">Normal pass</span></td>
         <td>API</td>
         <td>
@@ -747,7 +747,7 @@ Received array: [31m[401, 403][39m</pre></details></td></tr><tr>
 [32m- Expected  - 5[39m
 [31m+ Received  + 4[39m
 
-[32m- 下單時間 2026-07-[7m22 09:06[27m[39m
+[32m- 下單時間 2026-07-[7m23 20:24[27m[39m
 [31m+ 下單時間 2026-07-[7m01 10:15[27m[39m
 [32m- 手沖咖啡濾杯 × [7m1[27m[39m
 [32m- 香氛蠟燭禮盒 × 1[39m
@@ -913,7 +913,7 @@ Received: [31mfalse[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>api/p-products.spec.ts:20</code></div>
         </td>
         <td>—</td>
-        <td>0m 1s</td>
+        <td>0m 0s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -936,19 +936,29 @@ Received: [31mfalse[39m</pre></details></td></tr><tr>
         <td>0m 0s</td>
       </tr>
       <tr>
+        <td><span class="pill normalPass">Normal pass</span></td>
+        <td>Flow</td>
+        <td>
+          <strong>C-C02 happy path: single submit → complete page + empty cart</strong>
+          <div class="subtle"><code>flows/c-checkout-success.spec.ts:48</code></div>
+        </td>
+        <td>—</td>
+        <td>0m 12s</td>
+      </tr>
+      <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
         <td>Flow</td>
         <td>
-          <strong>submit order shows complete page, empties cart, blocks double submit</strong>
-          <div class="subtle"><code>flows/c-checkout-success.spec.ts:21</code></div>
+          <strong>C-C02 double-submit: rapid clicks must create exactly one order (DEF-024)</strong>
+          <div class="subtle"><code>flows/c-checkout-success.spec.ts:64</code></div>
         </td>
         <td><code>DEF-024</code></td>
-        <td>0m 27s</td>
+        <td>0m 5s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
 
-Expected: [32m4[39m
-Received: [31m7[39m</pre></details></td></tr><tr>
+Expected: [32m5[39m
+Received: [31m8[39m</pre></details></td></tr><tr>
         <td><span class="pill normalPass">Normal pass</span></td>
         <td>Flow</td>
         <td>
@@ -956,7 +966,7 @@ Received: [31m7[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>flows/c-remove-cart-item.spec.ts:18</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 5s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -966,7 +976,7 @@ Received: [31m7[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>flows/g-logout-clears-cart.spec.ts:19</code></div>
         </td>
         <td>—</td>
-        <td>0m 12s</td>
+        <td>0m 5s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -976,7 +986,7 @@ Received: [31m7[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>flows/g-logout-preserves-data.spec.ts:40</code></div>
         </td>
         <td>—</td>
-        <td>0m 14s</td>
+        <td>0m 7s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -986,7 +996,7 @@ Received: [31m7[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>flows/login-to-cart.spec.ts:14</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 4s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
@@ -996,7 +1006,7 @@ Received: [31m7[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>flows/o-cancel-order.spec.ts:16</code></div>
         </td>
         <td><code>DEF-003</code></td>
-        <td>0m 27s</td>
+        <td>0m 10s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1016,7 +1026,7 @@ Call log:
           <div class="subtle"><code>flows/o-return-refund.spec.ts:31</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 4s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
@@ -1026,7 +1036,7 @@ Call log:
           <div class="subtle"><code>flows/o-return-refund.spec.ts:68</code></div>
         </td>
         <td><code>DEF-005</code></td>
-        <td>0m 13s</td>
+        <td>0m 7s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1046,7 +1056,7 @@ Call log:
           <div class="subtle"><code>flows/o-return-refund.spec.ts:75</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 4s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
@@ -1056,7 +1066,7 @@ Call log:
           <div class="subtle"><code>flows/o-return-refund.spec.ts:102</code></div>
         </td>
         <td><code>DEF-006</code></td>
-        <td>0m 9s</td>
+        <td>0m 2s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
 
@@ -1069,7 +1079,7 @@ Received: [31m1230[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>flows/o-return-refund.spec.ts:126</code></div>
         </td>
         <td><code>DEF-007</code></td>
-        <td>0m 9s</td>
+        <td>0m 3s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
 
@@ -1082,7 +1092,7 @@ Received: [31m[&quot;待審核&quot;][39m</pre></details></td></tr><tr>
           <div class="subtle"><code>flows/o-return-refund.spec.ts:143</code></div>
         </td>
         <td><code>DEF-008</code></td>
-        <td>0m 8s</td>
+        <td>0m 3s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>TypeError: [2mexpect([22m[31mreceived[39m[2m).[22mtoMatch[2m([22m[32mexpected[39m[2m)[22m
 
@@ -1096,7 +1106,7 @@ Received has value: [31mnull[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>flows/o-return-reject-revoke.spec.ts:24</code></div>
         </td>
         <td>—</td>
-        <td>0m 12s</td>
+        <td>0m 5s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1106,7 +1116,7 @@ Received has value: [31mnull[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>flows/o-return-reject-revoke.spec.ts:75</code></div>
         </td>
         <td>—</td>
-        <td>0m 8s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
@@ -1116,7 +1126,7 @@ Received has value: [31mnull[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>flows/o-return-reject-revoke.spec.ts:104</code></div>
         </td>
         <td><code>DEF-005</code></td>
-        <td>0m 15s</td>
+        <td>0m 9s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1136,7 +1146,7 @@ Call log:
           <div class="subtle"><code>flows/o-ship-confirm.spec.ts:18</code></div>
         </td>
         <td>—</td>
-        <td>0m 13s</td>
+        <td>0m 5s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1146,7 +1156,7 @@ Call log:
           <div class="subtle"><code>ui/c-cart.spec.ts:21</code></div>
         </td>
         <td>—</td>
-        <td>0m 9s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1156,7 +1166,7 @@ Call log:
           <div class="subtle"><code>ui/c-cart.spec.ts:31</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 4s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1166,7 +1176,7 @@ Call log:
           <div class="subtle"><code>ui/c-cart.spec.ts:60</code></div>
         </td>
         <td>—</td>
-        <td>0m 11s</td>
+        <td>0m 5s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
@@ -1176,7 +1186,7 @@ Call log:
           <div class="subtle"><code>ui/c-cart.spec.ts:94</code></div>
         </td>
         <td><code>DEF-019</code></td>
-        <td>0m 13s</td>
+        <td>0m 6s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
 
@@ -1196,7 +1206,7 @@ Call log:
           <div class="subtle"><code>ui/c-checkout-coupons.spec.ts:25</code></div>
         </td>
         <td>—</td>
-        <td>0m 11s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1206,7 +1216,7 @@ Call log:
           <div class="subtle"><code>ui/c-checkout-coupons.spec.ts:42</code></div>
         </td>
         <td>—</td>
-        <td>0m 11s</td>
+        <td>0m 4s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1216,27 +1226,27 @@ Call log:
           <div class="subtle"><code>ui/c-checkout-coupons.spec.ts:66</code></div>
         </td>
         <td>—</td>
-        <td>0m 14s</td>
+        <td>0m 5s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
         <td>UI</td>
         <td>
           <strong>CASE_R56_1: summary strings match fixture</strong>
-          <div class="subtle"><code>ui/c-checkout-display.spec.ts:22</code></div>
+          <div class="subtle"><code>ui/c-checkout-display.spec.ts:24</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
         <td>UI</td>
         <td>
           <strong>CASE_R56_2: summary strings match fixture</strong>
-          <div class="subtle"><code>ui/c-checkout-display.spec.ts:22</code></div>
+          <div class="subtle"><code>ui/c-checkout-display.spec.ts:24</code></div>
         </td>
         <td><code>DEF-004</code></td>
-        <td>0m 12s</td>
+        <td>0m 3s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
 
@@ -1246,10 +1256,10 @@ Received: [31m&quot;NT$[7m0[27m&quot;[39m</pre></details></td></tr><tr>
         <td>UI</td>
         <td>
           <strong>CASE_R56_3: summary strings match fixture</strong>
-          <div class="subtle"><code>ui/c-checkout-display.spec.ts:22</code></div>
+          <div class="subtle"><code>ui/c-checkout-display.spec.ts:24</code></div>
         </td>
         <td><code>DEF-004</code></td>
-        <td>0m 11s</td>
+        <td>0m 3s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
 
@@ -1259,10 +1269,10 @@ Received: [31m&quot;−NT$[7m300[27m&quot;[39m</pre></details></td></tr><tr>
         <td>UI</td>
         <td>
           <strong>CASE_R56_4: summary strings match fixture</strong>
-          <div class="subtle"><code>ui/c-checkout-display.spec.ts:22</code></div>
+          <div class="subtle"><code>ui/c-checkout-display.spec.ts:24</code></div>
         </td>
         <td><code>DEF-004</code></td>
-        <td>0m 10s</td>
+        <td>0m 3s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
 
@@ -1275,7 +1285,7 @@ Received: [31m&quot;NT$[7m0[27m&quot;[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>ui/c-checkout-structure.spec.ts:25</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1285,7 +1295,7 @@ Received: [31m&quot;NT$[7m0[27m&quot;[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>ui/c-checkout-structure.spec.ts:55</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1295,7 +1305,7 @@ Received: [31m&quot;NT$[7m0[27m&quot;[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>ui/c-checkout-structure.spec.ts:79</code></div>
         </td>
         <td>—</td>
-        <td>0m 12s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1305,7 +1315,7 @@ Received: [31m&quot;NT$[7m0[27m&quot;[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>ui/c-checkout-structure.spec.ts:87</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1315,7 +1325,7 @@ Received: [31m&quot;NT$[7m0[27m&quot;[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>ui/c-checkout-structure.spec.ts:113</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 4s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1325,7 +1335,7 @@ Received: [31m&quot;NT$[7m0[27m&quot;[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>ui/c-checkout-validation.spec.ts:27</code></div>
         </td>
         <td>—</td>
-        <td>0m 11s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1335,7 +1345,7 @@ Received: [31m&quot;NT$[7m0[27m&quot;[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>ui/c-checkout-validation.spec.ts:45</code></div>
         </td>
         <td>—</td>
-        <td>0m 9s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1345,7 +1355,7 @@ Received: [31m&quot;NT$[7m0[27m&quot;[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>ui/c-checkout-validation.spec.ts:54</code></div>
         </td>
         <td>—</td>
-        <td>0m 9s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1355,7 +1365,7 @@ Received: [31m&quot;NT$[7m0[27m&quot;[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>ui/c-checkout-validation.spec.ts:61</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
@@ -1365,7 +1375,7 @@ Received: [31m&quot;NT$[7m0[27m&quot;[39m</pre></details></td></tr><tr>
           <div class="subtle"><code>ui/c-checkout-validation.spec.ts:67</code></div>
         </td>
         <td><code>DEF-011</code></td>
-        <td>0m 13s</td>
+        <td>0m 8s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1385,7 +1395,7 @@ Call log:
           <div class="subtle"><code>ui/c-checkout-validation.spec.ts:89</code></div>
         </td>
         <td><code>DEF-022</code></td>
-        <td>0m 15s</td>
+        <td>0m 8s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1405,7 +1415,7 @@ Call log:
           <div class="subtle"><code>ui/c-checkout-validation.spec.ts:127</code></div>
         </td>
         <td>—</td>
-        <td>0m 9s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1415,7 +1425,7 @@ Call log:
           <div class="subtle"><code>ui/g-loading-datetime.spec.ts:14</code></div>
         </td>
         <td>—</td>
-        <td>0m 20s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
@@ -1425,7 +1435,7 @@ Call log:
           <div class="subtle"><code>ui/g-loading-datetime.spec.ts:39</code></div>
         </td>
         <td><code>DEF-016</code></td>
-        <td>0m 29s</td>
+        <td>0m 13s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1445,7 +1455,7 @@ Call log:
           <div class="subtle"><code>ui/g-loading-datetime.spec.ts:61</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 4s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1455,7 +1465,7 @@ Call log:
           <div class="subtle"><code>ui/g-login.spec.ts:15</code></div>
         </td>
         <td>—</td>
-        <td>0m 9s</td>
+        <td>0m 2s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1465,7 +1475,7 @@ Call log:
           <div class="subtle"><code>ui/g-login.spec.ts:35</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1475,7 +1485,7 @@ Call log:
           <div class="subtle"><code>ui/g-navbar.spec.ts:17</code></div>
         </td>
         <td>—</td>
-        <td>0m 13s</td>
+        <td>0m 5s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1485,7 +1495,7 @@ Call log:
           <div class="subtle"><code>ui/n-notifications.spec.ts:42</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1495,7 +1505,7 @@ Call log:
           <div class="subtle"><code>ui/n-notifications.spec.ts:113</code></div>
         </td>
         <td>—</td>
-        <td>0m 20s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1505,77 +1515,77 @@ Call log:
           <div class="subtle"><code>ui/n-notifications.spec.ts:125</code></div>
         </td>
         <td>—</td>
-        <td>0m 21s</td>
+        <td>0m 5s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
         <td>UI</td>
         <td>
           <strong>O-B02: detail six blocks (v2.1); completed has 完成時間; summary order</strong>
-          <div class="subtle"><code>ui/o-order-detail.spec.ts:34</code></div>
+          <div class="subtle"><code>ui/o-order-detail.spec.ts:36</code></div>
         </td>
         <td>—</td>
-        <td>0m 9s</td>
+        <td>0m 2s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
         <td>UI</td>
         <td>
           <strong>O-B07: seed / pre-v2.1 orders show （無備註）</strong>
-          <div class="subtle"><code>ui/o-order-detail.spec.ts:68</code></div>
+          <div class="subtle"><code>ui/o-order-detail.spec.ts:70</code></div>
         </td>
         <td>—</td>
-        <td>0m 8s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
         <td>UI</td>
         <td>
           <strong>O-B07: blank note allowed; detail shows （無備註）</strong>
-          <div class="subtle"><code>ui/o-order-detail.spec.ts:75</code></div>
+          <div class="subtle"><code>ui/o-order-detail.spec.ts:77</code></div>
         </td>
         <td>—</td>
-        <td>0m 11s</td>
+        <td>0m 4s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
         <td>UI</td>
         <td>
           <strong>O-B07: filled note trimmed on detail; absent on list and complete</strong>
-          <div class="subtle"><code>ui/o-order-detail.spec.ts:92</code></div>
+          <div class="subtle"><code>ui/o-order-detail.spec.ts:94</code></div>
         </td>
         <td>—</td>
-        <td>0m 11s</td>
+        <td>0m 5s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
         <td>UI</td>
         <td>
           <strong>O-B04: cancel does not create return; illegal entry redirects</strong>
-          <div class="subtle"><code>ui/o-order-detail.spec.ts:123</code></div>
+          <div class="subtle"><code>ui/o-order-detail.spec.ts:125</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
         <td>UI</td>
         <td>
           <strong>O-B04: empty / over-200 reason disables submit; counter</strong>
-          <div class="subtle"><code>ui/o-order-detail.spec.ts:142</code></div>
+          <div class="subtle"><code>ui/o-order-detail.spec.ts:144</code></div>
         </td>
         <td>—</td>
-        <td>0m 8s</td>
+        <td>0m 2s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
         <td>UI</td>
         <td>
           <strong>O-B04 DEF: reason error copy for empty / over 200</strong>
-          <div class="subtle"><code>ui/o-order-detail.spec.ts:158</code></div>
+          <div class="subtle"><code>ui/o-order-detail.spec.ts:160</code></div>
         </td>
         <td><code>DEF-017</code></td>
-        <td>0m 14s</td>
+        <td>0m 7s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1592,43 +1602,40 @@ Call log:
         <td>UI</td>
         <td>
           <strong>O-B06: return apply page refund strings match seed completed order</strong>
-          <div class="subtle"><code>ui/o-order-detail.spec.ts:174</code></div>
+          <div class="subtle"><code>ui/o-order-detail.spec.ts:176</code></div>
         </td>
         <td>—</td>
-        <td>0m 8s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
         <td>UI</td>
         <td>
           <strong>O-B05: order detail summary matches CASE_R56_2 fixture</strong>
-          <div class="subtle"><code>ui/o-order-detail.spec.ts:183</code></div>
+          <div class="subtle"><code>ui/o-order-detail.spec.ts:185</code></div>
         </td>
         <td>—</td>
-        <td>0m 14s</td>
+        <td>0m 4s</td>
       </tr>
       <tr>
-        <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
+        <td><span class="pill normalPass">Normal pass</span></td>
         <td>UI</td>
         <td>
           <strong>O-B05 + coupon: CASE_R56_3 detail rows vs fixture (DEF-004 family)</strong>
-          <div class="subtle"><code>ui/o-order-detail.spec.ts:202</code></div>
+          <div class="subtle"><code>ui/o-order-detail.spec.ts:204</code></div>
         </td>
         <td><code>DEF-004</code></td>
-        <td>0m 12s</td>
+        <td>0m 4s</td>
       </tr>
-      <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
-
-Expected: [32m&quot;−NT$300&quot;[39m
-Received: [31m&quot;−NT$300[7m（滿三千折三百券）[27m&quot;[39m</pre></details></td></tr><tr>
+      <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
         <td>UI</td>
         <td>
           <strong>O-B03: action buttons by status</strong>
-          <div class="subtle"><code>ui/o-order-detail.spec.ts:232</code></div>
+          <div class="subtle"><code>ui/o-order-detail.spec.ts:239</code></div>
         </td>
         <td>—</td>
-        <td>0m 18s</td>
+        <td>0m 11s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1638,7 +1645,7 @@ Received: [31m&quot;−NT$300[7m（滿三千折三百券）[27m&quot;[39m</p
           <div class="subtle"><code>ui/o-orders.spec.ts:19</code></div>
         </td>
         <td>—</td>
-        <td>0m 9s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
@@ -1648,20 +1655,20 @@ Received: [31m&quot;−NT$300[7m（滿三千折三百券）[27m&quot;[39m</p
           <div class="subtle"><code>ui/o-orders.spec.ts:50</code></div>
         </td>
         <td><code>DEF-025</code></td>
-        <td>0m 13s</td>
+        <td>0m 7s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
 
 Locator:  locator(&#039;.order-row&#039;).first().locator(&#039;.order-row-id&#039;)
-Expected: [32m&quot;MM-2026071[7m7[27m-0001&quot;[39m
-Received: [31m&quot;MM-2026071[7m5[27m-0001&quot;[39m
+Expected: [32m&quot;MM-2026071[7m8[27m-0001&quot;[39m
+Received: [31m&quot;MM-2026071[7m6[27m-0001&quot;[39m
 Timeout:  5000ms
 
 Call log:
 [2m  - Expect &quot;toHaveText&quot; with timeout 5000ms[22m
 [2m  - waiting for locator(&#039;.order-row&#039;).first().locator(&#039;.order-row-id&#039;)[22m
-[2m    11 × locator resolved to &lt;span class=&quot;order-row-id&quot;&gt;MM-20260715-0001&lt;/span&gt;[22m
-[2m       - unexpected value &quot;MM-20260715-0001&quot;[22m
+[2m    11 × locator resolved to &lt;span class=&quot;order-row-id&quot;&gt;MM-20260716-0001&lt;/span&gt;[22m
+[2m       - unexpected value &quot;MM-20260716-0001&quot;[22m
 </pre></details></td></tr><tr>
         <td><span class="pill normalPass">Normal pass</span></td>
         <td>UI</td>
@@ -1670,7 +1677,7 @@ Call log:
           <div class="subtle"><code>ui/o-orders.spec.ts:63</code></div>
         </td>
         <td>—</td>
-        <td>0m 15s</td>
+        <td>0m 2s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1680,7 +1687,7 @@ Call log:
           <div class="subtle"><code>ui/p-product-detail.spec.ts:19</code></div>
         </td>
         <td>—</td>
-        <td>0m 11s</td>
+        <td>0m 4s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1690,7 +1697,7 @@ Call log:
           <div class="subtle"><code>ui/p-product-detail.spec.ts:59</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1700,7 +1707,7 @@ Call log:
           <div class="subtle"><code>ui/p-products.spec.ts:62</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 2s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
@@ -1710,7 +1717,7 @@ Call log:
           <div class="subtle"><code>ui/p-products.spec.ts:81</code></div>
         </td>
         <td><code>DEF-018</code></td>
-        <td>0m 20s</td>
+        <td>0m 12s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: Broken product images: 香氛蠟燭禮盒
 
@@ -1730,7 +1737,7 @@ Call log:
           <div class="subtle"><code>ui/p-products.spec.ts:92</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 2s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1740,7 +1747,7 @@ Call log:
           <div class="subtle"><code>ui/p-products.spec.ts:101</code></div>
         </td>
         <td>—</td>
-        <td>0m 11s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1750,7 +1757,7 @@ Call log:
           <div class="subtle"><code>ui/v-coupons.spec.ts:22</code></div>
         </td>
         <td>—</td>
-        <td>0m 10s</td>
+        <td>0m 3s</td>
       </tr>
       <tr>
         <td><span class="pill normalPass">Normal pass</span></td>
@@ -1760,7 +1767,7 @@ Call log:
           <div class="subtle"><code>ui/v-coupons.spec.ts:76</code></div>
         </td>
         <td>—</td>
-        <td>0m 12s</td>
+        <td>0m 4s</td>
       </tr>
       <tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
@@ -1770,20 +1777,20 @@ Call log:
           <div class="subtle"><code>ui/v-coupons.spec.ts:101</code></div>
         </td>
         <td><code>DEF-010</code></td>
-        <td>0m 16s</td>
+        <td>0m 7s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
 
 Locator: getByTestId(&#039;coupon-card&#039;).filter({ hasText: &#039;新人小禮券&#039; })
 Expected pattern: [32m/訂單編號 MM-\d{8}-\d{4}/[39m
-Received string:  [31m&quot;新人小禮券已使用券碼 NEWBIE20NT$20無最低消費到期日 2027-01-18訂單編號 20260722-0001&quot;[39m
+Received string:  [31m&quot;新人小禮券已使用券碼 NEWBIE20NT$20無最低消費到期日 2027-01-19訂單編號 20260723-0001&quot;[39m
 Timeout: 5000ms
 
 Call log:
 [2m  - Expect &quot;toContainText&quot; with timeout 5000ms[22m
 [2m  - waiting for getByTestId(&#039;coupon-card&#039;).filter({ hasText: &#039;新人小禮券&#039; })[22m
 [2m    14 × locator resolved to &lt;div class=&quot;coupon-card&quot; data-testid=&quot;coupon-card&quot;&gt;…&lt;/div&gt;[22m
-[2m       - unexpected value &quot;新人小禮券已使用券碼 NEWBIE20NT$20無最低消費到期日 2027-01-18訂單編號 20260722-0001&quot;[22m
+[2m       - unexpected value &quot;新人小禮券已使用券碼 NEWBIE20NT$20無最低消費到期日 2027-01-19訂單編號 20260723-0001&quot;[22m
 </pre></details></td></tr><tr>
         <td><span class="pill expectedFailure">Expected failure / known-defect evidence</span></td>
         <td>UI</td>
@@ -1792,7 +1799,7 @@ Call log:
           <div class="subtle"><code>ui/v-coupons.spec.ts:123</code></div>
         </td>
         <td><code>DEF-009</code></td>
-        <td>0m 15s</td>
+        <td>0m 7s</td>
       </tr>
       <tr class="error-row"><td colspan="5"><details><summary>Actual failure evidence</summary><pre>Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1812,7 +1819,7 @@ Call log:
   
 
   <div class="footer">
-    Generated 2026-07-22T01:26:06.742Z by tests/reporters/executive-reporter.ts. Machine-readable data: summary.json.
+    Generated 2026-07-23T12:34:35.538Z by tests/reporters/executive-reporter.ts. Machine-readable data: summary.json.
   </div>
 </main>
 </body>
