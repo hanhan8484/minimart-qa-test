@@ -30,4 +30,5 @@ export {
   previewCheckout,
   applyPricingCaseCart,
   getSummaryValueByLabel,
+  looksLikeDef004DiscountSwap,
 } from './pricing';

@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import {
   getDetailStatusText,
   getSummaryValueByLabel,
+  looksLikeDef004DiscountSwap,
   loginAsDemo,
   openOrderDetail,
   resetEnv,
@@ -201,12 +202,6 @@ test.describe.serial('O-B02～O-B07 order UI', () => {
 
   test('O-B05 + coupon: CASE_R56_3 detail rows vs fixture (DEF-004 family)', async ({ page }) => {
     test.setTimeout(90_000);
-    const swapWouldBreak =
-      CASE_R56_3.expect.bulkDiscount !== CASE_R56_3.expect.couponDiscount;
-    test.fail(
-      swapWouldBreak,
-      'DEF-004: 訂單詳情金額摘要亦可能滿額／券折抵對調；以 PRD 標籤對齊 fixture',
-    );
 
     await loginAsDemo(page);
     await clearCartViaApi(page);
@@ -222,11 +217,19 @@ test.describe.serial('O-B02～O-B07 order UI', () => {
     await expect(page.getByRole('heading', { name: '訂單詳情' })).toBeVisible();
 
     const d = CASE_R56_3.display;
+    // Hard gates — must not be swallowed by DEF-004 expected-fail
     expect(await getSummaryValueByLabel(page, '商品小計')).toBe(d.subtotal);
-    expect(await getSummaryValueByLabel(page, '滿額折扣')).toBe(d.bulkDiscount);
-    expect(await getSummaryValueByLabel(page, '優惠券折抵')).toBe(d.couponDiscount);
     expect(await getSummaryValueByLabel(page, '運費')).toBe(d.shipping);
     expect(await getSummaryValueByLabel(page, '應付金額')).toBe(d.payable);
+
+    const bulkShown = await getSummaryValueByLabel(page, '滿額折扣');
+    const couponShown = await getSummaryValueByLabel(page, '優惠券折抵');
+    test.fail(
+      looksLikeDef004DiscountSwap(bulkShown, couponShown, d.bulkDiscount, d.couponDiscount),
+      'DEF-004: 訂單詳情金額摘要滿額／券折抵數值對調；僅此模式算 expected fail',
+    );
+    expect(bulkShown).toBe(d.bulkDiscount);
+    expect(couponShown).toBe(d.couponDiscount);
   });
 
   test('O-B03: action buttons by status', async ({ page }) => {

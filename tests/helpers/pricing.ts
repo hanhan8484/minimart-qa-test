@@ -109,3 +109,17 @@ export async function getSummaryValueByLabel(page: Page, label: string): Promise
   }
   throw new Error(`Summary label not found: ${label}`);
 }
+
+/**
+ * True only for the classic DEF-004 pattern: 滿額折扣 / 優惠券折抵 values are swapped.
+ * Other mismatches (extra coupon-name text, wrong shipping, etc.) must stay unexpected.
+ */
+export function looksLikeDef004DiscountSwap(
+  bulkShown: string,
+  couponShown: string,
+  expectedBulk: string,
+  expectedCoupon: string,
+): boolean {
+  if (expectedBulk === expectedCoupon) return false;
+  return bulkShown === expectedCoupon && couponShown === expectedBulk;
+}

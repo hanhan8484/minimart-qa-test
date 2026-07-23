@@ -189,7 +189,7 @@
 | **期望結果** | API：`bulkDiscount=159`、`couponDiscount=0`。畫面：「滿額折扣 −NT$159」、「優惠券折抵 NT$0」 |
 | **實際結果** | API 正確。畫面：「滿額折扣 NT$0」、「優惠券折抵 −NT$159」。選 SAVE300 時變成滿額顯示 −NT$300、優惠券顯示 −NT$159（兩欄對調） |
 | **影響** | 應付金額可能仍正確，但使用者誤判折扣來源；Display 測試無法對齊 PRD 標籤 |
-| **自動化處理** | `tests/ui/c-checkout-display.spec.ts`：當滿額≠券折抵時以 `test.fail(…DEF-004)` 標記；修復後移除 |
+| **自動化處理** | `c-checkout-display.spec.ts`（C-B10）、`o-order-detail.spec.ts`（O-B05）：`test.fail` **僅**在觀察到「滿額／券兩欄數值對調」時啟用；小計／運費／應付為硬閘門。其它 mismatch（例如 value 夾券名）視為 unexpected，不掛 DEF-004。修復對調後移除 `test.fail` |
 | **附件／備註** | Primary `C-A03`（preview API）通過；問題在前端綁定 |
 
 **歷程**
@@ -197,6 +197,7 @@
 | 日期 | 動作 |
 |---|---|
 | 2026-07-17 | 開單；API vs UI 複驗 Confirmed |
+| 2026-07-22 | 收窄 `test.fail` 範圍：只鎖經典對調，避免非 DEF-004 失敗被誤標 expected |
 
 ---
 

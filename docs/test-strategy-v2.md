@@ -153,7 +153,7 @@
 | `BASE_URL` | 可覆寫（見 README） |
 | 帳號 | PRD R-1.2 內建測試帳（可用 env 覆寫；見 README） |
 | Reset | `RESET_URL` 或預設 reset path，等 5 秒 |
-| Browser | chromium（另可選 firefox／webkit projects） |
+| Browser | chromium |
 
 細節與案例總表：[`test-strategy-v2-matrix.md`](./test-strategy-v2-matrix.md)。
 

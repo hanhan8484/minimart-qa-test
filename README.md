@@ -39,12 +39,6 @@ npm install
 npx playwright install chromium
 ```
 
-可選：Firefox／WebKit（`playwright.config.ts` 已宣告 projects）
-
-```bash
-npx playwright install firefox webkit
-```
-
 > Windows 若 C 槽空間不足，可先指定瀏覽器路徑再安裝／執行：  
 > PowerShell：`$env:PLAYWRIGHT_BROWSERS_PATH = "D:\ms-playwright"`
 
@@ -107,12 +101,6 @@ npm run test:report
 
 ```bash
 npx playwright test tests/flows/c-checkout-success.spec.ts --project=chromium
-```
-
-跨瀏覽器（需已 install 對應 browser）：
-
-```bash
-npx playwright test tests/ui tests/flows --project=chromium --project=firefox --project=webkit
 ```
 
 ---
